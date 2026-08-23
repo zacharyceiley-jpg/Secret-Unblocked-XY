@@ -1,227 +1,175 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub</title>
+<title>Secret Unblocked</title>
 
 <style>
     * {
         box-sizing: border-box;
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
         margin: 0;
         min-height: 100vh;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #111;
+        background: #0b0b0f;
         color: white;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* Header */
     header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 20px;
+        background: rgba(11, 11, 15, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #22232b;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: auto;
         display: flex;
         align-items: center;
         gap: 18px;
-        padding: 18px 24px;
-        background: #181818;
-        border-bottom: 1px solid #303030;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        flex-wrap: wrap;
     }
 
     .logo {
-        font-size: 25px;
+        font-size: 26px;
         font-weight: 800;
         white-space: nowrap;
     }
 
-    #search {
+    .search-wrapper {
         flex: 1;
-        max-width: 650px;
-        padding: 12px 16px;
-        border: 1px solid #444;
+        min-width: 220px;
+    }
+
+    #search {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1px solid #30313a;
         border-radius: 12px;
         outline: none;
-        background: #222;
+        background: #15161c;
         color: white;
-        font-size: 16px;
+        font-size: 15px;
     }
 
     #search:focus {
-        border-color: #777;
+        border-color: #666875;
     }
 
-    .settings-button {
-        margin-left: auto;
-        border: 1px solid #444;
-        background: #222;
-        color: white;
-        border-radius: 10px;
-        padding: 11px 14px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    .settings-button:hover {
-        background: #2b2b2b;
-    }
-
-    /* Main page */
     main {
-        padding: 30px;
-        max-width: 1500px;
+        max-width: 1200px;
         margin: auto;
+        padding: 35px 20px 60px;
     }
 
-    .welcome {
-        margin-bottom: 25px;
+    .hero {
+        margin-bottom: 30px;
     }
 
-    .welcome h1 {
-        margin: 0 0 7px;
-        font-size: 32px;
+    .hero h1 {
+        margin: 0 0 8px;
+        font-size: clamp(30px, 5vw, 48px);
     }
 
-    .welcome p {
+    .hero p {
         margin: 0;
-        color: #aaa;
+        color: #a9aab4;
     }
 
-    .section-title {
-        font-size: 22px;
-        margin: 25px 0 15px;
+    #status {
+        margin: 25px 0;
+        color: #8e909c;
     }
 
-    /* Game grid */
-    .grid {
+    .games-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 20px;
     }
 
-    .game {
-        background: #1d1d1d;
-        border: 1px solid #353535;
-        border-radius: 14px;
-        padding: 10px;
-        cursor: pointer;
-        transition: transform .15s, background .15s, border-color .15s;
-    }
-
-    .game:hover {
-        transform: translateY(-3px);
-        background: #252525;
-        border-color: #555;
-    }
-
-    /* Images are ALWAYS square and automatically cropped */
-    .game img {
+    .game-card {
         display: block;
+        overflow: hidden;
+        text-decoration: none;
+        color: white;
+        background: #15161c;
+        border: 1px solid #252630;
+        border-radius: 16px;
+        transition:
+            transform 0.18s ease,
+            border-color 0.18s ease,
+            background 0.18s ease;
+    }
+
+    .game-card:hover {
+        transform: translateY(-4px);
+        border-color: #454752;
+        background: #1a1b22;
+    }
+
+    .game-card:active {
+        transform: translateY(-1px);
+    }
+
+    .game-icon {
         width: 100%;
         aspect-ratio: 1 / 1;
+        display: block;
         object-fit: cover;
-        border-radius: 10px;
-        background: #292929;
+        background: #202128;
     }
 
-    .game-name {
-        padding: 11px 3px 3px;
-        font-weight: 600;
+    .game-info {
+        padding: 13px 14px 15px;
+    }
+
+    .game-title {
+        font-size: 16px;
+        font-weight: 700;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .empty {
-        grid-column: 1 / -1;
-        padding: 50px 20px;
+    .no-games {
+        padding: 35px;
         text-align: center;
-        color: #888;
-        border: 1px dashed #444;
-        border-radius: 14px;
-    }
-
-    /* Settings */
-    .overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,.65);
-        z-index: 20;
-    }
-
-    .settings-panel {
-        width: min(440px, calc(100% - 30px));
-        margin: 80px auto;
-        background: #1b1b1b;
-        border: 1px solid #444;
+        border: 1px dashed #343640;
         border-radius: 16px;
-        padding: 22px;
+        color: #90929d;
     }
 
-    .settings-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    footer {
+        padding: 25px;
+        text-align: center;
+        color: #666873;
+        font-size: 13px;
     }
 
-    .settings-top h2 {
-        margin: 0;
-    }
-
-    .close {
-        background: none;
-        border: 0;
-        color: #aaa;
-        font-size: 25px;
-        cursor: pointer;
-    }
-
-    .setting {
-        margin-top: 22px;
-        padding: 15px;
-        background: #242424;
-        border-radius: 12px;
-    }
-
-    .setting-title {
-        font-weight: 700;
-        margin-bottom: 6px;
-    }
-
-    .setting-description {
-        color: #999;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-
-    .disguiser-placeholder {
-        margin-top: 12px;
-        padding: 10px;
-        border: 1px dashed #555;
-        border-radius: 9px;
-        color: #777;
-        font-size: 14px;
-    }
-
-    @media (max-width: 650px) {
+    @media (max-width: 600px) {
         header {
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            width: 100%;
-        }
-
-        #search {
-            order: 3;
-            flex-basis: 100%;
+            padding: 15px;
         }
 
         main {
-            padding: 20px;
+            padding: 25px 15px 50px;
+        }
+
+        .games-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 13px;
         }
     }
 </style>
@@ -230,97 +178,215 @@
 <body>
 
 <header>
-    <div class="logo">Game Hub</div>
+    <div class="header-content">
+        <div class="logo">Secret Unblocked</div>
 
-    <input
-        id="search"
-        type="text"
-        placeholder="Search games..."
-        autocomplete="off"
-    >
-
-    <button class="settings-button" onclick="openSettings()">⚙ Settings</button>
+        <div class="search-wrapper">
+            <input
+                id="search"
+                type="search"
+                placeholder="Search games..."
+                autocomplete="off"
+                spellcheck="false"
+            >
+        </div>
+    </div>
 </header>
 
 <main>
-    <div class="welcome">
-        <h1>Welcome</h1>
-        <p>Your games, all in one place.</p>
-    </div>
+    <section class="hero">
+        <h1>Games</h1>
+        <p>Choose a game to play.</p>
+    </section>
 
-    <div class="section-title">🎮 Games</div>
+    <div id="status">Searching repository for games...</div>
 
-    <div class="grid" id="gameGrid">
-        <!-- Add games here later.
-        Example:
-
-        <div class="game" data-name="Example Game"
-             onclick="window.open('https://example.com', '_blank')">
-            <img src="icon.png" alt="Example Game">
-            <div class="game-name">Example Game</div>
-        </div>
-        -->
-
-        <div class="empty" id="emptyMessage">
-            No games added yet.
-        </div>
-    </div>
+    <div id="games" class="games-grid"></div>
 </main>
 
-<!-- Settings -->
-<div class="overlay" id="settingsOverlay" onclick="closeSettings(event)">
-    <div class="settings-panel" onclick="event.stopPropagation()">
-        <div class="settings-top">
-            <h2>Settings</h2>
-            <button class="close" onclick="closeSettings()">×</button>
-        </div>
-
-        <div class="setting">
-            <div class="setting-title">Site Disguiser</div>
-            <div class="setting-description">
-                Disguise options will go here.
-            </div>
-
-            <div class="disguiser-placeholder">
-                Disguiser system coming next...
-            </div>
-        </div>
-    </div>
-</div>
+<footer>
+    Secret Unblocked
+</footer>
 
 <script>
-    const search = document.getElementById("search");
-    const gameGrid = document.getElementById("gameGrid");
-    const emptyMessage = document.getElementById("emptyMessage");
+    const GITHUB_OWNER = "zacharyceiley-jpg";
+    const GITHUB_REPO = "Secret-Unblocked-XY";
+    const GITHUB_BRANCH = "main";
 
-    search.addEventListener("input", () => {
-        const query = search.value.toLowerCase().trim();
-        const games = gameGrid.querySelectorAll(".game");
-        let visible = 0;
+    const API_URL =
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/?ref=${GITHUB_BRANCH}`;
 
-        games.forEach(game => {
-            const name = game.dataset.name?.toLowerCase() || "";
-            const matches = name.includes(query);
+    const gamesContainer = document.getElementById("games");
+    const statusElement = document.getElementById("status");
+    const searchInput = document.getElementById("search");
 
-            game.style.display = matches ? "" : "none";
-            if (matches) visible++;
-        });
+    let games = [];
 
-        if (games.length > 0) {
-            emptyMessage.style.display = visible === 0 ? "block" : "none";
+    function getGameTitle(filename) {
+        return filename
+            .replace(/\.html$/i, "")
+            .replace(/game$/i, "")
+            .replace(/[-_]+/g, " ")
+            .replace(/\s+/g, " ")
+            .trim()
+            .replace(/\b\w/g, letter => letter.toUpperCase());
+    }
+
+    function getIconName(htmlName) {
+        return htmlName.replace(/\.html$/i, ".png");
+    }
+
+    function renderGames(list) {
+        gamesContainer.innerHTML = "";
+
+        if (list.length === 0) {
+            gamesContainer.innerHTML = `
+                <div class="no-games">
+                    No games found.
+                </div>
+            `;
+            return;
         }
+
+        list.forEach(game => {
+            const card = document.createElement("a");
+
+            card.className = "game-card";
+            card.href = game.url;
+            card.title = game.title;
+
+            card.innerHTML = `
+                <img
+                    class="game-icon"
+                    src="${game.icon}"
+                    alt="${escapeHTML(game.title)}"
+                    loading="lazy"
+                    onerror="this.src='data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                            <rect width="400" height="400" fill="#202128"/>
+                            <text x="200" y="205"
+                                  text-anchor="middle"
+                                  dominant-baseline="middle"
+                                  fill="#777"
+                                  font-family="Arial"
+                                  font-size="28">
+                                No Image
+                            </text>
+                        </svg>
+                    `)}'"
+                >
+
+                <div class="game-info">
+                    <div class="game-title">
+                        ${escapeHTML(game.title)}
+                    </div>
+                </div>
+            `;
+
+            gamesContainer.appendChild(card);
+        });
+    }
+
+    function escapeHTML(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    async function loadGames() {
+        try {
+            statusElement.textContent = "Searching repository for games...";
+
+            const response = await fetch(API_URL, {
+                headers: {
+                    "Accept": "application/vnd.github+json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`GitHub API returned ${response.status}`);
+            }
+
+            const files = await response.json();
+
+            /*
+             * A game is any HTML file whose filename contains "game".
+             *
+             * Examples:
+             * FNAFgame.html
+             * MinecraftGame.html
+             * slopegame.html
+             */
+
+            const gameFiles = files.filter(file =>
+                file.type === "file" &&
+                /\.html$/i.test(file.name) &&
+                /game/i.test(file.name) &&
+                file.name.toLowerCase() !== "index.html"
+            );
+
+            games = gameFiles.map(file => {
+                const iconName = getIconName(file.name);
+
+                return {
+                    filename: file.name,
+                    title: getGameTitle(file.name),
+
+                    // GitHub Pages URL
+                    url:
+                        `https://${GITHUB_OWNER}.github.io/` +
+                        `${GITHUB_REPO}/${encodeURIComponent(file.name)}`,
+
+                    // Matching PNG:
+                    // FNAFgame.html -> FNAFgame.png
+                    icon:
+                        `https://raw.githubusercontent.com/` +
+                        `${GITHUB_OWNER}/${GITHUB_REPO}/` +
+                        `${GITHUB_BRANCH}/${encodeURIComponent(iconName)}`
+                };
+            });
+
+            games.sort((a, b) =>
+                a.title.localeCompare(b.title)
+            );
+
+            statusElement.textContent =
+                `${games.length} game${games.length === 1 ? "" : "s"} found`;
+
+            renderGames(games);
+
+        } catch (error) {
+            console.error(error);
+
+            statusElement.textContent =
+                "Unable to load games from the repository.";
+
+            gamesContainer.innerHTML = `
+                <div class="no-games">
+                    <strong>Could not load the games.</strong>
+                    <br><br>
+                    Please check that the repository is public and try again.
+                </div>
+            `;
+        }
+    }
+
+    searchInput.addEventListener("input", () => {
+        const query = searchInput.value
+            .trim()
+            .toLowerCase();
+
+        const filtered = games.filter(game =>
+            game.title.toLowerCase().includes(query) ||
+            game.filename.toLowerCase().includes(query)
+        );
+
+        renderGames(filtered);
     });
 
-    function openSettings() {
-        document.getElementById("settingsOverlay").style.display = "block";
-    }
-
-    function closeSettings(event) {
-        if (!event || event.target.id === "settingsOverlay") {
-            document.getElementById("settingsOverlay").style.display = "none";
-        }
-    }
+    loadGames();
 </script>
 
 </body>
 </html>
+```
