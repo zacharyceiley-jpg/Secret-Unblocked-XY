@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Game</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+        background: #0b0b0f;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .page {
+        max-width: 1400px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .topbar {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        border: 0;
+        border-radius: 10px;
+        padding: 11px 16px;
+        background: #1b1c23;
+        color: white;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .back-button:hover {
+        background: #252630;
+    }
+
+    .game-title {
+        margin: 0;
+        font-size: 28px;
+    }
+
+    .description {
+        margin-bottom: 20px;
+        padding: 18px;
+        border-radius: 14px;
+        background: #15161c;
+        border: 1px solid #252630;
+    }
+
+    .description h2 {
+        margin: 0 0 8px;
+        font-size: 18px;
+    }
+
+    .description p {
+        margin: 0;
+        color: #b1b2bc;
+        line-height: 1.6;
+    }
+
+    .game-container {
+        position: relative;
+        width: 100%;
+        height: min(75vh, 800px);
+        min-height: 400px;
+        overflow: hidden;
+        border-radius: 16px;
+        background: #000;
+        border: 1px solid #252630;
+    }
+
+    #gameFrame {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        background: #000;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .control-button {
+        border: 0;
+        border-radius: 10px;
+        padding: 11px 16px;
+        background: #1b1c23;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .control-button:hover {
+        background: #252630;
+    }
+
+    .redirect-container {
+        display: none;
+        text-align: center;
+        padding: 60px 20px;
+        border-radius: 16px;
+        background: #15161c;
+        border: 1px solid #252630;
+    }
+
+    .redirect-container h2 {
+        margin-top: 0;
+    }
+
+    .redirect-container p {
+        color: #a9aab4;
+    }
+
+    .play-button {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 13px 22px;
+        border-radius: 10px;
+        background: #fff;
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .play-button:hover {
+        opacity: 0.85;
+    }
+
+    @media (max-width: 600px) {
+        .page {
+            padding: 12px;
+        }
+
+        .game-title {
+            font-size: 22px;
+        }
+
+        .game-container {
+            height: 65vh;
+            min-height: 300px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="topbar">
+        <button class="back-button" onclick="goBack()">
+            ← Back
+        </button>
+
+        <h1 class="game-title" id="gameTitle">
+            Game
+        </h1>
+    </div>
+
+    <section class="description">
+        <h2>About this game</h2>
+
+        <p id="gameDescription">
+            Game description goes here.
+        </p>
+    </section>
+
+    <!-- EMBEDDED GAME -->
+    <div class="game-container" id="embedContainer">
+
+        <iframe
+            id="gameFrame"
+            allowfullscreen
+            loading="eager"
+            referrerpolicy="no-referrer"
+        ></iframe>
+
+    </div>
+
+    <!-- REDIRECT GAME -->
+    <div class="redirect-container" id="redirectContainer">
+
+        <h2>Ready to play?</h2>
+
+        <p>
+            This game opens in another page.
+        </p>
+
+        <a
+            id="playButton"
+            class="play-button"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Play Game
+        </a>
+
+    </div>
+
+    <div class="controls">
+
+        <button
+            class="control-button"
+            id="fullscreenButton"
+            onclick="toggleFullscreen()"
+        >
+            ⛶ Fullscreen
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+/*
+==================================================
+GAME SETUP
+==================================================
+
+Change ONLY these settings for each game.
+==================================================
+*/
+
+
+// Game name
+const GAME_TITLE = "Grow a Garden";
+
+
+// Game description
+const GAME_DESCRIPTION =
+    "Step onto your very own patch of land and discover the relaxing joy of farming! Grow a Garden is a massively popular multiplayer simulator where you start with nothing but a handful of coins and a small patch of soil, slowly turning it into a thriving paradise.Head to the shop to buy seeds, plant them in your brown dirt plots, and watch your hard work bloom. From basic carrots and sweet strawberries to massive coconut trees and giant bamboo, there are dozens of unique plant types to discover. Sell your fully grown crops to earn coins and rare gems, then use your profits to unlock better farming gear, faster sprinklers, and premium expansions. Best of all, your plants keep growing even while you are completely offline!Keep an eye on the sky, because changing weather like pouring rain speeds up your growth, while special storms can mutate your crops into ultra-rare golden versions worth a fortune. Team up with friends to share your harvest, look out for rare seed drops, and build the ultimate dream farm!";
+
+
+// Game URL
+//
+// Example:
+// https://example.com/game
+//
+// Or a local/game URL if supported.
+const GAME_URL =
+    "https://useful-magenta-ljuxv4oers.edgeone.app/";
+
+
+// TRUE  = embed the game inside this page
+// FALSE = show a button that opens the game
+const USE_EMBED = true;
+
+
+/*
+==================================================
+DO NOT EDIT BELOW THIS LINE
+==================================================
+*/
+
+
+const titleElement =
+    document.getElementById("gameTitle");
+
+const descriptionElement =
+    document.getElementById("gameDescription");
+
+const frame =
+    document.getElementById("gameFrame");
+
+const embedContainer =
+    document.getElementById("embedContainer");
+
+const redirectContainer =
+    document.getElementById("redirectContainer");
+
+const playButton =
+    document.getElementById("playButton");
+
+const fullscreenButton =
+    document.getElementById("fullscreenButton");
+
+
+// Set title
+document.title =
+    GAME_TITLE + " - Secret Unblocked";
+
+titleElement.textContent =
+    GAME_TITLE;
+
+
+// Set description
+descriptionElement.textContent =
+    GAME_DESCRIPTION;
+
+
+// Decide whether this is an embedded
+// game or a redirect game.
+
+if (USE_EMBED) {
+
+    embedContainer.style.display =
+        "block";
+
+    redirectContainer.style.display =
+        "none";
+
+    frame.src =
+        GAME_URL;
+
+} else {
+
+    embedContainer.style.display =
+        "none";
+
+    redirectContainer.style.display =
+        "block";
+
+    playButton.href =
+        GAME_URL;
+
+}
+
+
+/*
+==================================================
+FULLSCREEN
+==================================================
+*/
+
+async function toggleFullscreen() {
+
+    const element =
+        document.getElementById("embedContainer");
+
+    try {
+
+        if (!document.fullscreenElement) {
+
+            await element.requestFullscreen();
+
+            fullscreenButton.textContent =
+                "✕ Exit Fullscreen";
+
+        } else {
+
+            await document.exitFullscreen();
+
+            fullscreenButton.textContent =
+                "⛶ Fullscreen";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Fullscreen error:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+==================================================
+BACK BUTTON
+==================================================
+*/
+
+function goBack() {
+
+    if (window.history.length > 1) {
+
+        window.history.back();
+
+    } else {
+
+        window.location.href =
+            "index.html";
+
+    }
+
+}
+
+
+/*
+==================================================
+KEEP FULLSCREEN BUTTON IN SYNC
+==================================================
+*/
+
+document.addEventListener(
+    "fullscreenchange",
+    () => {
+
+        if (document.fullscreenElement) {
+
+            fullscreenButton.textContent =
+                "✕ Exit Fullscreen";
+
+        } else {
+
+            fullscreenButton.textContent =
+                "⛶ Fullscreen";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
