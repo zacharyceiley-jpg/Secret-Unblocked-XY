@@ -5,238 +5,376 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secret Unblocked XY</title>
 
+<!--
+=========================================================
+EASY SETTINGS
+=========================================================
+
+Put your favicon URLs directly into the code below.
+
+Each disguise can have its OWN favicon URL.
+Example:
+word: {
+    title: "Microsoft Word",
+    favicon: "https://example.com/word-icon.png"
+}
+
+You can also use a normal website favicon URL such as:
+https://www.google.com/favicon.ico
+
+=========================================================
+-->
+
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* { box-sizing: border-box; }
 
-    html {
-        scroll-behavior: smooth;
-    }
+:root {
+    --bg: #0b0b0f;
+    --surface: #15161c;
+    --surface-hover: #1a1b22;
+    --border: #252630;
+    --border-strong: #30313a;
+    --text: #ffffff;
+    --muted: #a9aab4;
+    --muted-2: #8e909c;
+}
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: #0b0b0f;
-        color: white;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+html { scroll-behavior: smooth; }
 
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background .2s ease, color .2s ease;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 20px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border-strong);
+    backdrop-filter: blur(12px);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.search-wrapper {
+    flex: 1;
+    min-width: 220px;
+}
+
+#search {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    outline: none;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 15px;
+}
+
+#search:focus { border-color: #666875; }
+
+.header-button {
+    padding: 13px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.header-button:hover {
+    background: var(--surface-hover);
+    border-color: #666875;
+}
+
+.disguise-wrapper {
+    position: relative;
+}
+
+.disguise-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+
+.disguise-menu.visible {
+    display: grid;
+    gap: 5px;
+}
+
+.disguise-option {
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.disguise-option:hover {
+    background: var(--surface-hover);
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 20px 60px;
+}
+
+.hero {
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    margin: 0 0 8px;
+    font-size: clamp(30px, 5vw, 48px);
+}
+
+.hero p {
+    margin: 0;
+    color: var(--muted);
+}
+
+#status {
+    margin: 25px 0;
+    color: var(--muted-2);
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+}
+
+.game-card {
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    border-color: #454752;
+    background: var(--surface-hover);
+}
+
+.game-card:active {
+    transform: translateY(-1px);
+}
+
+.game-icon {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: block;
+    object-fit: cover;
+    background: var(--surface-hover);
+}
+
+.game-info {
+    padding: 13px 14px 15px;
+}
+
+.game-title {
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.no-games {
+    padding: 35px;
+    text-align: center;
+    border: 1px dashed var(--border-strong);
+    border-radius: 16px;
+    color: var(--muted-2);
+}
+
+footer {
+    padding: 25px;
+    text-align: center;
+    color: var(--muted-2);
+    font-size: 13px;
+}
+
+/* =========================
+   GENERAL SETTINGS PAGE
+   ========================= */
+
+#settingsPage {
+    display: none;
+    max-width: 900px;
+    margin: auto;
+    padding: 35px 20px 60px;
+}
+
+#settingsPage.visible {
+    display: block;
+}
+
+.settings-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.settings-top h1 {
+    margin: 0;
+    font-size: clamp(30px, 5vw, 42px);
+}
+
+.settings-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.settings-card h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.settings-card p {
+    margin: 0 0 18px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.theme-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.theme-button {
+    padding: 18px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+}
+
+.theme-button:hover {
+    border-color: #666875;
+}
+
+.theme-button.active {
+    border-color: var(--text);
+    box-shadow: 0 0 0 2px var(--text);
+}
+
+.theme-button strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.theme-button span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.info-box {
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.back-button {
+    padding: 12px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background: var(--surface-hover);
+}
+
+@media (max-width: 600px) {
     header {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: 20px;
-        background: rgba(11, 11, 15, 0.92);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #22232b;
-    }
-
-    .header-content {
-        max-width: 1200px;
-        margin: auto;
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        flex-wrap: wrap;
-    }
-
-    .logo {
-        font-size: 26px;
-        font-weight: 800;
-        white-space: nowrap;
-    }
-
-    .search-wrapper {
-        flex: 1;
-        min-width: 220px;
-    }
-
-    #search {
-        width: 100%;
-        padding: 13px 16px;
-        border: 1px solid #30313a;
-        border-radius: 12px;
-        outline: none;
-        background: #15161c;
-        color: white;
-        font-size: 15px;
-    }
-
-    #search:focus {
-        border-color: #666875;
-    }
-
-    .disguise-wrapper {
-        position: relative;
-    }
-
-    #disguiseButton {
-        padding: 13px 16px;
-        border: 1px solid #30313a;
-        border-radius: 12px;
-        background: #15161c;
-        color: white;
-        cursor: pointer;
-        font-size: 14px;
-        white-space: nowrap;
-    }
-
-    #disguiseButton:hover {
-        background: #202128;
-        border-color: #666875;
-    }
-
-    .disguise-menu {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: calc(100% + 8px);
-        min-width: 190px;
-        padding: 8px;
-        background: #15161c;
-        border: 1px solid #30313a;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-    }
-
-    .disguise-menu.visible {
-        display: grid;
-        gap: 5px;
-    }
-
-    .disguise-option {
-        padding: 10px 12px;
-        border: 0;
-        border-radius: 8px;
-        background: transparent;
-        color: white;
-        text-align: left;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .disguise-option:hover {
-        background: #292a33;
+        padding: 15px;
     }
 
     main {
-        max-width: 1200px;
-        margin: auto;
-        padding: 35px 20px 60px;
-    }
-
-    .hero {
-        margin-bottom: 30px;
-    }
-
-    .hero h1 {
-        margin: 0 0 8px;
-        font-size: clamp(30px, 5vw, 48px);
-    }
-
-    .hero p {
-        margin: 0;
-        color: #a9aab4;
-    }
-
-    #status {
-        margin: 25px 0;
-        color: #8e909c;
+        padding: 25px 15px 50px;
     }
 
     .games-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
     }
 
-    .game-card {
-        display: block;
-        overflow: hidden;
-        text-decoration: none;
-        color: white;
-        background: #15161c;
-        border: 1px solid #252630;
-        border-radius: 16px;
-        transition:
-            transform 0.18s ease,
-            border-color 0.18s ease,
-            background 0.18s ease;
-    }
-
-    .game-card:hover {
-        transform: translateY(-4px);
-        border-color: #454752;
-        background: #1a1b22;
-    }
-
-    .game-card:active {
-        transform: translateY(-1px);
-    }
-
-    .game-icon {
+    .disguise-wrapper {
         width: 100%;
-        aspect-ratio: 1 / 1;
-        display: block;
-        object-fit: cover;
-        background: #202128;
     }
 
-    .game-info {
-        padding: 13px 14px 15px;
+    .disguise-menu {
+        left: 0;
+        right: 0;
     }
 
-    .game-title {
-        font-size: 16px;
-        font-weight: 700;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .header-button {
+        width: 100%;
     }
 
-    .no-games {
-        padding: 35px;
-        text-align: center;
-        border: 1px dashed #343640;
-        border-radius: 16px;
-        color: #90929d;
+    .theme-buttons {
+        grid-template-columns: 1fr;
     }
 
-    footer {
-        padding: 25px;
-        text-align: center;
-        color: #666873;
-        font-size: 13px;
+    #settingsPage {
+        padding: 25px 15px 50px;
     }
-
-    @media (max-width: 600px) {
-        header {
-            padding: 15px;
-        }
-
-        main {
-            padding: 25px 15px 50px;
-        }
-
-        .games-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 13px;
-        }
-
-        .disguise-wrapper {
-            width: 100%;
-        }
-
-        #disguiseButton {
-            width: 100%;
-        }
-
-        .disguise-menu {
-            left: 0;
-            right: 0;
-        }
-    }
+}
 </style>
 </head>
 
@@ -244,6 +382,7 @@
 
 <header>
     <div class="header-content">
+
         <div class="logo">Secret Unblocked Team</div>
 
         <div class="search-wrapper">
@@ -257,7 +396,7 @@
         </div>
 
         <div class="disguise-wrapper">
-            <button id="disguiseButton" type="button">
+            <button id="disguiseButton" class="header-button" type="button">
                 Disguise Tab
             </button>
 
@@ -265,21 +404,31 @@
                 <button class="disguise-option" data-disguise="word">
                     Microsoft Word
                 </button>
+
                 <button class="disguise-option" data-disguise="classroom">
                     Google Classroom
                 </button>
+
                 <button class="disguise-option" data-disguise="powerpoint">
                     Microsoft PowerPoint
                 </button>
+
                 <button class="disguise-option" data-disguise="google">
                     Google
                 </button>
             </div>
         </div>
+
+        <!-- SEPARATE GENERAL SETTINGS TAB -->
+        <button id="settingsButton" class="header-button" type="button">
+            ⚙ Settings
+        </button>
+
     </div>
 </header>
 
-<main>
+<!-- HOME -->
+<main id="homePage">
     <section class="hero">
         <h1>Games</h1>
         <p>Choose a game to play.</p>
@@ -290,246 +439,473 @@
     <div id="games" class="games-grid"></div>
 </main>
 
-<footer>
+<!-- GENERAL SETTINGS -->
+<section id="settingsPage">
+
+    <div class="settings-top">
+        <button id="backButton" class="back-button">← Back</button>
+        <h1>Settings</h1>
+    </div>
+
+    <div class="settings-card">
+        <h2>Site Appearance</h2>
+
+        <p>
+            Choose whether the entire site uses Light Mode or Dark Mode.
+            Your choice is saved on this device.
+        </p>
+
+        <div class="theme-buttons">
+
+            <button class="theme-button" data-theme="dark">
+                <strong>Dark Mode</strong>
+                <span>Dark background and interface.</span>
+            </button>
+
+            <button class="theme-button" data-theme="light">
+                <strong>Light Mode</strong>
+                <span>Light background and interface.</span>
+            </button>
+
+        </div>
+    </div>
+
+    <div class="settings-card">
+        <h2>Disguise Favicons</h2>
+
+        <p>
+            Favicons are controlled directly in the HTML code. Edit the
+            <code>favicon</code> value for each disguise near the top of
+            the JavaScript.
+        </p>
+
+        <div class="info-box">
+            When you select a disguise, its favicon URL is automatically
+            applied to the browser tab. This means Word, Classroom,
+            PowerPoint and Google can all have different icons.
+        </div>
+    </div>
+
+</section>
+
+<footer id="footer">
     Secret Unblocked
 </footer>
 
 <script>
-    const GITHUB_OWNER = "zacharyceiley-jpg";
-    const GITHUB_REPO = "Secret-Unblocked-XY";
-    const GITHUB_BRANCH = "main";
+/* =========================================================
+   PUT YOUR FAVICON URLS HERE
+   =========================================================
 
-    const API_URL =
-        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/?ref=${GITHUB_BRANCH}`;
+   Change ONLY the URL inside the quotation marks.
 
-    const gamesContainer = document.getElementById("games");
-    const statusElement = document.getElementById("status");
-    const searchInput = document.getElementById("search");
-    const disguiseButton = document.getElementById("disguiseButton");
-    const disguiseMenu = document.getElementById("disguiseMenu");
+   Example:
+   favicon: "https://example.com/favicon.png"
 
-    let games = [];
+   Leave it as "" if you don't want a custom favicon.
+   ========================================================= */
 
-    const disguises = {
-        word: {
-            title: "Microsoft Word",
-            color: "#185abd",
-            letter: "W"
-        },
-        classroom: {
-            title: "Google Classroom",
-            color: "#0f9d58",
-            letter: "C"
-        },
-        powerpoint: {
-            title: "Microsoft PowerPoint",
-            color: "#d24726",
-            letter: "P"
-        },
-        google: {
-            title: "Google",
-            color: "#4285f4",
-            letter: "G"
-        }
-    };
+const disguises = {
 
-    function setFavicon(color, letter) {
-        const svg = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-                <rect width="64" height="64" rx="12" fill="${color}"/>
-                <text x="32" y="43"
-                      text-anchor="middle"
-                      fill="white"
-                      font-family="Arial"
-                      font-size="38"
-                      font-weight="bold">${letter}</text>
-            </svg>
-        `;
+    word: {
+        title: "Microsoft Word",
 
-        let favicon = document.querySelector("link[rel='icon']");
+        // PUT WORD FAVICON URL HERE
+        favicon: "https://www.google.com/favicon.ico"
+    },
 
-        if (!favicon) {
-            favicon = document.createElement("link");
-            favicon.rel = "icon";
-            document.head.appendChild(favicon);
-        }
+    classroom: {
+        title: "Google Classroom",
 
-        favicon.href = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+        // PUT GOOGLE CLASSROOM FAVICON URL HERE
+        favicon: "https://www.google.com/favicon.ico"
+    },
+
+    powerpoint: {
+        title: "Microsoft PowerPoint",
+
+        // PUT POWERPOINT FAVICON URL HERE
+        favicon: "https://www.google.com/favicon.ico"
+    },
+
+    google: {
+        title: "Google",
+
+        // PUT GOOGLE FAVICON URL HERE
+        favicon: "https://www.google.com/favicon.ico"
+    }
+};
+
+
+/* =========================================================
+   GITHUB GAME SYSTEM
+   ========================================================= */
+
+const GITHUB_OWNER = "zacharyceiley-jpg";
+const GITHUB_REPO = "Secret-Unblocked-XY";
+const GITHUB_BRANCH = "main";
+
+const API_URL =
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/?ref=${GITHUB_BRANCH}`;
+
+const gamesContainer = document.getElementById("games");
+const statusElement = document.getElementById("status");
+const searchInput = document.getElementById("search");
+
+const disguiseButton = document.getElementById("disguiseButton");
+const disguiseMenu = document.getElementById("disguiseMenu");
+
+const settingsButton = document.getElementById("settingsButton");
+const settingsPage = document.getElementById("settingsPage");
+const homePage = document.getElementById("homePage");
+const footer = document.getElementById("footer");
+const backButton = document.getElementById("backButton");
+
+let games = [];
+
+
+/* =========================================================
+   FAVICON
+   ========================================================= */
+
+function setFavicon(url) {
+
+    let favicon = document.querySelector("link[rel='icon']");
+
+    if (!favicon) {
+        favicon = document.createElement("link");
+        favicon.rel = "icon";
+        document.head.appendChild(favicon);
     }
 
-    function applyDisguise(type) {
-        const disguise = disguises[type];
+    if (url && /^https?:\/\//i.test(url)) {
+        favicon.href = url;
+    } else {
+        favicon.removeAttribute("href");
+    }
+}
 
-        if (!disguise) {
-            return;
-        }
 
-        document.title = disguise.title;
-        setFavicon(disguise.color, disguise.letter);
-        disguiseButton.textContent = `Tab: ${disguise.title}`;
+/* =========================================================
+   LIGHT / DARK MODE
+   ========================================================= */
+
+function applyTheme(theme) {
+
+    if (theme === "light") {
+
+        document.documentElement.style.setProperty("--bg", "#f5f5f7");
+        document.documentElement.style.setProperty("--surface", "#ffffff");
+        document.documentElement.style.setProperty("--surface-hover", "#eeeef2");
+        document.documentElement.style.setProperty("--border", "#dedee5");
+        document.documentElement.style.setProperty("--border-strong", "#c9c9d2");
+        document.documentElement.style.setProperty("--text", "#111116");
+        document.documentElement.style.setProperty("--muted", "#5f606b");
+        document.documentElement.style.setProperty("--muted-2", "#70717c");
+
+    } else {
+
+        document.documentElement.style.setProperty("--bg", "#0b0b0f");
+        document.documentElement.style.setProperty("--surface", "#15161c");
+        document.documentElement.style.setProperty("--surface-hover", "#1a1b22");
+        document.documentElement.style.setProperty("--border", "#252630");
+        document.documentElement.style.setProperty("--border-strong", "#30313a");
+        document.documentElement.style.setProperty("--text", "#ffffff");
+        document.documentElement.style.setProperty("--muted", "#a9aab4");
+        document.documentElement.style.setProperty("--muted-2", "#8e909c");
+    }
+
+    localStorage.setItem("siteTheme", theme);
+
+    document.querySelectorAll(".theme-button").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.theme === theme
+        );
+    });
+}
+
+
+/* =========================================================
+   DISGUISE
+   ========================================================= */
+
+function applyDisguise(type) {
+
+    const disguise = disguises[type];
+
+    if (!disguise) return;
+
+    document.title = disguise.title;
+
+    // This applies the favicon URL you entered above.
+    setFavicon(disguise.favicon);
+
+    disguiseButton.textContent = `Tab: ${disguise.title}`;
+
+    disguiseMenu.classList.remove("visible");
+}
+
+
+/* =========================================================
+   GENERAL SETTINGS PAGE
+   ========================================================= */
+
+function openSettings() {
+
+    settingsPage.classList.add("visible");
+    homePage.style.display = "none";
+    footer.style.display = "none";
+
+    disguiseMenu.classList.remove("visible");
+
+    window.scrollTo(0, 0);
+}
+
+function closeSettings() {
+
+    settingsPage.classList.remove("visible");
+    homePage.style.display = "";
+    footer.style.display = "";
+
+    window.scrollTo(0, 0);
+}
+
+settingsButton.addEventListener("click", openSettings);
+
+backButton.addEventListener("click", closeSettings);
+
+document.querySelectorAll(".theme-button").forEach(button => {
+
+    button.addEventListener("click", () => {
+        applyTheme(button.dataset.theme);
+    });
+
+});
+
+
+/* =========================================================
+   DISGUISE MENU
+   ========================================================= */
+
+disguiseButton.addEventListener("click", () => {
+    disguiseMenu.classList.toggle("visible");
+});
+
+document.addEventListener("click", event => {
+
+    if (!event.target.closest(".disguise-wrapper")) {
         disguiseMenu.classList.remove("visible");
     }
 
-    disguiseButton.addEventListener("click", () => {
-        disguiseMenu.classList.toggle("visible");
+});
+
+document.querySelectorAll(".disguise-option").forEach(option => {
+
+    option.addEventListener("click", () => {
+        applyDisguise(option.dataset.disguise);
     });
 
-    document.addEventListener("click", event => {
-        if (!event.target.closest(".disguise-wrapper")) {
-            disguiseMenu.classList.remove("visible");
-        }
-    });
+});
 
-    document.querySelectorAll(".disguise-option").forEach(option => {
-        option.addEventListener("click", () => {
-            applyDisguise(option.dataset.disguise);
-        });
-    });
 
-    function getGameTitle(filename) {
-        return filename
-            .replace(/\.html$/i, "")
-            .replace(/game$/i, "")
-            .replace(/[-_]+/g, " ")
-            .replace(/\s+/g, " ")
-            .trim()
-            .replace(/\b\w/g, letter => letter.toUpperCase());
+/* =========================================================
+   GAME TITLES / ICONS
+   ========================================================= */
+
+function getGameTitle(filename) {
+
+    return filename
+        .replace(/\.html$/i, "")
+        .replace(/game$/i, "")
+        .replace(/[-_]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\b\w/g, letter => letter.toUpperCase());
+}
+
+function getIconName(htmlName) {
+    return htmlName.replace(/\.html$/i, ".png");
+}
+
+
+/* =========================================================
+   RENDER GAMES
+   ========================================================= */
+
+function renderGames(list) {
+
+    gamesContainer.innerHTML = "";
+
+    if (list.length === 0) {
+
+        gamesContainer.innerHTML = `
+            <div class="no-games">
+                No games found.
+            </div>
+        `;
+
+        return;
     }
 
-    function getIconName(htmlName) {
-        return htmlName.replace(/\.html$/i, ".png");
-    }
+    list.forEach(game => {
 
-    function renderGames(list) {
-        gamesContainer.innerHTML = "";
+        const card = document.createElement("a");
 
-        if (list.length === 0) {
-            gamesContainer.innerHTML = `
-                <div class="no-games">
-                    No games found.
+        card.className = "game-card";
+        card.href = game.url;
+        card.title = game.title;
+
+        card.innerHTML = `
+            <img
+                class="game-icon"
+                src="${game.icon}"
+                alt="${escapeHTML(game.title)}"
+                loading="lazy"
+                onerror="this.src='data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                        <rect width="400" height="400" fill="#202128"/>
+                        <text x="200" y="205"
+                              text-anchor="middle"
+                              dominant-baseline="middle"
+                              fill="#777"
+                              font-family="Arial"
+                              font-size="28">
+                            No Image
+                        </text>
+                    </svg>
+                `)}'"
+            >
+
+            <div class="game-info">
+                <div class="game-title">
+                    ${escapeHTML(game.title)}
                 </div>
-            `;
-            return;
-        }
+            </div>
+        `;
 
-        list.forEach(game => {
-            const card = document.createElement("a");
+        gamesContainer.appendChild(card);
+    });
+}
 
-            card.className = "game-card";
-            card.href = game.url;
-            card.title = game.title;
+function escapeHTML(text) {
 
-            card.innerHTML = `
-                <img
-                    class="game-icon"
-                    src="${game.icon}"
-                    alt="${escapeHTML(game.title)}"
-                    loading="lazy"
-                    onerror="this.src='data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-                            <rect width="400" height="400" fill="#202128"/>
-                            <text x="200" y="205"
-                                  text-anchor="middle"
-                                  dominant-baseline="middle"
-                                  fill="#777"
-                                  font-family="Arial"
-                                  font-size="28">
-                                No Image
-                            </text>
-                        </svg>
-                    `)}'"
-                >
+    const div = document.createElement("div");
 
-                <div class="game-info">
-                    <div class="game-title">
-                        ${escapeHTML(game.title)}
-                    </div>
-                </div>
-            `;
+    div.textContent = text;
 
-            gamesContainer.appendChild(card);
-        });
-    }
+    return div.innerHTML;
+}
 
-    function escapeHTML(text) {
-        const div = document.createElement("div");
-        div.textContent = text;
-        return div.innerHTML;
-    }
 
-    async function loadGames() {
-        try {
-            statusElement.textContent = "Searching repository for games...";
+/* =========================================================
+   LOAD GAMES FROM GITHUB
+   ========================================================= */
 
-            const response = await fetch(API_URL, {
-                headers: {
-                    "Accept": "application/vnd.github+json"
-                }
-            });
+async function loadGames() {
 
-            if (!response.ok) {
-                throw new Error(`GitHub API returned ${response.status}`);
+    try {
+
+        statusElement.textContent =
+            "Searching repository for games...";
+
+        const response = await fetch(API_URL, {
+            headers: {
+                "Accept": "application/vnd.github+json"
             }
+        });
 
-            const files = await response.json();
-
-            const gameFiles = files.filter(file =>
-                file.type === "file" &&
-                /\.html$/i.test(file.name) &&
-                /game/i.test(file.name) &&
-                file.name.toLowerCase() !== "index.html"
+        if (!response.ok) {
+            throw new Error(
+                `GitHub API returned ${response.status}`
             );
-
-            games = gameFiles.map(file => {
-                const iconName = getIconName(file.name);
-
-                return {
-                    filename: file.name,
-                    title: getGameTitle(file.name),
-                    url:
-                        `https://${GITHUB_OWNER}.github.io/` +
-                        `${GITHUB_REPO}/${encodeURIComponent(file.name)}`,
-                    icon:
-                        `https://raw.githubusercontent.com/` +
-                        `${GITHUB_OWNER}/${GITHUB_REPO}/` +
-                        `${GITHUB_BRANCH}/${encodeURIComponent(iconName)}`
-                };
-            });
-
-            games.sort((a, b) => a.title.localeCompare(b.title));
-
-            statusElement.textContent =
-                `${games.length} game${games.length === 1 ? "" : "s"} found`;
-
-            renderGames(games);
-        } catch (error) {
-            console.error(error);
-
-            statusElement.textContent =
-                "Unable to load games from the repository.";
-
-            gamesContainer.innerHTML = `
-                <div class="no-games">
-                    <strong>Could not load the games.</strong>
-                    <br><br>
-                    Please check that the repository is public and try again.
-                </div>
-            `;
         }
-    }
 
-    searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim().toLowerCase();
+        const files = await response.json();
 
-        const filtered = games.filter(game =>
-            game.title.toLowerCase().includes(query) ||
-            game.filename.toLowerCase().includes(query)
+        const gameFiles = files.filter(file =>
+            file.type === "file" &&
+            /\.html$/i.test(file.name) &&
+            /game/i.test(file.name) &&
+            file.name.toLowerCase() !== "index.html"
         );
 
-        renderGames(filtered);
-    });
+        games = gameFiles.map(file => {
 
-    loadGames();
+            const iconName = getIconName(file.name);
+
+            return {
+                filename: file.name,
+
+                title: getGameTitle(file.name),
+
+                url:
+                    `https://${GITHUB_OWNER}.github.io/` +
+                    `${GITHUB_REPO}/${encodeURIComponent(file.name)}`,
+
+                icon:
+                    `https://raw.githubusercontent.com/` +
+                    `${GITHUB_OWNER}/${GITHUB_REPO}/` +
+                    `${GITHUB_BRANCH}/${encodeURIComponent(iconName)}`
+            };
+        });
+
+        games.sort((a, b) =>
+            a.title.localeCompare(b.title)
+        );
+
+        statusElement.textContent =
+            `${games.length} game${games.length === 1 ? "" : "s"} found`;
+
+        renderGames(games);
+
+    } catch (error) {
+
+        console.error(error);
+
+        statusElement.textContent =
+            "Unable to load games from the repository.";
+
+        gamesContainer.innerHTML = `
+            <div class="no-games">
+                <strong>Could not load the games.</strong>
+                <br><br>
+                Please check that the repository is public and try again.
+            </div>
+        `;
+    }
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+searchInput.addEventListener("input", () => {
+
+    const query =
+        searchInput.value.trim().toLowerCase();
+
+    const filtered = games.filter(game =>
+        game.title.toLowerCase().includes(query) ||
+        game.filename.toLowerCase().includes(query)
+    );
+
+    renderGames(filtered);
+});
+
+
+/* =========================================================
+   STARTUP
+   ========================================================= */
+
+const savedTheme =
+    localStorage.getItem("siteTheme") || "dark";
+
+applyTheme(savedTheme);
+
+loadGames();
+
 </script>
 
 </body>
