@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Game</title>
+<title>0v0 - Secret Unblocked</title>
 
 <style>
     * {
@@ -39,7 +38,8 @@
         margin-bottom: 20px;
     }
 
-    .back-button {
+    .back-button,
+    .control-button {
         border: 0;
         border-radius: 10px;
         padding: 11px 16px;
@@ -49,7 +49,8 @@
         font-size: 15px;
     }
 
-    .back-button:hover {
+    .back-button:hover,
+    .control-button:hover {
         background: #252630;
     }
 
@@ -75,6 +76,7 @@
         margin: 0;
         color: #b1b2bc;
         line-height: 1.6;
+        white-space: pre-line;
     }
 
     .game-container {
@@ -101,20 +103,6 @@
         justify-content: flex-end;
         gap: 10px;
         margin-top: 12px;
-    }
-
-    .control-button {
-        border: 0;
-        border-radius: 10px;
-        padding: 11px 16px;
-        background: #1b1c23;
-        color: white;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .control-button:hover {
-        background: #252630;
     }
 
     .redirect-container {
@@ -167,48 +155,29 @@
 </head>
 
 <body>
-
 <div class="page">
-
     <div class="topbar">
-        <button class="back-button" onclick="goBack()">
-            ← Back
-        </button>
-
-        <h1 class="game-title" id="gameTitle">
-            Game
-        </h1>
+        <button class="back-button" onclick="goBack()">← Back</button>
+        <h1 class="game-title" id="gameTitle">0v0</h1>
     </div>
 
     <section class="description">
         <h2>About this game</h2>
-
-        <p id="gameDescription">
-            Game description goes here.
-        </p>
+        <p id="gameDescription">Loading description...</p>
     </section>
 
-    <!-- EMBEDDED GAME -->
     <div class="game-container" id="embedContainer">
-
         <iframe
             id="gameFrame"
             allowfullscreen
             loading="eager"
             referrerpolicy="no-referrer"
         ></iframe>
-
     </div>
 
-    <!-- REDIRECT GAME -->
     <div class="redirect-container" id="redirectContainer">
-
         <h2>Ready to play?</h2>
-
-        <p>
-            This game opens in another page.
-        </p>
-
+        <p>This game opens in another page.</p>
         <a
             id="playButton"
             class="play-button"
@@ -217,11 +186,9 @@
         >
             Play Game
         </a>
-
     </div>
 
     <div class="controls">
-
         <button
             class="control-button"
             id="fullscreenButton"
@@ -229,211 +196,70 @@
         >
             ⛶ Fullscreen
         </button>
-
     </div>
-
 </div>
 
 <script>
+const GAME_TITLE = "Snowrider 3D";
 
-/*
-==================================================
-GAME SETUP
-==================================================
-
-Change ONLY these settings for each game.
-==================================================
-*/
-
-
-// Game name
-const GAME_TITLE = "0v0";
-
-
-// Game description
-const GAME_DESCRIPTION =
-    "Experience the thrill of downhill skiing in Snow Rider 3D, where stunning 3D graphics meet exhilarating gameplay. Master the slopes, perform incredible tricks, and compete against players worldwide in this ultimate winter sports adventure.
+const GAME_DESCRIPTION = `
+Experience the thrill of downhill skiing in Snow Rider 3D, where stunning 3D graphics meet exhilarating gameplay. Master the slopes, perform incredible tricks, and compete against players worldwide in this ultimate winter sports adventure.
 
 Dive into the ultimate winter sports experience with Snow Rider 3D. Whether you're carving through fresh powder, pulling off spectacular aerial tricks, or racing against time, every run brings a new challenge. With realistic physics and responsive controls, you'll feel the rush of sliding down beautifully crafted mountain trails.
 
-Created by TapNation and enjoyed by millions of players globally, Snow Rider 3D combines stunning visuals with engaging gameplay mechanics. The game features dynamic weather conditions, progressive difficulty levels, multiple character customization options, and real-time multiplayer competitions to keep you coming back for more thrilling runs.";
+Created by TapNation and enjoyed by millions of players globally, Snow Rider 3D combines stunning visuals with engaging gameplay mechanics. The game features dynamic weather conditions, progressive difficulty levels, multiple character customization options, and real-time multiplayer competitions to keep you coming back for more thrilling runs.
+`;
 
-
-// Game URL
-//
-// Example:
-// https://example.com/game
-//
-// Or a local/game URL if supported.
-const GAME_URL =
-    "https://snowrider-unblocked.github.io/game/";
-
-
-// TRUE  = embed the game inside this page
-// FALSE = show a button that opens the game
+const GAME_URL = "https://snowrider-unblocked.github.io/game/";
 const USE_EMBED = true;
 
+const titleElement = document.getElementById("gameTitle");
+const descriptionElement = document.getElementById("gameDescription");
+const frame = document.getElementById("gameFrame");
+const embedContainer = document.getElementById("embedContainer");
+const redirectContainer = document.getElementById("redirectContainer");
+const playButton = document.getElementById("playButton");
+const fullscreenButton = document.getElementById("fullscreenButton");
 
-/*
-==================================================
-DO NOT EDIT BELOW THIS LINE
-==================================================
-*/
-
-
-const titleElement =
-    document.getElementById("gameTitle");
-
-const descriptionElement =
-    document.getElementById("gameDescription");
-
-const frame =
-    document.getElementById("gameFrame");
-
-const embedContainer =
-    document.getElementById("embedContainer");
-
-const redirectContainer =
-    document.getElementById("redirectContainer");
-
-const playButton =
-    document.getElementById("playButton");
-
-const fullscreenButton =
-    document.getElementById("fullscreenButton");
-
-
-// Set title
-document.title =
-    GAME_TITLE + " - Secret Unblocked";
-
-titleElement.textContent =
-    GAME_TITLE;
-
-
-// Set description
-descriptionElement.textContent =
-    GAME_DESCRIPTION;
-
-
-// Decide whether this is an embedded
-// game or a redirect game.
+document.title = GAME_TITLE + " - Secret Unblocked";
+titleElement.textContent = GAME_TITLE;
+descriptionElement.textContent = GAME_DESCRIPTION.trim();
 
 if (USE_EMBED) {
-
-    embedContainer.style.display =
-        "block";
-
-    redirectContainer.style.display =
-        "none";
-
-    frame.src =
-        GAME_URL;
-
+    embedContainer.style.display = "block";
+    redirectContainer.style.display = "none";
+    frame.src = GAME_URL;
 } else {
-
-    embedContainer.style.display =
-        "none";
-
-    redirectContainer.style.display =
-        "block";
-
-    playButton.href =
-        GAME_URL;
-
+    embedContainer.style.display = "none";
+    redirectContainer.style.display = "block";
+    playButton.href = GAME_URL;
 }
-
-
-/*
-==================================================
-FULLSCREEN
-==================================================
-*/
 
 async function toggleFullscreen() {
-
-    const element =
-        document.getElementById("embedContainer");
-
     try {
-
         if (!document.fullscreenElement) {
-
-            await element.requestFullscreen();
-
-            fullscreenButton.textContent =
-                "✕ Exit Fullscreen";
-
+            await embedContainer.requestFullscreen();
         } else {
-
             await document.exitFullscreen();
-
-            fullscreenButton.textContent =
-                "⛶ Fullscreen";
-
         }
-
     } catch (error) {
-
-        console.error(
-            "Fullscreen error:",
-            error
-        );
-
+        console.error("Fullscreen error:", error);
     }
-
 }
-
-
-/*
-==================================================
-BACK BUTTON
-==================================================
-*/
 
 function goBack() {
-
     if (window.history.length > 1) {
-
         window.history.back();
-
     } else {
-
-        window.location.href =
-            "index.html";
-
+        window.location.href = "index.html";
     }
-
 }
 
-
-/*
-==================================================
-KEEP FULLSCREEN BUTTON IN SYNC
-==================================================
-*/
-
-document.addEventListener(
-    "fullscreenchange",
-    () => {
-
-        if (document.fullscreenElement) {
-
-            fullscreenButton.textContent =
-                "✕ Exit Fullscreen";
-
-        } else {
-
-            fullscreenButton.textContent =
-                "⛶ Fullscreen";
-
-        }
-
-    }
-);
-
+document.addEventListener("fullscreenchange", () => {
+    fullscreenButton.textContent = document.fullscreenElement
+        ? "✕ Exit Fullscreen"
+        : "⛶ Fullscreen";
+});
 </script>
-
 </body>
 </html>
-```
