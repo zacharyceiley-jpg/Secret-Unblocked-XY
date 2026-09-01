@@ -5,26 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secret Unblocked XY</title>
 
-<!--
-=========================================================
-EASY SETTINGS
-=========================================================
-
-Put your favicon URLs directly into the code below.
-
-Each disguise can have its OWN favicon URL.
-Example:
-word: {
-    title: "Microsoft Word",
-    favicon: "https://example.com/word-icon.png"
-}
-
-You can also use a normal website favicon URL such as:
-https://www.google.com/favicon.ico
-
-=========================================================
--->
-
 <style>
 * { box-sizing: border-box; }
 
@@ -34,7 +14,7 @@ https://www.google.com/favicon.ico
     --surface-hover: #1a1b22;
     --border: #252630;
     --border-strong: #30313a;
-    --text: #ffffff;
+    --text: #fff;
     --muted: #a9aab4;
     --muted-2: #8e909c;
 }
@@ -47,7 +27,6 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Arial, Helvetica, sans-serif;
-    transition: background .2s ease, color .2s ease;
 }
 
 header {
@@ -91,9 +70,8 @@ header {
     font-size: 15px;
 }
 
-#search:focus { border-color: #666875; }
-
-.header-button {
+.header-button,
+.back-button {
     padding: 13px 16px;
     border: 1px solid var(--border-strong);
     border-radius: 12px;
@@ -101,10 +79,11 @@ header {
     color: var(--text);
     cursor: pointer;
     font-size: 14px;
-    white-space: nowrap;
 }
 
-.header-button:hover {
+.header-button:hover,
+.back-button:hover,
+.theme-button:hover {
     background: var(--surface-hover);
     border-color: #666875;
 }
@@ -139,14 +118,14 @@ header {
     color: var(--text);
     text-align: left;
     cursor: pointer;
-    font-size: 14px;
 }
 
 .disguise-option:hover {
     background: var(--surface-hover);
 }
 
-main {
+main,
+#settingsPage {
     max-width: 1200px;
     margin: auto;
     padding: 35px 20px 60px;
@@ -156,13 +135,14 @@ main {
     margin-bottom: 30px;
 }
 
-.hero h1 {
+.hero h1,
+.settings-top h1 {
     margin: 0 0 8px;
     font-size: clamp(30px, 5vw, 48px);
 }
 
-.hero p {
-    margin: 0;
+.hero p,
+.settings-card p {
     color: var(--muted);
 }
 
@@ -185,25 +165,17 @@ main {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        background .18s ease;
+    transition: transform .18s ease, border-color .18s ease;
 }
 
 .game-card:hover {
     transform: translateY(-4px);
     border-color: #454752;
-    background: var(--surface-hover);
-}
-
-.game-card:active {
-    transform: translateY(-1px);
 }
 
 .game-icon {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1;
     display: block;
     object-fit: cover;
     background: var(--surface-hover);
@@ -214,7 +186,6 @@ main {
 }
 
 .game-title {
-    font-size: 16px;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
@@ -236,15 +207,10 @@ footer {
     font-size: 13px;
 }
 
-/* =========================
-   GENERAL SETTINGS PAGE
-   ========================= */
-
+/* Settings */
 #settingsPage {
     display: none;
     max-width: 900px;
-    margin: auto;
-    padding: 35px 20px 60px;
 }
 
 #settingsPage.visible {
@@ -260,26 +226,18 @@ footer {
 
 .settings-top h1 {
     margin: 0;
-    font-size: clamp(30px, 5vw, 42px);
 }
 
 .settings-card {
+    padding: 22px;
+    margin-bottom: 18px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 18px;
 }
 
 .settings-card h2 {
     margin: 0 0 8px;
-    font-size: 20px;
-}
-
-.settings-card p {
-    margin: 0 0 18px;
-    color: var(--muted);
-    line-height: 1.5;
 }
 
 .theme-buttons {
@@ -298,8 +256,15 @@ footer {
     text-align: left;
 }
 
-.theme-button:hover {
-    border-color: #666875;
+.theme-button strong,
+.theme-button span {
+    display: block;
+}
+
+.theme-button span {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
 }
 
 .theme-button.active {
@@ -307,37 +272,75 @@ footer {
     box-shadow: 0 0 0 2px var(--text);
 }
 
-.theme-button strong {
-    display: block;
-    margin-bottom: 6px;
+/* Embedded side panel */
+.embed-toggle {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 300;
+    padding: 14px 10px;
+    border: 0;
+    border-radius: 12px 0 0 12px;
+    background: #4f46e5;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%);
+    box-shadow: 0 4px 18px rgba(0,0,0,.35);
 }
 
-.theme-button span {
-    color: var(--muted);
-    font-size: 13px;
+.embed-toggle:hover {
+    background: #6366f1;
 }
 
-.info-box {
-    padding: 14px;
-    border-radius: 12px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.back-button {
-    padding: 12px 16px;
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
+.embed-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 250;
+    width: min(420px, 90vw);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     background: var(--surface);
+    border-left: 1px solid var(--border-strong);
+    box-shadow: -8px 0 25px rgba(0,0,0,.4);
+    transform: translateX(100%);
+    transition: transform .25s ease;
+}
+
+.embed-panel.visible {
+    transform: translateX(0);
+}
+
+.embed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-strong);
+}
+
+.embed-header strong {
+    font-size: 16px;
+}
+
+.embed-close {
+    padding: 6px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: transparent;
     color: var(--text);
     cursor: pointer;
+    font-size: 18px;
 }
 
-.back-button:hover {
-    background: var(--surface-hover);
+.embed-frame {
+    width: 100%;
+    flex: 1;
+    border: 0;
+    background: #fff;
 }
 
 @media (max-width: 600px) {
@@ -345,7 +348,8 @@ footer {
         padding: 15px;
     }
 
-    main {
+    main,
+    #settingsPage {
         padding: 25px 15px 50px;
     }
 
@@ -354,7 +358,8 @@ footer {
         gap: 13px;
     }
 
-    .disguise-wrapper {
+    .disguise-wrapper,
+    .header-button {
         width: 100%;
     }
 
@@ -363,16 +368,8 @@ footer {
         right: 0;
     }
 
-    .header-button {
-        width: 100%;
-    }
-
     .theme-buttons {
         grid-template-columns: 1fr;
-    }
-
-    #settingsPage {
-        padding: 25px 15px 50px;
     }
 }
 </style>
@@ -382,17 +379,10 @@ footer {
 
 <header>
     <div class="header-content">
-
         <div class="logo">Secret Unblocked XY</div>
 
         <div class="search-wrapper">
-            <input
-                id="search"
-                type="search"
-                placeholder="Search games..."
-                autocomplete="off"
-                spellcheck="false"
-            >
+            <input id="search" type="search" placeholder="Search games..." autocomplete="off">
         </div>
 
         <div class="disguise-wrapper">
@@ -401,33 +391,36 @@ footer {
             </button>
 
             <div id="disguiseMenu" class="disguise-menu">
-                <button class="disguise-option" data-disguise="word">
-                    Microsoft Word
-                </button>
-
-                <button class="disguise-option" data-disguise="classroom">
-                    Google Classroom
-                </button>
-
-                <button class="disguise-option" data-disguise="powerpoint">
-                    Microsoft PowerPoint
-                </button>
-
-                <button class="disguise-option" data-disguise="google">
-                    Google
-                </button>
+                <button class="disguise-option" data-disguise="word">Microsoft Word</button>
+                <button class="disguise-option" data-disguise="classroom">Google Classroom</button>
+                <button class="disguise-option" data-disguise="powerpoint">Microsoft PowerPoint</button>
+                <button class="disguise-option" data-disguise="google">Google</button>
             </div>
         </div>
 
-        <!-- SEPARATE GENERAL SETTINGS TAB -->
-        <button id="settingsButton" class="header-button" type="button">
-            ⚙ Settings
-        </button>
-
+        <button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
     </div>
 </header>
 
-<!-- HOME -->
+<button id="embedToggle" class="embed-toggle" type="button">
+    Open Listen
+</button>
+
+<aside id="embedPanel" class="embed-panel" aria-label="Embedded Listen site">
+    <div class="embed-header">
+        <strong>Secret Unblocked Listen</strong>
+        <button id="embedClose" class="embed-close" type="button" aria-label="Close embed">×</button>
+    </div>
+
+    <iframe
+        class="embed-frame"
+        src="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/"
+        title="Secret Unblocked Listen"
+        loading="lazy"
+        allow="autoplay; fullscreen"
+    ></iframe>
+</aside>
+
 <main id="homePage">
     <section class="hero">
         <h1>Games</h1>
@@ -435,28 +428,20 @@ footer {
     </section>
 
     <div id="status">Searching repository for games...</div>
-
     <div id="games" class="games-grid"></div>
 </main>
 
-<!-- GENERAL SETTINGS -->
 <section id="settingsPage">
-
     <div class="settings-top">
-        <button id="backButton" class="back-button">← Back</button>
+        <button id="backButton" class="back-button" type="button">← Back</button>
         <h1>Settings</h1>
     </div>
 
     <div class="settings-card">
         <h2>Site Appearance</h2>
-
-        <p>
-            Choose whether the entire site uses Light Mode or Dark Mode.
-            Your choice is saved on this device.
-        </p>
+        <p>Choose whether the entire site uses Light Mode or Dark Mode.</p>
 
         <div class="theme-buttons">
-
             <button class="theme-button" data-theme="dark">
                 <strong>Dark Mode</strong>
                 <span>Dark background and interface.</span>
@@ -466,255 +451,89 @@ footer {
                 <strong>Light Mode</strong>
                 <span>Light background and interface.</span>
             </button>
-
         </div>
     </div>
-
-    <div class="settings-card">
-        <h2>Disguise Favicons</h2>
-
-        <p>
-            Favicons are controlled directly in the HTML code. Edit the
-            <code>favicon</code> value for each disguise near the top of
-            the JavaScript.
-        </p>
-
-        <div class="info-box">
-            When you select a disguise, its favicon URL is automatically
-            applied to the browser tab. This means Word, Classroom,
-            PowerPoint and Google can all have different icons.
-        </div>
-    </div>
-
 </section>
 
-<footer id="footer">
-    Secret Unblocked
-</footer>
+<footer id="footer">Secret Unblocked</footer>
 
 <script>
-/* =========================================================
-   PUT YOUR FAVICON URLS HERE
-   =========================================================
-
-   Change ONLY the URL inside the quotation marks.
-
-   Example:
-   favicon: "https://example.com/favicon.png"
-
-   Leave it as "" if you don't want a custom favicon.
-   ========================================================= */
-
 const disguises = {
-
     word: {
         title: "Microsoft Word",
-
-        // PUT WORD FAVICON URL HERE
-        favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Microsoft_Office_Word_%282025%E2%80%93present%29.svg/960px-Microsoft_Office_Word_%282025%E2%80%93present%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"
+        favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Microsoft_Office_Word_%282025%E2%80%93present%29.svg/960px-Microsoft_Office_Word_%282025%E2%80%93present%29.svg.png"
     },
-
     classroom: {
         title: "Google Classroom",
-
-        // PUT GOOGLE CLASSROOM FAVICON URL HERE
         favicon: "https://logos-world.net/wp-content/uploads/2021/08/Google-Classroom-Logo-2014-2016.png"
     },
-
     powerpoint: {
         title: "Microsoft PowerPoint",
-
-        // PUT POWERPOINT FAVICON URL HERE
         favicon: "https://static.vecteezy.com/system/resources/thumbnails/027/179/348/small_2x/microsoft-power-point-icon-logo-symbol-free-png.png"
     },
-
     google: {
         title: "Google",
-
-        // PUT GOOGLE FAVICON URL HERE
-        favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/3840px-Google_Favicon_2025.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"
+        favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/3840px-Google_Favicon_2025.svg.png"
     }
 };
 
-
-/* =========================================================
-   GITHUB GAME SYSTEM
-   ========================================================= */
-
-const GITHUB_OWNER = "zacharyceiley-jpg";
-const GITHUB_REPO = "Secret-Unblocked-XY";
-const GITHUB_BRANCH = "main";
-
-const API_URL =
-    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/?ref=${GITHUB_BRANCH}`;
+const owner = "zacharyceiley-jpg";
+const repo = "Secret-Unblocked-XY";
+const branch = "main";
+const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/?ref=${branch}`;
 
 const gamesContainer = document.getElementById("games");
 const statusElement = document.getElementById("status");
 const searchInput = document.getElementById("search");
-
 const disguiseButton = document.getElementById("disguiseButton");
 const disguiseMenu = document.getElementById("disguiseMenu");
-
-const settingsButton = document.getElementById("settingsButton");
 const settingsPage = document.getElementById("settingsPage");
 const homePage = document.getElementById("homePage");
 const footer = document.getElementById("footer");
-const backButton = document.getElementById("backButton");
 
 let games = [];
 
-
-/* =========================================================
-   FAVICON
-   ========================================================= */
-
 function setFavicon(url) {
+    let icon = document.querySelector("link[rel='icon']");
 
-    let favicon = document.querySelector("link[rel='icon']");
-
-    if (!favicon) {
-        favicon = document.createElement("link");
-        favicon.rel = "icon";
-        document.head.appendChild(favicon);
+    if (!icon) {
+        icon = document.createElement("link");
+        icon.rel = "icon";
+        document.head.appendChild(icon);
     }
 
-    if (url && /^https?:\/\//i.test(url)) {
-        favicon.href = url;
-    } else {
-        favicon.removeAttribute("href");
-    }
+    icon.href = url || "";
 }
 
+function applyDisguise(type) {
+    const disguise = disguises[type];
+    if (!disguise) return;
 
-/* =========================================================
-   LIGHT / DARK MODE
-   ========================================================= */
+    document.title = disguise.title;
+    setFavicon(disguise.favicon);
+    disguiseButton.textContent = `Tab: ${disguise.title}`;
+    disguiseMenu.classList.remove("visible");
+}
 
 function applyTheme(theme) {
+    const light = theme === "light";
+    const values = light
+        ? ["#f5f5f7", "#fff", "#eeeef2", "#dedee5", "#c9c9d2", "#111116", "#5f606b", "#70717c"]
+        : ["#0b0b0f", "#15161c", "#1a1b22", "#252630", "#30313a", "#fff", "#a9aab4", "#8e909c"];
 
-    if (theme === "light") {
-
-        document.documentElement.style.setProperty("--bg", "#f5f5f7");
-        document.documentElement.style.setProperty("--surface", "#ffffff");
-        document.documentElement.style.setProperty("--surface-hover", "#eeeef2");
-        document.documentElement.style.setProperty("--border", "#dedee5");
-        document.documentElement.style.setProperty("--border-strong", "#c9c9d2");
-        document.documentElement.style.setProperty("--text", "#111116");
-        document.documentElement.style.setProperty("--muted", "#5f606b");
-        document.documentElement.style.setProperty("--muted-2", "#70717c");
-
-    } else {
-
-        document.documentElement.style.setProperty("--bg", "#0b0b0f");
-        document.documentElement.style.setProperty("--surface", "#15161c");
-        document.documentElement.style.setProperty("--surface-hover", "#1a1b22");
-        document.documentElement.style.setProperty("--border", "#252630");
-        document.documentElement.style.setProperty("--border-strong", "#30313a");
-        document.documentElement.style.setProperty("--text", "#ffffff");
-        document.documentElement.style.setProperty("--muted", "#a9aab4");
-        document.documentElement.style.setProperty("--muted-2", "#8e909c");
-    }
+    ["--bg", "--surface", "--surface-hover", "--border", "--border-strong", "--text", "--muted", "--muted-2"]
+        .forEach((name, index) => {
+            document.documentElement.style.setProperty(name, values[index]);
+        });
 
     localStorage.setItem("siteTheme", theme);
 
     document.querySelectorAll(".theme-button").forEach(button => {
-        button.classList.toggle(
-            "active",
-            button.dataset.theme === theme
-        );
+        button.classList.toggle("active", button.dataset.theme === theme);
     });
 }
-
-
-/* =========================================================
-   DISGUISE
-   ========================================================= */
-
-function applyDisguise(type) {
-
-    const disguise = disguises[type];
-
-    if (!disguise) return;
-
-    document.title = disguise.title;
-
-    // This applies the favicon URL you entered above.
-    setFavicon(disguise.favicon);
-
-    disguiseButton.textContent = `Tab: ${disguise.title}`;
-
-    disguiseMenu.classList.remove("visible");
-}
-
-
-/* =========================================================
-   GENERAL SETTINGS PAGE
-   ========================================================= */
-
-function openSettings() {
-
-    settingsPage.classList.add("visible");
-    homePage.style.display = "none";
-    footer.style.display = "none";
-
-    disguiseMenu.classList.remove("visible");
-
-    window.scrollTo(0, 0);
-}
-
-function closeSettings() {
-
-    settingsPage.classList.remove("visible");
-    homePage.style.display = "";
-    footer.style.display = "";
-
-    window.scrollTo(0, 0);
-}
-
-settingsButton.addEventListener("click", openSettings);
-
-backButton.addEventListener("click", closeSettings);
-
-document.querySelectorAll(".theme-button").forEach(button => {
-
-    button.addEventListener("click", () => {
-        applyTheme(button.dataset.theme);
-    });
-
-});
-
-
-/* =========================================================
-   DISGUISE MENU
-   ========================================================= */
-
-disguiseButton.addEventListener("click", () => {
-    disguiseMenu.classList.toggle("visible");
-});
-
-document.addEventListener("click", event => {
-
-    if (!event.target.closest(".disguise-wrapper")) {
-        disguiseMenu.classList.remove("visible");
-    }
-
-});
-
-document.querySelectorAll(".disguise-option").forEach(option => {
-
-    option.addEventListener("click", () => {
-        applyDisguise(option.dataset.disguise);
-    });
-
-});
-
-
-/* =========================================================
-   GAME TITLES / ICONS
-   ========================================================= */
 
 function getGameTitle(filename) {
-
     return filename
         .replace(/\.html$/i, "")
         .replace(/game$/i, "")
@@ -724,63 +543,31 @@ function getGameTitle(filename) {
         .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
-function getIconName(htmlName) {
-    return htmlName.replace(/\.html$/i, ".png");
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
 }
 
-
-/* =========================================================
-   RENDER GAMES
-   ========================================================= */
-
 function renderGames(list) {
-
     gamesContainer.innerHTML = "";
 
-    if (list.length === 0) {
-
-        gamesContainer.innerHTML = `
-            <div class="no-games">
-                No games found.
-            </div>
-        `;
-
+    if (!list.length) {
+        gamesContainer.innerHTML = '<div class="no-games">No games found.</div>';
         return;
     }
 
     list.forEach(game => {
-
         const card = document.createElement("a");
-
         card.className = "game-card";
         card.href = game.url;
         card.title = game.title;
 
         card.innerHTML = `
-            <img
-                class="game-icon"
-                src="${game.icon}"
-                alt="${escapeHTML(game.title)}"
-                loading="lazy"
-                onerror="this.src='data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-                        <rect width="400" height="400" fill="#202128"/>
-                        <text x="200" y="205"
-                              text-anchor="middle"
-                              dominant-baseline="middle"
-                              fill="#777"
-                              font-family="Arial"
-                              font-size="28">
-                            No Image
-                        </text>
-                    </svg>
-                `)}'"
-            >
-
+            <img class="game-icon" src="${game.icon}" alt="${escapeHTML(game.title)}" loading="lazy"
+                onerror="this.style.display='none'">
             <div class="game-info">
-                <div class="game-title">
-                    ${escapeHTML(game.title)}
-                </div>
+                <div class="game-title">${escapeHTML(game.title)}</div>
             </div>
         `;
 
@@ -788,124 +575,102 @@ function renderGames(list) {
     });
 }
 
-function escapeHTML(text) {
-
-    const div = document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
-}
-
-
-/* =========================================================
-   LOAD GAMES FROM GITHUB
-   ========================================================= */
-
 async function loadGames() {
-
     try {
-
-        statusElement.textContent =
-            "Searching repository for games...";
-
-        const response = await fetch(API_URL, {
-            headers: {
-                "Accept": "application/vnd.github+json"
-            }
+        const response = await fetch(apiURL, {
+            headers: { Accept: "application/vnd.github+json" }
         });
 
-        if (!response.ok) {
-            throw new Error(
-                `GitHub API returned ${response.status}`
-            );
-        }
+        if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
 
         const files = await response.json();
 
-        const gameFiles = files.filter(file =>
-            file.type === "file" &&
-            /\.html$/i.test(file.name) &&
-            /game/i.test(file.name) &&
-            file.name.toLowerCase() !== "index.html"
-        );
+        games = files
+            .filter(file =>
+                file.type === "file" &&
+                /\.html$/i.test(file.name) &&
+                /game/i.test(file.name) &&
+                file.name.toLowerCase() !== "index.html"
+            )
+            .map(file => {
+                const iconName = file.name.replace(/\.html$/i, ".png");
 
-        games = gameFiles.map(file => {
+                return {
+                    filename: file.name,
+                    title: getGameTitle(file.name),
+                    url: `https://${owner}.github.io/${repo}/${encodeURIComponent(file.name)}`,
+                    icon: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${encodeURIComponent(iconName)}`
+                };
+            })
+            .sort((a, b) => a.title.localeCompare(b.title));
 
-            const iconName = getIconName(file.name);
-
-            return {
-                filename: file.name,
-
-                title: getGameTitle(file.name),
-
-                url:
-                    `https://${GITHUB_OWNER}.github.io/` +
-                    `${GITHUB_REPO}/${encodeURIComponent(file.name)}`,
-
-                icon:
-                    `https://raw.githubusercontent.com/` +
-                    `${GITHUB_OWNER}/${GITHUB_REPO}/` +
-                    `${GITHUB_BRANCH}/${encodeURIComponent(iconName)}`
-            };
-        });
-
-        games.sort((a, b) =>
-            a.title.localeCompare(b.title)
-        );
-
-        statusElement.textContent =
-            `${games.length} game${games.length === 1 ? "" : "s"} found`;
-
+        statusElement.textContent = `${games.length} game${games.length === 1 ? "" : "s"} found`;
         renderGames(games);
-
     } catch (error) {
-
         console.error(error);
-
-        statusElement.textContent =
-            "Unable to load games from the repository.";
-
+        statusElement.textContent = "Unable to load games from the repository.";
         gamesContainer.innerHTML = `
             <div class="no-games">
-                <strong>Could not load the games.</strong>
-                <br><br>
+                <strong>Could not load the games.</strong><br><br>
                 Please check that the repository is public and try again.
             </div>
         `;
     }
 }
 
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-searchInput.addEventListener("input", () => {
-
-    const query =
-        searchInput.value.trim().toLowerCase();
-
-    const filtered = games.filter(game =>
-        game.title.toLowerCase().includes(query) ||
-        game.filename.toLowerCase().includes(query)
-    );
-
-    renderGames(filtered);
+disguiseButton.addEventListener("click", () => {
+    disguiseMenu.classList.toggle("visible");
 });
 
+document.addEventListener("click", event => {
+    if (!event.target.closest(".disguise-wrapper")) {
+        disguiseMenu.classList.remove("visible");
+    }
+});
 
-/* =========================================================
-   STARTUP
-   ========================================================= */
+document.querySelectorAll(".disguise-option").forEach(option => {
+    option.addEventListener("click", () => applyDisguise(option.dataset.disguise));
+});
 
-const savedTheme =
-    localStorage.getItem("siteTheme") || "dark";
+document.getElementById("settingsButton").addEventListener("click", () => {
+    settingsPage.classList.add("visible");
+    homePage.style.display = "none";
+    footer.style.display = "none";
+    window.scrollTo(0, 0);
+});
 
-applyTheme(savedTheme);
+document.getElementById("backButton").addEventListener("click", () => {
+    settingsPage.classList.remove("visible");
+    homePage.style.display = "";
+    footer.style.display = "";
+    window.scrollTo(0, 0);
+});
 
+document.querySelectorAll(".theme-button").forEach(button => {
+    button.addEventListener("click", () => applyTheme(button.dataset.theme));
+});
+
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+
+    renderGames(games.filter(game =>
+        game.title.toLowerCase().includes(query) ||
+        game.filename.toLowerCase().includes(query)
+    ));
+});
+
+const embedPanel = document.getElementById("embedPanel");
+
+document.getElementById("embedToggle").addEventListener("click", () => {
+    embedPanel.classList.add("visible");
+});
+
+document.getElementById("embedClose").addEventListener("click", () => {
+    embedPanel.classList.remove("visible");
+});
+
+applyTheme(localStorage.getItem("siteTheme") || "dark");
 loadGames();
-
 </script>
 
 </body>
