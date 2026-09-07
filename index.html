@@ -321,6 +321,95 @@ footer {
     font-size: 13px;
 }
 
+/* Global settings helpers */
+html.classic-font,
+html.classic-font body {
+    font-family: "Google Sans", "Google Sans Text", "Product Sans", Arial, Helvetica, sans-serif;
+}
+
+body.hide-listen .embed-toggle,
+body.hide-listen .embed-panel {
+    display: none !important;
+}
+
+/* Disguise settings */
+.disguise-settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.disguise-setting-option {
+    padding: 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+}
+
+.disguise-setting-option:hover {
+    background: var(--surface-hover);
+}
+
+.disguise-setting-option.active {
+    border-color: var(--text);
+    box-shadow: 0 0 0 2px var(--text);
+}
+
+/* Settings toggles */
+.setting-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+}
+
+.setting-toggle:first-child {
+    border-top: 0;
+}
+
+.setting-toggle-text strong,
+.setting-toggle-text span {
+    display: block;
+}
+
+.setting-toggle-text span {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.toggle-button {
+    min-width: 62px;
+    height: 34px;
+    padding: 3px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--bg);
+    cursor: pointer;
+}
+
+.toggle-button::after {
+    content: "";
+    display: block;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: transform .18s ease, background .18s ease;
+}
+
+.toggle-button.active::after {
+    transform: translateX(28px);
+    background: var(--text);
+}
+
 /* Settings */
 #settingsPage {
     display: none;
@@ -485,6 +574,10 @@ footer {
     .theme-buttons {
         grid-template-columns: 1fr;
     }
+
+    .disguise-settings-grid {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
@@ -498,21 +591,7 @@ footer {
         <div class="search-wrapper">
             <input id="search" type="search" placeholder="Search games..." autocomplete="off">
         </div>
-
-        <div class="disguise-wrapper">
-            <button id="disguiseButton" class="header-button" type="button">
-                Disguise Tab
-            </button>
-
-            <div id="disguiseMenu" class="disguise-menu">
-                <button class="disguise-option" data-disguise="word">Microsoft Word</button>
-                <button class="disguise-option" data-disguise="classroom">Google Classroom</button>
-                <button class="disguise-option" data-disguise="powerpoint">Microsoft PowerPoint</button>
-                <button class="disguise-option" data-disguise="google">Google</button>
-            </div>
-        </div>
-
-        <button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
+<button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
 
         <div class="account-wrapper">
             <button id="accountButton" class="header-button account-button" type="button" aria-expanded="false">
@@ -609,6 +688,57 @@ footer {
             </button>
         </div>
     </div>
+
+    <div class="settings-card">
+        <h2>Listen</h2>
+        <p>Choose whether the Listen button and panel are available.</p>
+
+        <div class="setting-toggle">
+            <div class="setting-toggle-text">
+                <strong>Hide Listen</strong>
+                <span>Hide the Listen button and its panel.</span>
+            </div>
+            <button id="hideListenToggle" class="toggle-button" type="button"
+                    aria-label="Toggle Hide Listen" aria-pressed="false"></button>
+        </div>
+    </div>
+
+    <div class="settings-card">
+        <h2>Font</h2>
+        <p>Use a Google Sans-style font across supported pages.</p>
+
+        <div class="setting-toggle">
+            <div class="setting-toggle-text">
+                <strong>Classic Font</strong>
+                <span>Switch the site interface to Google Sans when available.</span>
+            </div>
+            <button id="classicFontToggle" class="toggle-button" type="button"
+                    aria-label="Toggle Classic Font" aria-pressed="false"></button>
+        </div>
+    </div>
+
+    <div class="settings-card">
+        <h2>Disguise Tab</h2>
+        <p>Choose what this site looks like in your browser tab.</p>
+
+        <div class="disguise-settings-grid">
+            <button class="disguise-setting-option" data-disguise="none" type="button">
+                Secret Unblocked XY
+            </button>
+            <button class="disguise-setting-option" data-disguise="word" type="button">
+                Microsoft Word
+            </button>
+            <button class="disguise-setting-option" data-disguise="classroom" type="button">
+                Google Classroom
+            </button>
+            <button class="disguise-setting-option" data-disguise="powerpoint" type="button">
+                Microsoft PowerPoint
+            </button>
+            <button class="disguise-setting-option" data-disguise="google" type="button">
+                Google
+            </button>
+        </div>
+    </div>
 </section>
 
 <footer id="footer">Secret Unblocked</footer>
@@ -641,8 +771,6 @@ const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/?ref=${br
 const gamesContainer = document.getElementById("games");
 const statusElement = document.getElementById("status");
 const searchInput = document.getElementById("search");
-const disguiseButton = document.getElementById("disguiseButton");
-const disguiseMenu = document.getElementById("disguiseMenu");
 const settingsPage = document.getElementById("settingsPage");
 const homePage = document.getElementById("homePage");
 const footer = document.getElementById("footer");
@@ -696,13 +824,62 @@ function setFavicon(url) {
 }
 
 function applyDisguise(type) {
-    const disguise = disguises[type];
-    if (!disguise) return;
+    if (type === "none") {
+        document.title = "Secret Unblocked XY";
+        setFavicon("");
+    } else {
+        const disguise = disguises[type];
+        if (!disguise) return;
 
-    document.title = disguise.title;
-    setFavicon(disguise.favicon);
-    disguiseButton.textContent = `Tab: ${disguise.title}`;
-    disguiseMenu.classList.remove("visible");
+        document.title = disguise.title;
+        setFavicon(disguise.favicon);
+    }
+
+    localStorage.setItem("siteDisguise", type);
+
+    document.querySelectorAll(".disguise-setting-option").forEach(button => {
+        button.classList.toggle("active", button.dataset.disguise === type);
+    });
+}
+
+/*
+ * Global settings are stored in localStorage so pages on this same
+ * GitHub Pages site can share them.
+ */
+function getSiteSettings() {
+    return {
+        theme: localStorage.getItem("siteTheme") || "dark",
+        hideListen: localStorage.getItem("hideListen") === "true",
+        classicFont: localStorage.getItem("classicFont") === "true",
+        disguise: localStorage.getItem("siteDisguise") || "none"
+    };
+}
+
+function applyGlobalSettings() {
+    const settings = getSiteSettings();
+
+    applyTheme(settings.theme);
+
+    document.body.classList.toggle("hide-listen", settings.hideListen);
+    document.documentElement.classList.toggle("classic-font", settings.classicFont);
+    applyDisguise(settings.disguise);
+
+    const hideListenToggle = document.getElementById("hideListenToggle");
+    if (hideListenToggle) {
+        hideListenToggle.classList.toggle("active", settings.hideListen);
+        hideListenToggle.setAttribute("aria-pressed", String(settings.hideListen));
+    }
+
+    const classicFontToggle = document.getElementById("classicFontToggle");
+    if (classicFontToggle) {
+        classicFontToggle.classList.toggle("active", settings.classicFont);
+        classicFontToggle.setAttribute("aria-pressed", String(settings.classicFont));
+    }
+}
+
+function saveGlobalSetting(name, value) {
+    localStorage.setItem(name, String(value));
+    applyGlobalSettings();
 }
 
 function applyTheme(theme) {
@@ -750,7 +927,7 @@ function renderGames(list) {
     list.forEach(game => {
         const card = document.createElement("a");
         card.className = "game-card";
-        card.href = game.url;
+        card.href = game.url + (game.url.includes("?") ? "&" : "?") + "siteSettings=1";
         card.title = game.title;
 
         card.innerHTML = `
@@ -807,17 +984,8 @@ async function loadGames() {
         `;
     }
 }
-
-disguiseButton.addEventListener("click", () => {
-    disguiseMenu.classList.toggle("visible");
-});
-
 document.addEventListener("click", event => {
-    if (!event.target.closest(".disguise-wrapper")) {
-        disguiseMenu.classList.remove("visible");
-    }
-
-    if (!event.target.closest(".account-wrapper")) {
+if (!event.target.closest(".account-wrapper")) {
         accountMenu.classList.remove("visible");
         accountButton.setAttribute("aria-expanded", "false");
     }
@@ -847,7 +1015,7 @@ document.getElementById("googleSync").addEventListener("click", () => {
     accountNote.textContent = "Google sync will be available after a Google sign-in service is connected.";
 });
 
-document.querySelectorAll(".disguise-option").forEach(option => {
+document.querySelectorAll(".disguise-setting-option").forEach(option => {
     option.addEventListener("click", () => applyDisguise(option.dataset.disguise));
 });
 
@@ -869,6 +1037,20 @@ document.querySelectorAll(".theme-button").forEach(button => {
     button.addEventListener("click", () => applyTheme(button.dataset.theme));
 });
 
+const hideListenToggle = document.getElementById("hideListenToggle");
+if (hideListenToggle) {
+    hideListenToggle.addEventListener("click", () => {
+        saveGlobalSetting("hideListen", !getSiteSettings().hideListen);
+    });
+}
+
+const classicFontToggle = document.getElementById("classicFontToggle");
+if (classicFontToggle) {
+    classicFontToggle.addEventListener("click", () => {
+        saveGlobalSetting("classicFont", !getSiteSettings().classicFont);
+    });
+}
+
 searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim().toLowerCase();
 
@@ -888,8 +1070,14 @@ document.getElementById("embedClose").addEventListener("click", () => {
     embedPanel.classList.remove("visible");
 });
 
-applyTheme(localStorage.getItem("siteTheme") || "dark");
+applyGlobalSettings();
 loadGames();
+
+window.addEventListener("storage", event => {
+    if (["siteTheme", "hideListen", "classicFont", "siteDisguise"].includes(event.key)) {
+        applyGlobalSettings();
+    }
+});
 </script>
 
 </body>
