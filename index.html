@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +17,6 @@
     --text: #fff;
     --muted: #a9aab4;
     --muted-2: #8e909c;
-    --accent: #4f46e5;
-    --accent-hover: #6366f1;
-    --blood-red: #ff0000;
 }
 
 html { scroll-behavior: smooth; }
@@ -74,7 +70,7 @@ header {
     font-size: 15px;
 }
 
-.header-button,
+    .header-button,
 .back-button {
     padding: 13px 16px;
     border: 1px solid var(--border-strong);
@@ -206,6 +202,42 @@ header {
     place-items: center;
 }
 
+.disguise-wrapper {
+    position: relative;
+}
+
+.disguise-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+
+.disguise-menu.visible {
+    display: grid;
+    gap: 5px;
+}
+
+.disguise-option {
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+}
+
+.disguise-option:hover {
+    background: var(--surface-hover);
+}
+
 main,
 #settingsPage {
     max-width: 1200px;
@@ -298,105 +330,6 @@ html.classic-font body {
 body.hide-listen .embed-toggle,
 body.hide-listen .embed-panel {
     display: none !important;
-}
-
-/* Blood theme */
-html.blood-theme body {
-    background: #ff0000;
-    color: #000;
-}
-
-html.blood-theme header,
-html.blood-theme .settings-card,
-html.blood-theme .game-card,
-html.blood-theme .account-menu,
-html.blood-theme .embed-panel {
-    background: #ff0000;
-    color: #000;
-    border-color: #000;
-}
-
-html.blood-theme #search,
-html.blood-theme .header-button,
-html.blood-theme .back-button,
-html.blood-theme .account-action,
-html.blood-theme .disguise-setting-option,
-html.blood-theme .theme-button,
-html.blood-theme .toggle-button {
-    background: #ff0000;
-    color: #000;
-    border-color: #000;
-}
-
-html.blood-theme .search-wrapper input::placeholder,
-html.blood-theme .hero p,
-html.blood-theme .settings-card p,
-html.blood-theme #status,
-html.blood-theme .account-heading span,
-html.blood-theme .account-note,
-html.blood-theme .account-field label,
-html.blood-theme .account-room,
-html.blood-theme .setting-toggle-text span,
-html.blood-theme .theme-button span,
-html.blood-theme footer {
-    color: #000;
-}
-
-html.blood-theme .header-button:hover,
-html.blood-theme .back-button:hover,
-html.blood-theme .theme-button:hover,
-html.blood-theme .disguise-setting-option:hover,
-html.blood-theme .account-action:hover {
-    background: #cc0000;
-    color: #000;
-    border-color: #000;
-}
-
-html.blood-theme .account-action.primary,
-html.blood-theme .embed-toggle {
-    background: #000;
-    color: #ff0000;
-    border-color: #000;
-}
-
-html.blood-theme .embed-toggle:hover {
-    background: #330000;
-    color: #ff0000;
-}
-
-html.blood-theme .game-card:hover {
-    border-color: #000;
-}
-
-html.blood-theme .game-icon {
-    background: #cc0000;
-}
-
-html.blood-theme .toggle-button::after {
-    background: #000;
-}
-
-html.blood-theme .toggle-button.active::after {
-    background: #000;
-}
-
-/* Running text */
-html.blood-theme .logo,
-html.blood-theme .hero h1,
-html.blood-theme .settings-top h1,
-html.blood-theme .settings-card h2,
-html.blood-theme .game-title,
-html.blood-theme .account-heading strong,
-html.blood-theme .embed-header strong {
-    animation: bloodRun 2.8s linear infinite;
-}
-
-@keyframes bloodRun {
-    0%   { transform: translateX(0); }
-    25%  { transform: translateX(6px); }
-    50%  { transform: translateX(0); }
-    75%  { transform: translateX(-6px); }
-    100% { transform: translateX(0); }
 }
 
 /* Disguise settings */
@@ -628,6 +561,16 @@ html.blood-theme .embed-header strong {
         gap: 13px;
     }
 
+    .disguise-wrapper,
+    .header-button {
+        width: 100%;
+    }
+
+    .disguise-menu {
+        left: 0;
+        right: 0;
+    }
+
     .theme-buttons {
         grid-template-columns: 1fr;
     }
@@ -646,41 +589,19 @@ html.blood-theme .embed-header strong {
         <div class="logo">Secret Unblocked XY</div>
 
         <div class="search-wrapper">
-            <input
-                id="search"
-                type="search"
-                placeholder="Search games..."
-                autocomplete="off"
-            >
+            <input id="search" type="search" placeholder="Search games..." autocomplete="off">
         </div>
-
-        <button id="settingsButton" class="header-button" type="button">
-            ⚙ Settings
-        </button>
+<button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
 
         <div class="account-wrapper">
-            <button
-                id="accountButton"
-                class="header-button account-button"
-                type="button"
-                aria-expanded="false"
-            >
-                <img
-                    id="accountAvatar"
-                    class="account-avatar"
-                    alt="Profile picture"
-                >
+            <button id="accountButton" class="header-button account-button" type="button" aria-expanded="false">
+                <img id="accountAvatar" class="account-avatar" alt="Profile picture">
                 <span id="accountButtonLabel">Account</span>
             </button>
 
-            <div id="accountMenu" class="account-menu">
+            <div id="accountMenu" class="account-menu" aria-label="Account menu">
                 <div class="account-heading">
-                    <img
-                        id="profilePreview"
-                        class="profile-preview"
-                        alt="Your profile picture"
-                    >
-
+                    <img id="profilePreview" class="profile-preview" alt="Your profile picture">
                     <div>
                         <strong id="accountGreeting">Your account</strong>
                         <span>Saved on this device</span>
@@ -689,47 +610,21 @@ html.blood-theme .embed-header strong {
 
                 <div class="account-field">
                     <label for="accountName">Display name</label>
-                    <input
-                        id="accountName"
-                        type="text"
-                        maxlength="40"
-                        placeholder="Your name"
-                    >
+                    <input id="accountName" type="text" maxlength="40" placeholder="Your name" autocomplete="name">
                 </div>
 
                 <div class="account-field">
                     <label for="profileUpload">Profile picture</label>
-                    <input
-                        id="profileUpload"
-                        type="file"
-                        accept="image/*"
-                    >
+                    <input id="profileUpload" type="file" accept="image/*">
                 </div>
 
                 <div class="account-actions">
-                    <button
-                        id="saveAccount"
-                        class="account-action primary"
-                        type="button"
-                    >
-                        Save account
-                    </button>
-
-                    <button
-                        id="googleSync"
-                        class="account-action"
-                        type="button"
-                    >
-                        Sync to Google
-                    </button>
+                    <button id="saveAccount" class="account-action primary" type="button">Save account</button>
+                    <button id="googleSync" class="account-action" type="button">Sync to Google</button>
                 </div>
+                <p id="accountNote" class="account-note">Google sync needs a connected sign-in service. Your account currently saves locally.</p>
 
-                <p id="accountNote" class="account-note">
-                    Google sync needs a connected sign-in service.
-                    Your account currently saves locally.
-                </p>
-
-                <div class="account-rooms">
+                <div class="account-rooms" aria-label="Future account rooms">
                     <div class="account-room">Room 1</div>
                     <div class="account-room">Room 2</div>
                     <div class="account-room">Room 3</div>
@@ -746,18 +641,10 @@ html.blood-theme .embed-header strong {
     Open Listen
 </button>
 
-<aside id="embedPanel" class="embed-panel">
+<aside id="embedPanel" class="embed-panel" aria-label="Embedded Listen site">
     <div class="embed-header">
         <strong>Secret Unblocked Listen</strong>
-
-        <button
-            id="embedClose"
-            class="embed-close"
-            type="button"
-            aria-label="Close embed"
-        >
-            ×
-        </button>
+        <button id="embedClose" class="embed-close" type="button" aria-label="Close embed">×</button>
     </div>
 
     <iframe
@@ -775,17 +662,13 @@ html.blood-theme .embed-header strong {
         <p>Choose a game to play.</p>
     </section>
 
-    <div id="status">Loading games...</div>
+    <div id="status">Searching repository for games...</div>
     <div id="games" class="games-grid"></div>
 </main>
 
 <section id="settingsPage">
-
     <div class="settings-top">
-        <button id="backButton" class="back-button" type="button">
-            ← Back
-        </button>
-
+        <button id="backButton" class="back-button" type="button">← Back</button>
         <h1>Settings</h1>
     </div>
 
@@ -794,35 +677,15 @@ html.blood-theme .embed-header strong {
         <p>Choose whether the entire site uses Light Mode or Dark Mode.</p>
 
         <div class="theme-buttons">
-            <button class="theme-button" data-theme="dark" type="button">
+            <button class="theme-button" data-theme="dark">
                 <strong>Dark Mode</strong>
                 <span>Dark background and interface.</span>
             </button>
 
-            <button class="theme-button" data-theme="light" type="button">
+            <button class="theme-button" data-theme="light">
                 <strong>Light Mode</strong>
                 <span>Light background and interface.</span>
             </button>
-        </div>
-    </div>
-
-    <div class="settings-card">
-        <h2>Blood Theme</h2>
-        <p>Turn the entire site bright red with black text and running text.</p>
-
-        <div class="setting-toggle">
-            <div class="setting-toggle-text">
-                <strong>Blood Theme</strong>
-                <span>Bright red background, black text, and animated running text.</span>
-            </div>
-
-            <button
-                id="bloodThemeToggle"
-                class="toggle-button"
-                type="button"
-                aria-label="Toggle Blood Theme"
-                aria-pressed="false"
-            ></button>
         </div>
     </div>
 
@@ -835,14 +698,8 @@ html.blood-theme .embed-header strong {
                 <strong>Hide Listen</strong>
                 <span>Hide the Listen button and its panel.</span>
             </div>
-
-            <button
-                id="hideListenToggle"
-                class="toggle-button"
-                type="button"
-                aria-label="Toggle Hide Listen"
-                aria-pressed="false"
-            ></button>
+            <button id="hideListenToggle" class="toggle-button" type="button"
+                    aria-label="Toggle Hide Listen" aria-pressed="false"></button>
         </div>
     </div>
 
@@ -855,14 +712,8 @@ html.blood-theme .embed-header strong {
                 <strong>Classic Font</strong>
                 <span>Switch the site interface to Google Sans when available.</span>
             </div>
-
-            <button
-                id="classicFontToggle"
-                class="toggle-button"
-                type="button"
-                aria-label="Toggle Classic Font"
-                aria-pressed="false"
-            ></button>
+            <button id="classicFontToggle" class="toggle-button" type="button"
+                    aria-label="Toggle Classic Font" aria-pressed="false"></button>
         </div>
     </div>
 
@@ -871,43 +722,19 @@ html.blood-theme .embed-header strong {
         <p>Choose what this site looks like in your browser tab.</p>
 
         <div class="disguise-settings-grid">
-            <button
-                class="disguise-setting-option"
-                data-disguise="none"
-                type="button"
-            >
+            <button class="disguise-setting-option" data-disguise="none" type="button">
                 Secret Unblocked XY
             </button>
-
-            <button
-                class="disguise-setting-option"
-                data-disguise="word"
-                type="button"
-            >
+            <button class="disguise-setting-option" data-disguise="word" type="button">
                 Microsoft Word
             </button>
-
-            <button
-                class="disguise-setting-option"
-                data-disguise="classroom"
-                type="button"
-            >
+            <button class="disguise-setting-option" data-disguise="classroom" type="button">
                 Google Classroom
             </button>
-
-            <button
-                class="disguise-setting-option"
-                data-disguise="powerpoint"
-                type="button"
-            >
+            <button class="disguise-setting-option" data-disguise="powerpoint" type="button">
                 Microsoft PowerPoint
             </button>
-
-            <button
-                class="disguise-setting-option"
-                data-disguise="google"
-                type="button"
-            >
+            <button class="disguise-setting-option" data-disguise="google" type="button">
                 Google
             </button>
         </div>
@@ -922,37 +749,31 @@ const disguises = {
         title: "Microsoft Word",
         favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Microsoft_Office_Word_%282025%E2%80%93present%29.svg/960px-Microsoft_Office_Word_%282025%E2%80%93present%29.svg.png"
     },
-
     classroom: {
         title: "Google Classroom",
         favicon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-classroom-icon.png"
     },
-
     powerpoint: {
         title: "Microsoft PowerPoint",
         favicon: "https://static.vecteezy.com/system/resources/thumbnails/027/179/348/small_2x/microsoft-power-point-icon-logo-symbol-free-png.png"
     },
-
     google: {
         title: "Google",
         favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/3840px-Google_Favicon_2025.svg.png"
     }
 };
 
-/*
- * The homepage is index.html.
- * games.json is manually maintained.
- */
-const gamesURL = "./games.json";
+const owner = "zacharyceiley-jpg";
+const repo = "Secret-Unblocked-XY";
+const branch = "main";
+const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/?ref=${branch}`;
 
 const gamesContainer = document.getElementById("games");
 const statusElement = document.getElementById("status");
 const searchInput = document.getElementById("search");
-
 const settingsPage = document.getElementById("settingsPage");
 const homePage = document.getElementById("homePage");
 const footer = document.getElementById("footer");
-
 const accountButton = document.getElementById("accountButton");
 const accountMenu = document.getElementById("accountMenu");
 const accountAvatar = document.getElementById("accountAvatar");
@@ -964,54 +785,30 @@ const accountButtonLabel = document.getElementById("accountButtonLabel");
 const accountNote = document.getElementById("accountNote");
 
 let games = [];
-
-let account = {
-    name: "",
-    avatar: ""
-};
-
-const defaultAvatar =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E';
+let account = { name: "", avatar: "" };
+const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E";
 
 function updateAccountDisplay() {
     const avatar = account.avatar || defaultAvatar;
-
     accountAvatar.src = avatar;
     profilePreview.src = avatar;
     accountName.value = account.name;
-
-    accountGreeting.textContent =
-        account.name ? `Hello, ${account.name}` : "Your account";
-
-    accountButtonLabel.textContent =
-        account.name || "Account";
+    accountGreeting.textContent = account.name ? `Hello, ${account.name}` : "Your account";
+    accountButtonLabel.textContent = account.name || "Account";
 }
 
 function saveAccountData() {
     account.name = accountName.value.trim();
-
-    localStorage.setItem(
-        "siteAccount",
-        JSON.stringify(account)
-    );
-
+    localStorage.setItem("siteAccount", JSON.stringify(account));
     updateAccountDisplay();
-
-    accountNote.textContent =
-        "Account saved on this device.";
+    accountNote.textContent = "Account saved on this device.";
 }
 
 try {
-    account =
-        JSON.parse(localStorage.getItem("siteAccount")) ||
-        account;
+    account = JSON.parse(localStorage.getItem("siteAccount")) || account;
 } catch (error) {
-    account = {
-        name: "",
-        avatar: ""
-    };
+    account = { name: "", avatar: "" };
 }
-
 updateAccountDisplay();
 
 function setFavicon(url) {
@@ -1032,10 +829,7 @@ function applyDisguise(type) {
         setFavicon("");
     } else {
         const disguise = disguises[type];
-
-        if (!disguise) {
-            return;
-        }
+        if (!disguise) return;
 
         document.title = disguise.title;
         setFavicon(disguise.favicon);
@@ -1043,22 +837,20 @@ function applyDisguise(type) {
 
     localStorage.setItem("siteDisguise", type);
 
-    document
-        .querySelectorAll(".disguise-setting-option")
-        .forEach(button => {
-            button.classList.toggle(
-                "active",
-                button.dataset.disguise === type
-            );
-        });
+    document.querySelectorAll(".disguise-setting-option").forEach(button => {
+        button.classList.toggle("active", button.dataset.disguise === type);
+    });
 }
 
+/*
+ * Global settings are stored in localStorage so pages on this same
+ * GitHub Pages site can share them.
+ */
 function getSiteSettings() {
     return {
         theme: localStorage.getItem("siteTheme") || "dark",
         hideListen: localStorage.getItem("hideListen") === "true",
         classicFont: localStorage.getItem("classicFont") === "true",
-        bloodTheme: localStorage.getItem("bloodTheme") === "true",
         disguise: localStorage.getItem("siteDisguise") || "none"
     };
 }
@@ -1068,66 +860,20 @@ function applyGlobalSettings() {
 
     applyTheme(settings.theme);
 
-    document.body.classList.toggle(
-        "hide-listen",
-        settings.hideListen
-    );
-
-    document.documentElement.classList.toggle(
-        "classic-font",
-        settings.classicFont
-    );
-
-    document.documentElement.classList.toggle(
-        "blood-theme",
-        settings.bloodTheme
-    );
-
+    document.body.classList.toggle("hide-listen", settings.hideListen);
+    document.documentElement.classList.toggle("classic-font", settings.classicFont);
     applyDisguise(settings.disguise);
 
-    const hideListenToggle =
-        document.getElementById("hideListenToggle");
-
+    const hideListenToggle = document.getElementById("hideListenToggle");
     if (hideListenToggle) {
-        hideListenToggle.classList.toggle(
-            "active",
-            settings.hideListen
-        );
-
-        hideListenToggle.setAttribute(
-            "aria-pressed",
-            String(settings.hideListen)
-        );
+        hideListenToggle.classList.toggle("active", settings.hideListen);
+        hideListenToggle.setAttribute("aria-pressed", String(settings.hideListen));
     }
 
-    const bloodThemeToggle =
-        document.getElementById("bloodThemeToggle");
-
-    if (bloodThemeToggle) {
-        bloodThemeToggle.classList.toggle(
-            "active",
-            settings.bloodTheme
-        );
-
-        bloodThemeToggle.setAttribute(
-            "aria-pressed",
-            String(settings.bloodTheme)
-        );
-    }
-
-    const classicFontToggle =
-        document.getElementById("classicFontToggle");
-
+    const classicFontToggle = document.getElementById("classicFontToggle");
     if (classicFontToggle) {
-        classicFontToggle.classList.toggle(
-            "active",
-            settings.classicFont
-        );
-
-        classicFontToggle.setAttribute(
-            "aria-pressed",
-            String(settings.classicFont)
-        );
+        classicFontToggle.classList.toggle("active", settings.classicFont);
+        classicFontToggle.setAttribute("aria-pressed", String(settings.classicFont));
     }
 }
 
@@ -1138,55 +884,30 @@ function saveGlobalSetting(name, value) {
 
 function applyTheme(theme) {
     const light = theme === "light";
-
     const values = light
-        ? [
-            "#f5f5f7",
-            "#fff",
-            "#eeeef2",
-            "#dedee5",
-            "#c9c9d2",
-            "#111116",
-            "#5f606b",
-            "#70717c"
-        ]
-        : [
-            "#0b0b0f",
-            "#15161c",
-            "#1a1b22",
-            "#252630",
-            "#30313a",
-            "#fff",
-            "#a9aab4",
-            "#8e909c"
-        ];
+        ? ["#f5f5f7", "#fff", "#eeeef2", "#dedee5", "#c9c9d2", "#111116", "#5f606b", "#70717c"]
+        : ["#0b0b0f", "#15161c", "#1a1b22", "#252630", "#30313a", "#fff", "#a9aab4", "#8e909c"];
 
-    [
-        "--bg",
-        "--surface",
-        "--surface-hover",
-        "--border",
-        "--border-strong",
-        "--text",
-        "--muted",
-        "--muted-2"
-    ].forEach((name, index) => {
-        document.documentElement.style.setProperty(
-            name,
-            values[index]
-        );
-    });
+    ["--bg", "--surface", "--surface-hover", "--border", "--border-strong", "--text", "--muted", "--muted-2"]
+        .forEach((name, index) => {
+            document.documentElement.style.setProperty(name, values[index]);
+        });
 
     localStorage.setItem("siteTheme", theme);
 
-    document
-        .querySelectorAll(".theme-button")
-        .forEach(button => {
-            button.classList.toggle(
-                "active",
-                button.dataset.theme === theme
-            );
-        });
+    document.querySelectorAll(".theme-button").forEach(button => {
+        button.classList.toggle("active", button.dataset.theme === theme);
+    });
+}
+
+function getGameTitle(filename) {
+    return filename
+        .replace(/\.html$/i, "")
+        .replace(/game$/i, "")
+        .replace(/[-_]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
 function escapeHTML(text) {
@@ -1199,47 +920,23 @@ function renderGames(list) {
     gamesContainer.innerHTML = "";
 
     if (!list.length) {
-        gamesContainer.innerHTML =
-            '<div class="no-games">No games found.</div>';
-
+        gamesContainer.innerHTML = '<div class="no-games">No games found.</div>';
         return;
     }
 
     list.forEach(game => {
         const card = document.createElement("a");
-
         card.className = "game-card";
-
-        /*
-         * Open the exact game file from games.json.
-         * No redirect and no siteSettings parameter.
-         */
-        card.href = "./" + encodeURI(game.filename);
-
+        card.href = game.url + (game.url.includes("?") ? "&" : "?") + "siteSettings=1";
         card.title = game.title;
 
-        const icon = document.createElement("img");
-
-        icon.className = "game-icon";
-        icon.src = "./" + encodeURI(game.icon);
-        icon.alt = game.title;
-        icon.loading = "lazy";
-
-        icon.onerror = function() {
-            this.style.display = "none";
-        };
-
-        const info = document.createElement("div");
-        info.className = "game-info";
-
-        const title = document.createElement("div");
-        title.className = "game-title";
-        title.textContent = game.title;
-
-        info.appendChild(title);
-
-        card.appendChild(icon);
-        card.appendChild(info);
+        card.innerHTML = `
+            <img class="game-icon" src="${game.icon}" alt="${escapeHTML(game.title)}" loading="lazy"
+                onerror="this.style.display='none'">
+            <div class="game-info">
+                <div class="game-title">${escapeHTML(game.title)}</div>
+            </div>
+        `;
 
         gamesContainer.appendChild(card);
     });
@@ -1247,243 +944,137 @@ function renderGames(list) {
 
 async function loadGames() {
     try {
-        const response = await fetch(
-            "./games.json?cache=" + Date.now()
-        );
+        const response = await fetch(apiURL, {
+            headers: { Accept: "application/vnd.github+json" }
+        });
 
-        if (!response.ok) {
-            throw new Error(
-                `games.json returned HTTP ${response.status}`
-            );
-        }
+        if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
 
-        const data = await response.json();
+        const files = await response.json();
 
-        games = Array.isArray(data.games)
-            ? data.games
-            : [];
+        games = files
+            .filter(file =>
+                file.type === "file" &&
+                /\.html$/i.test(file.name) &&
+                /game/i.test(file.name) &&
+                file.name.toLowerCase() !== "index.html"
+            )
+            .map(file => {
+                const iconName = file.name.replace(/\.html$/i, ".png");
 
-        statusElement.textContent =
-            `${games.length} game${games.length === 1 ? "" : "s"} found`;
+                return {
+                    filename: file.name,
+                    title: getGameTitle(file.name),
+                    url: `https://${owner}.github.io/${repo}/${encodeURIComponent(file.name)}`,
+                    icon: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${encodeURIComponent(iconName)}`
+                };
+            })
+            .sort((a, b) => a.title.localeCompare(b.title));
 
+        statusElement.textContent = `${games.length} game${games.length === 1 ? "" : "s"} found`;
         renderGames(games);
-
     } catch (error) {
-        console.error(
-            "Could not load games.json:",
-            error
-        );
-
-        statusElement.textContent =
-            "Unable to load games.";
-
+        console.error(error);
+        statusElement.textContent = "Unable to load games from the repository.";
         gamesContainer.innerHTML = `
             <div class="no-games">
-                <strong>Could not load the games.</strong>
-                <br><br>
-                ${escapeHTML(error.message)}
+                <strong>Could not load the games.</strong><br><br>
+                Please check that the repository is public and try again.
             </div>
         `;
     }
 }
-
-/* Account */
 document.addEventListener("click", event => {
-    if (!event.target.closest(".account-wrapper")) {
+if (!event.target.closest(".account-wrapper")) {
         accountMenu.classList.remove("visible");
-
-        accountButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
+        accountButton.setAttribute("aria-expanded", "false");
     }
 });
 
 accountButton.addEventListener("click", () => {
-    const visible =
-        accountMenu.classList.toggle("visible");
-
-    accountButton.setAttribute(
-        "aria-expanded",
-        String(visible)
-    );
+    const isVisible = accountMenu.classList.toggle("visible");
+    accountButton.setAttribute("aria-expanded", String(isVisible));
 });
 
-document
-    .getElementById("saveAccount")
-    .addEventListener(
-        "click",
-        saveAccountData
-    );
+document.getElementById("saveAccount").addEventListener("click", saveAccountData);
 
 profileUpload.addEventListener("change", () => {
     const file = profileUpload.files[0];
-
-    if (!file) {
-        return;
-    }
+    if (!file) return;
 
     const reader = new FileReader();
-
     reader.addEventListener("load", () => {
         account.avatar = reader.result;
-
         updateAccountDisplay();
-
-        accountNote.textContent =
-            "Picture selected. Click Save account to keep it.";
+        accountNote.textContent = "Picture selected. Click Save account to keep it.";
     });
-
     reader.readAsDataURL(file);
 });
 
-document
-    .getElementById("googleSync")
-    .addEventListener("click", () => {
-        accountNote.textContent =
-            "Google sync will be available after a Google sign-in service is connected.";
-    });
-
-/* Disguise */
-document
-    .querySelectorAll(".disguise-setting-option")
-    .forEach(option => {
-        option.addEventListener("click", () => {
-            applyDisguise(
-                option.dataset.disguise
-            );
-        });
-    });
-
-/* Settings navigation */
-document
-    .getElementById("settingsButton")
-    .addEventListener("click", () => {
-        settingsPage.classList.add("visible");
-        homePage.style.display = "none";
-        footer.style.display = "none";
-
-        window.scrollTo(0, 0);
-    });
-
-document
-    .getElementById("backButton")
-    .addEventListener("click", () => {
-        settingsPage.classList.remove("visible");
-        homePage.style.display = "";
-        footer.style.display = "";
-
-        window.scrollTo(0, 0);
-    });
-
-/* Theme */
-document
-    .querySelectorAll(".theme-button")
-    .forEach(button => {
-        button.addEventListener("click", () => {
-            applyTheme(
-                button.dataset.theme
-            );
-        });
-    });
-
-/* Listen */
-const hideListenToggle =
-    document.getElementById("hideListenToggle");
-
-if (hideListenToggle) {
-    hideListenToggle.addEventListener(
-        "click",
-        () => {
-            saveGlobalSetting(
-                "hideListen",
-                !getSiteSettings().hideListen
-            );
-        }
-    );
-}
-
-/* Blood theme */
-const bloodThemeToggle =
-    document.getElementById("bloodThemeToggle");
-
-if (bloodThemeToggle) {
-    bloodThemeToggle.addEventListener(
-        "click",
-        () => {
-            saveGlobalSetting(
-                "bloodTheme",
-                !getSiteSettings().bloodTheme
-            );
-        }
-    );
-}
-
-/* Classic font */
-const classicFontToggle =
-    document.getElementById("classicFontToggle");
-
-if (classicFontToggle) {
-    classicFontToggle.addEventListener(
-        "click",
-        () => {
-            saveGlobalSetting(
-                "classicFont",
-                !getSiteSettings().classicFont
-            );
-        }
-    );
-}
-
-/* Search */
-searchInput.addEventListener("input", () => {
-    const query =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-    renderGames(
-        games.filter(game =>
-            game.title
-                .toLowerCase()
-                .includes(query) ||
-            game.filename
-                .toLowerCase()
-                .includes(query)
-        )
-    );
+document.getElementById("googleSync").addEventListener("click", () => {
+    accountNote.textContent = "Google sync will be available after a Google sign-in service is connected.";
 });
 
-/* Listen panel */
-const embedPanel =
-    document.getElementById("embedPanel");
+document.querySelectorAll(".disguise-setting-option").forEach(option => {
+    option.addEventListener("click", () => applyDisguise(option.dataset.disguise));
+});
 
-document
-    .getElementById("embedToggle")
-    .addEventListener("click", () => {
-        embedPanel.classList.add("visible");
+document.getElementById("settingsButton").addEventListener("click", () => {
+    settingsPage.classList.add("visible");
+    homePage.style.display = "none";
+    footer.style.display = "none";
+    window.scrollTo(0, 0);
+});
+
+document.getElementById("backButton").addEventListener("click", () => {
+    settingsPage.classList.remove("visible");
+    homePage.style.display = "";
+    footer.style.display = "";
+    window.scrollTo(0, 0);
+});
+
+document.querySelectorAll(".theme-button").forEach(button => {
+    button.addEventListener("click", () => applyTheme(button.dataset.theme));
+});
+
+const hideListenToggle = document.getElementById("hideListenToggle");
+if (hideListenToggle) {
+    hideListenToggle.addEventListener("click", () => {
+        saveGlobalSetting("hideListen", !getSiteSettings().hideListen);
     });
+}
 
-document
-    .getElementById("embedClose")
-    .addEventListener("click", () => {
-        embedPanel.classList.remove("visible");
+const classicFontToggle = document.getElementById("classicFontToggle");
+if (classicFontToggle) {
+    classicFontToggle.addEventListener("click", () => {
+        saveGlobalSetting("classicFont", !getSiteSettings().classicFont);
     });
+}
 
-/* Start */
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+
+    renderGames(games.filter(game =>
+        game.title.toLowerCase().includes(query) ||
+        game.filename.toLowerCase().includes(query)
+    ));
+});
+
+const embedPanel = document.getElementById("embedPanel");
+
+document.getElementById("embedToggle").addEventListener("click", () => {
+    embedPanel.classList.add("visible");
+});
+
+document.getElementById("embedClose").addEventListener("click", () => {
+    embedPanel.classList.remove("visible");
+});
+
 applyGlobalSettings();
 loadGames();
 
 window.addEventListener("storage", event => {
-    if (
-        [
-            "siteTheme",
-            "hideListen",
-            "classicFont",
-            "bloodTheme",
-            "siteDisguise"
-        ].includes(event.key)
-    ) {
+    if (["siteTheme", "hideListen", "classicFont", "siteDisguise"].includes(event.key)) {
         applyGlobalSettings();
     }
 });
@@ -1491,4 +1082,3 @@ window.addEventListener("storage", event => {
 
 </body>
 </html>
-
