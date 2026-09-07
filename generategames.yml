@@ -1,0 +1,91 @@
+name: Generate Games Index
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-games:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate games.json
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          root = Path(".")
+
+          def game_title(filename):
+              name = re.sub(r"\.html$", "", filename, flags=re.I)
+              name = re.sub(r"game$", "", name, flags=re.I)
+              name = re.sub(r"[-_]+", " ", name)
+              name = re.sub(r"\s+", " ", name).strip()
+              return " ".join(word[:1].upper() + word[1:] for word in name.split())
+
+          games = []
+
+          for path in root.iterdir():
+              if not path.is_file():
+                  continue
+
+              filename = path.name
+
+              if filename.lower() == "index.html":
+                  continue
+
+              if not re.search(r"\.html$", filename, re.I):
+                  continue
+
+              if not re.search(r"game", filename, re.I):
+                  continue
+
+              icon_name = re.sub(r"\.html$", ".png", filename, flags=re.I)
+              icon_path = root / icon_name
+
+              games.append({
+                  "filename": filename,
+                  "title": game_title(filename),
+                  "url": filename,
+                  "icon": icon_name if icon_path.is_file() else ""
+              })
+
+          games.sort(key=lambda game: game["title"].lower())
+
+          output = {
+              "generated": True,
+              "games": games
+          }
+
+          Path("games.json").write_text(
+              json.dumps(output, indent=2),
+              encoding="utf-8"
+          )
+
+          print(f"Generated games.json with {len(games)} games.")
+
+      - name: Commit games.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add games.json
+
+          if git diff --cached --quiet; then
+            echo "games.json is already up to date."
+          else
+            git commit -m "Auto-update games index"
+            git push
+          fi
