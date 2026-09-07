@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,42 +206,6 @@ header {
     place-items: center;
 }
 
-.disguise-wrapper {
-    position: relative;
-}
-
-.disguise-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    min-width: 220px;
-    padding: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.35);
-}
-
-.disguise-menu.visible {
-    display: grid;
-    gap: 5px;
-}
-
-.disguise-option {
-    padding: 10px 12px;
-    border: 0;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text);
-    text-align: left;
-    cursor: pointer;
-}
-
-.disguise-option:hover {
-    background: var(--surface-hover);
-}
-
 main,
 #settingsPage {
     max-width: 1200px;
@@ -346,7 +310,6 @@ html.blood-theme header,
 html.blood-theme .settings-card,
 html.blood-theme .game-card,
 html.blood-theme .account-menu,
-html.blood-theme .disguise-menu,
 html.blood-theme .embed-panel {
     background: #ff0000;
     color: #000;
@@ -417,7 +380,7 @@ html.blood-theme .toggle-button.active::after {
     background: #000;
 }
 
-/* Running/scrolling text */
+/* Running text */
 html.blood-theme .logo,
 html.blood-theme .hero h1,
 html.blood-theme .settings-top h1,
@@ -665,16 +628,6 @@ html.blood-theme .embed-header strong {
         gap: 13px;
     }
 
-    .disguise-wrapper,
-    .header-button {
-        width: 100%;
-    }
-
-    .disguise-menu {
-        left: 0;
-        right: 0;
-    }
-
     .theme-buttons {
         grid-template-columns: 1fr;
     }
@@ -693,20 +646,41 @@ html.blood-theme .embed-header strong {
         <div class="logo">Secret Unblocked XY</div>
 
         <div class="search-wrapper">
-            <input id="search" type="search" placeholder="Search games..." autocomplete="off">
+            <input
+                id="search"
+                type="search"
+                placeholder="Search games..."
+                autocomplete="off"
+            >
         </div>
 
-        <button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
+        <button id="settingsButton" class="header-button" type="button">
+            ⚙ Settings
+        </button>
 
         <div class="account-wrapper">
-            <button id="accountButton" class="header-button account-button" type="button" aria-expanded="false">
-                <img id="accountAvatar" class="account-avatar" alt="Profile picture">
+            <button
+                id="accountButton"
+                class="header-button account-button"
+                type="button"
+                aria-expanded="false"
+            >
+                <img
+                    id="accountAvatar"
+                    class="account-avatar"
+                    alt="Profile picture"
+                >
                 <span id="accountButtonLabel">Account</span>
             </button>
 
-            <div id="accountMenu" class="account-menu" aria-label="Account menu">
+            <div id="accountMenu" class="account-menu">
                 <div class="account-heading">
-                    <img id="profilePreview" class="profile-preview" alt="Your profile picture">
+                    <img
+                        id="profilePreview"
+                        class="profile-preview"
+                        alt="Your profile picture"
+                    >
+
                     <div>
                         <strong id="accountGreeting">Your account</strong>
                         <span>Saved on this device</span>
@@ -715,24 +689,47 @@ html.blood-theme .embed-header strong {
 
                 <div class="account-field">
                     <label for="accountName">Display name</label>
-                    <input id="accountName" type="text" maxlength="40" placeholder="Your name" autocomplete="name">
+                    <input
+                        id="accountName"
+                        type="text"
+                        maxlength="40"
+                        placeholder="Your name"
+                    >
                 </div>
 
                 <div class="account-field">
                     <label for="profileUpload">Profile picture</label>
-                    <input id="profileUpload" type="file" accept="image/*">
+                    <input
+                        id="profileUpload"
+                        type="file"
+                        accept="image/*"
+                    >
                 </div>
 
                 <div class="account-actions">
-                    <button id="saveAccount" class="account-action primary" type="button">Save account</button>
-                    <button id="googleSync" class="account-action" type="button">Sync to Google</button>
+                    <button
+                        id="saveAccount"
+                        class="account-action primary"
+                        type="button"
+                    >
+                        Save account
+                    </button>
+
+                    <button
+                        id="googleSync"
+                        class="account-action"
+                        type="button"
+                    >
+                        Sync to Google
+                    </button>
                 </div>
 
                 <p id="accountNote" class="account-note">
-                    Google sync needs a connected sign-in service. Your account currently saves locally.
+                    Google sync needs a connected sign-in service.
+                    Your account currently saves locally.
                 </p>
 
-                <div class="account-rooms" aria-label="Future account rooms">
+                <div class="account-rooms">
                     <div class="account-room">Room 1</div>
                     <div class="account-room">Room 2</div>
                     <div class="account-room">Room 3</div>
@@ -749,10 +746,18 @@ html.blood-theme .embed-header strong {
     Open Listen
 </button>
 
-<aside id="embedPanel" class="embed-panel" aria-label="Embedded Listen site">
+<aside id="embedPanel" class="embed-panel">
     <div class="embed-header">
         <strong>Secret Unblocked Listen</strong>
-        <button id="embedClose" class="embed-close" type="button" aria-label="Close embed">×</button>
+
+        <button
+            id="embedClose"
+            class="embed-close"
+            type="button"
+            aria-label="Close embed"
+        >
+            ×
+        </button>
     </div>
 
     <iframe
@@ -775,8 +780,12 @@ html.blood-theme .embed-header strong {
 </main>
 
 <section id="settingsPage">
+
     <div class="settings-top">
-        <button id="backButton" class="back-button" type="button">← Back</button>
+        <button id="backButton" class="back-button" type="button">
+            ← Back
+        </button>
+
         <h1>Settings</h1>
     </div>
 
@@ -807,11 +816,13 @@ html.blood-theme .embed-header strong {
                 <span>Bright red background, black text, and animated running text.</span>
             </div>
 
-            <button id="bloodThemeToggle"
-                    class="toggle-button"
-                    type="button"
-                    aria-label="Toggle Blood Theme"
-                    aria-pressed="false"></button>
+            <button
+                id="bloodThemeToggle"
+                class="toggle-button"
+                type="button"
+                aria-label="Toggle Blood Theme"
+                aria-pressed="false"
+            ></button>
         </div>
     </div>
 
@@ -825,11 +836,13 @@ html.blood-theme .embed-header strong {
                 <span>Hide the Listen button and its panel.</span>
             </div>
 
-            <button id="hideListenToggle"
-                    class="toggle-button"
-                    type="button"
-                    aria-label="Toggle Hide Listen"
-                    aria-pressed="false"></button>
+            <button
+                id="hideListenToggle"
+                class="toggle-button"
+                type="button"
+                aria-label="Toggle Hide Listen"
+                aria-pressed="false"
+            ></button>
         </div>
     </div>
 
@@ -843,11 +856,13 @@ html.blood-theme .embed-header strong {
                 <span>Switch the site interface to Google Sans when available.</span>
             </div>
 
-            <button id="classicFontToggle"
-                    class="toggle-button"
-                    type="button"
-                    aria-label="Toggle Classic Font"
-                    aria-pressed="false"></button>
+            <button
+                id="classicFontToggle"
+                class="toggle-button"
+                type="button"
+                aria-label="Toggle Classic Font"
+                aria-pressed="false"
+            ></button>
         </div>
     </div>
 
@@ -856,23 +871,43 @@ html.blood-theme .embed-header strong {
         <p>Choose what this site looks like in your browser tab.</p>
 
         <div class="disguise-settings-grid">
-            <button class="disguise-setting-option" data-disguise="none" type="button">
+            <button
+                class="disguise-setting-option"
+                data-disguise="none"
+                type="button"
+            >
                 Secret Unblocked XY
             </button>
 
-            <button class="disguise-setting-option" data-disguise="word" type="button">
+            <button
+                class="disguise-setting-option"
+                data-disguise="word"
+                type="button"
+            >
                 Microsoft Word
             </button>
 
-            <button class="disguise-setting-option" data-disguise="classroom" type="button">
+            <button
+                class="disguise-setting-option"
+                data-disguise="classroom"
+                type="button"
+            >
                 Google Classroom
             </button>
 
-            <button class="disguise-setting-option" data-disguise="powerpoint" type="button">
+            <button
+                class="disguise-setting-option"
+                data-disguise="powerpoint"
+                type="button"
+            >
                 Microsoft PowerPoint
             </button>
 
-            <button class="disguise-setting-option" data-disguise="google" type="button">
+            <button
+                class="disguise-setting-option"
+                data-disguise="google"
+                type="button"
+            >
                 Google
             </button>
         </div>
@@ -905,17 +940,15 @@ const disguises = {
 };
 
 /*
- * games.json is generated automatically by GitHub Actions.
- *
- * IMPORTANT:
- * index.html is the homepage.
- * This file never redirects the homepage.
+ * The homepage is index.html.
+ * games.json is manually maintained.
  */
 const gamesURL = "./games.json";
 
 const gamesContainer = document.getElementById("games");
 const statusElement = document.getElementById("status");
 const searchInput = document.getElementById("search");
+
 const settingsPage = document.getElementById("settingsPage");
 const homePage = document.getElementById("homePage");
 const footer = document.getElementById("footer");
@@ -938,7 +971,7 @@ let account = {
 };
 
 const defaultAvatar =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E";
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E';
 
 function updateAccountDisplay() {
     const avatar = account.avatar || defaultAvatar;
@@ -1144,10 +1177,7 @@ function applyTheme(theme) {
         );
     });
 
-    localStorage.setItem(
-        "siteTheme",
-        theme
-    );
+    localStorage.setItem("siteTheme", theme);
 
     document
         .querySelectorAll(".theme-button")
@@ -1157,16 +1187,6 @@ function applyTheme(theme) {
                 button.dataset.theme === theme
             );
         });
-}
-
-function getGameTitle(filename) {
-    return filename
-        .replace(/\.html$/i, "")
-        .replace(/game$/i, "")
-        .replace(/[-_]+/g, " ")
-        .replace(/\s+/g, " ")
-        .trim()
-        .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
 function escapeHTML(text) {
@@ -1191,44 +1211,35 @@ function renderGames(list) {
         card.className = "game-card";
 
         /*
-         * IMPORTANT:
-         * Always use the actual filename from games.json.
-         * This prevents an old/stale "url" value from opening
-         * the wrong HTML page.
+         * Open the exact game file from games.json.
+         * No redirect and no siteSettings parameter.
          */
-        card.href =
-            "./" +
-            encodeURI(game.filename) +
-            "?siteSettings=1";
+        card.href = "./" + encodeURI(game.filename);
 
         card.title = game.title;
 
-        const iconHTML = game.icon
-            ? `
-                <img
-                    class="game-icon"
-                    src="${encodeURI(game.icon)}"
-                    alt="${escapeHTML(game.title)}"
-                    loading="lazy"
-                    onerror="this.style.display='none'"
-                >
-              `
-            : `
-                <div
-                    class="game-icon"
-                    aria-label="${escapeHTML(game.title)}"
-                ></div>
-              `;
+        const icon = document.createElement("img");
 
-        card.innerHTML = `
-            ${iconHTML}
+        icon.className = "game-icon";
+        icon.src = "./" + encodeURI(game.icon);
+        icon.alt = game.title;
+        icon.loading = "lazy";
 
-            <div class="game-info">
-                <div class="game-title">
-                    ${escapeHTML(game.title)}
-                </div>
-            </div>
-        `;
+        icon.onerror = function() {
+            this.style.display = "none";
+        };
+
+        const info = document.createElement("div");
+        info.className = "game-info";
+
+        const title = document.createElement("div");
+        title.className = "game-title";
+        title.textContent = game.title;
+
+        info.appendChild(title);
+
+        card.appendChild(icon);
+        card.appendChild(info);
 
         gamesContainer.appendChild(card);
     });
@@ -1237,45 +1248,20 @@ function renderGames(list) {
 async function loadGames() {
     try {
         const response = await fetch(
-            gamesURL,
-            {
-                cache: "no-store"
-            }
+            "./games.json?cache=" + Date.now()
         );
 
         if (!response.ok) {
             throw new Error(
-                `games.json returned ${response.status}`
+                `games.json returned HTTP ${response.status}`
             );
         }
 
         const data = await response.json();
 
-        /*
-         * Only accept real games.
-         *
-         * A filename MUST end with "game.html".
-         * This is what prevents things such as:
-         *
-         * Secret-Unblocked-XY-games-fixed.html
-         * settings.html
-         * index.html
-         * g@metemplate.html
-         *
-         * from appearing as games.
-         */
-        games = (
-            Array.isArray(data.games)
-                ? data.games
-                : []
-        ).filter(game =>
-            game &&
-            typeof game.filename === "string" &&
-            typeof game.title === "string" &&
-            /game\.html$/i.test(game.filename) &&
-            game.filename.toLowerCase() !== "index.html" &&
-            game.filename.toLowerCase() !== "g@metemplate.html"
-        );
+        games = Array.isArray(data.games)
+            ? data.games
+            : [];
 
         statusElement.textContent =
             `${games.length} game${games.length === 1 ? "" : "s"} found`;
@@ -1295,12 +1281,13 @@ async function loadGames() {
             <div class="no-games">
                 <strong>Could not load the games.</strong>
                 <br><br>
-                Make sure the GitHub Actions game index has been generated.
+                ${escapeHTML(error.message)}
             </div>
         `;
     }
 }
 
+/* Account */
 document.addEventListener("click", event => {
     if (!event.target.closest(".account-wrapper")) {
         accountMenu.classList.remove("visible");
@@ -1313,12 +1300,12 @@ document.addEventListener("click", event => {
 });
 
 accountButton.addEventListener("click", () => {
-    const isVisible =
+    const visible =
         accountMenu.classList.toggle("visible");
 
     accountButton.setAttribute(
         "aria-expanded",
-        String(isVisible)
+        String(visible)
     );
 });
 
@@ -1357,6 +1344,7 @@ document
             "Google sync will be available after a Google sign-in service is connected.";
     });
 
+/* Disguise */
 document
     .querySelectorAll(".disguise-setting-option")
     .forEach(option => {
@@ -1367,6 +1355,7 @@ document
         });
     });
 
+/* Settings navigation */
 document
     .getElementById("settingsButton")
     .addEventListener("click", () => {
@@ -1387,6 +1376,7 @@ document
         window.scrollTo(0, 0);
     });
 
+/* Theme */
 document
     .querySelectorAll(".theme-button")
     .forEach(button => {
@@ -1397,6 +1387,7 @@ document
         });
     });
 
+/* Listen */
 const hideListenToggle =
     document.getElementById("hideListenToggle");
 
@@ -1412,6 +1403,7 @@ if (hideListenToggle) {
     );
 }
 
+/* Blood theme */
 const bloodThemeToggle =
     document.getElementById("bloodThemeToggle");
 
@@ -1427,6 +1419,7 @@ if (bloodThemeToggle) {
     );
 }
 
+/* Classic font */
 const classicFontToggle =
     document.getElementById("classicFontToggle");
 
@@ -1442,6 +1435,7 @@ if (classicFontToggle) {
     );
 }
 
+/* Search */
 searchInput.addEventListener("input", () => {
     const query =
         searchInput.value
@@ -1460,6 +1454,7 @@ searchInput.addEventListener("input", () => {
     );
 });
 
+/* Listen panel */
 const embedPanel =
     document.getElementById("embedPanel");
 
@@ -1475,6 +1470,7 @@ document
         embedPanel.classList.remove("visible");
     });
 
+/* Start */
 applyGlobalSettings();
 loadGames();
 
@@ -1495,4 +1491,4 @@ window.addEventListener("storage", event => {
 
 </body>
 </html>
-```
+
