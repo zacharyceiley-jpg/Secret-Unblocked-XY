@@ -1,1 +1,136 @@
+```yaml
+name: Generate Games Index
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-games:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate games.json
+        shell: python
+        run: |
+          import json
+          import re
+          import subprocess
+          from pathlib import Path
+
+          # Only tracked HTML files are considered.
+          # A game must end with "game.html".
+          tracked = subprocess.check_output(
+              ["git", "ls-files", "*.html"],
+              text=True
+          ).splitlines()
+
+          def game_title(filename):
+              name = re.sub(
+                  r"game\.html$",
+                  "",
+                  filename,
+                  flags=re.I
+              )
+
+              name = re.sub(r"[-_]+", " ", name)
+              name = re.sub(r"\s+", " ", name).strip()
+
+              if not name:
+                  return "Game"
+
+              return " ".join(
+                  word[:1].upper() + word[1:]
+                  for word in name.split()
+              )
+
+          games = []
+
+          for filename in tracked:
+              path = Path(filename)
+
+              # Only games in the root of the repository.
+              if path.parent != Path("."):
+                  continue
+
+              lower = filename.lower()
+
+              # Never treat these as games.
+              if lower == "index.html":
+                  continue
+
+              if lower == "g@metemplate.html":
+                  continue
+
+              # Game filenames MUST end in game.html.
+              # Examples:
+              # fnafgame.html
+              # FNAFgame.html
+              # Minecraftgame.html
+              if not re.search(r"game\.html$", filename, re.I):
+                  continue
+
+              # Look for a matching game icon.
+              icon_name = re.sub(
+                  r"game\.html$",
+                  "game.png",
+                  filename,
+                  flags=re.I
+              )
+
+              icon_path = Path(icon_name)
+
+              games.append({
+                  "filename": filename,
+                  "title": game_title(filename),
+                  "url": filename,
+                  "icon": icon_name if icon_path.is_file() else ""
+              })
+
+          games.sort(
+              key=lambda game: game["title"].lower()
+          )
+
+          Path("games.json").write_text(
+              json.dumps(
+                  {
+                      "generated": True,
+                      "games": games
+                  },
+                  indent=2
+              ),
+              encoding="utf-8"
+          )
+
+          print(
+              f"Generated games.json with {len(games)} games."
+          )
+
+          for game in games:
+              print(" -", game["filename"])
+
+      - name: Commit games.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add games.json
+
+          if git diff --cached --quiet; then
+            echo "games.json is already up to date."
+          else
+            git commit -m "Auto-update games index"
+            git push
+          fi
+```
 
