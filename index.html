@@ -70,7 +70,7 @@ header {
     font-size: 15px;
 }
 
-.header-button,
+    .header-button,
 .back-button {
     padding: 13px 16px;
     border: 1px solid var(--border-strong);
@@ -86,6 +86,120 @@ header {
 .theme-button:hover {
     background: var(--surface-hover);
     border-color: #666875;
+}
+
+.account-wrapper {
+    position: relative;
+}
+
+.account-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    max-width: 190px;
+}
+
+.account-avatar,
+.profile-preview {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--surface-hover);
+}
+
+.account-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    width: min(340px, 90vw);
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+
+.account-menu.visible {
+    display: block;
+}
+
+.account-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.account-heading strong,
+.account-heading span {
+    display: block;
+}
+
+.account-heading span,
+.account-note {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.account-field {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.account-field label {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.account-field input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 9px;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.account-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.account-action {
+    padding: 10px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 9px;
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.account-action.primary {
+    background: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.account-rooms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+    margin-top: 16px;
+}
+
+.account-room {
+    min-height: 48px;
+    border: 1px dashed var(--border-strong);
+    border-radius: 8px;
+    color: var(--muted-2);
+    font-size: 11px;
+    display: grid;
+    place-items: center;
 }
 
 .disguise-wrapper {
@@ -399,6 +513,48 @@ footer {
         </div>
 
         <button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
+
+        <div class="account-wrapper">
+            <button id="accountButton" class="header-button account-button" type="button" aria-expanded="false">
+                <img id="accountAvatar" class="account-avatar" alt="Profile picture">
+                <span id="accountButtonLabel">Account</span>
+            </button>
+
+            <div id="accountMenu" class="account-menu" aria-label="Account menu">
+                <div class="account-heading">
+                    <img id="profilePreview" class="profile-preview" alt="Your profile picture">
+                    <div>
+                        <strong id="accountGreeting">Your account</strong>
+                        <span>Saved on this device</span>
+                    </div>
+                </div>
+
+                <div class="account-field">
+                    <label for="accountName">Display name</label>
+                    <input id="accountName" type="text" maxlength="40" placeholder="Your name" autocomplete="name">
+                </div>
+
+                <div class="account-field">
+                    <label for="profileUpload">Profile picture</label>
+                    <input id="profileUpload" type="file" accept="image/*">
+                </div>
+
+                <div class="account-actions">
+                    <button id="saveAccount" class="account-action primary" type="button">Save account</button>
+                    <button id="googleSync" class="account-action" type="button">Sync to Google</button>
+                </div>
+                <p id="accountNote" class="account-note">Google sync needs a connected sign-in service. Your account currently saves locally.</p>
+
+                <div class="account-rooms" aria-label="Future account rooms">
+                    <div class="account-room">Room 1</div>
+                    <div class="account-room">Room 2</div>
+                    <div class="account-room">Room 3</div>
+                    <div class="account-room">Room 4</div>
+                    <div class="account-room">Room 5</div>
+                    <div class="account-room">Room 6</div>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -490,8 +646,42 @@ const disguiseMenu = document.getElementById("disguiseMenu");
 const settingsPage = document.getElementById("settingsPage");
 const homePage = document.getElementById("homePage");
 const footer = document.getElementById("footer");
+const accountButton = document.getElementById("accountButton");
+const accountMenu = document.getElementById("accountMenu");
+const accountAvatar = document.getElementById("accountAvatar");
+const profilePreview = document.getElementById("profilePreview");
+const accountName = document.getElementById("accountName");
+const profileUpload = document.getElementById("profileUpload");
+const accountGreeting = document.getElementById("accountGreeting");
+const accountButtonLabel = document.getElementById("accountButtonLabel");
+const accountNote = document.getElementById("accountNote");
 
 let games = [];
+let account = { name: "", avatar: "" };
+const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E";
+
+function updateAccountDisplay() {
+    const avatar = account.avatar || defaultAvatar;
+    accountAvatar.src = avatar;
+    profilePreview.src = avatar;
+    accountName.value = account.name;
+    accountGreeting.textContent = account.name ? `Hello, ${account.name}` : "Your account";
+    accountButtonLabel.textContent = account.name || "Account";
+}
+
+function saveAccountData() {
+    account.name = accountName.value.trim();
+    localStorage.setItem("siteAccount", JSON.stringify(account));
+    updateAccountDisplay();
+    accountNote.textContent = "Account saved on this device.";
+}
+
+try {
+    account = JSON.parse(localStorage.getItem("siteAccount")) || account;
+} catch (error) {
+    account = { name: "", avatar: "" };
+}
+updateAccountDisplay();
 
 function setFavicon(url) {
     let icon = document.querySelector("link[rel='icon']");
@@ -626,6 +816,35 @@ document.addEventListener("click", event => {
     if (!event.target.closest(".disguise-wrapper")) {
         disguiseMenu.classList.remove("visible");
     }
+
+    if (!event.target.closest(".account-wrapper")) {
+        accountMenu.classList.remove("visible");
+        accountButton.setAttribute("aria-expanded", "false");
+    }
+});
+
+accountButton.addEventListener("click", () => {
+    const isVisible = accountMenu.classList.toggle("visible");
+    accountButton.setAttribute("aria-expanded", String(isVisible));
+});
+
+document.getElementById("saveAccount").addEventListener("click", saveAccountData);
+
+profileUpload.addEventListener("change", () => {
+    const file = profileUpload.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+        account.avatar = reader.result;
+        updateAccountDisplay();
+        accountNote.textContent = "Picture selected. Click Save account to keep it.";
+    });
+    reader.readAsDataURL(file);
+});
+
+document.getElementById("googleSync").addEventListener("click", () => {
+    accountNote.textContent = "Google sync will be available after a Google sign-in service is connected.";
 });
 
 document.querySelectorAll(".disguise-option").forEach(option => {
