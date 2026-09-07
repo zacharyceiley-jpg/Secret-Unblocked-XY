@@ -17,6 +17,9 @@
     --text: #fff;
     --muted: #a9aab4;
     --muted-2: #8e909c;
+    --accent: #4f46e5;
+    --accent-hover: #6366f1;
+    --blood-red: #ff0000;
 }
 
 html { scroll-behavior: smooth; }
@@ -330,6 +333,107 @@ html.classic-font body {
 body.hide-listen .embed-toggle,
 body.hide-listen .embed-panel {
     display: none !important;
+}
+
+
+/* Blood theme */
+html.blood-theme body {
+    background: #ff0000;
+    color: #000;
+}
+
+html.blood-theme header,
+html.blood-theme .settings-card,
+html.blood-theme .game-card,
+html.blood-theme .account-menu,
+html.blood-theme .disguise-menu,
+html.blood-theme .embed-panel {
+    background: #ff0000;
+    color: #000;
+    border-color: #000;
+}
+
+html.blood-theme #search,
+html.blood-theme .header-button,
+html.blood-theme .back-button,
+html.blood-theme .account-action,
+html.blood-theme .disguise-setting-option,
+html.blood-theme .theme-button,
+html.blood-theme .toggle-button {
+    background: #ff0000;
+    color: #000;
+    border-color: #000;
+}
+
+html.blood-theme .search-wrapper input::placeholder,
+html.blood-theme .hero p,
+html.blood-theme .settings-card p,
+html.blood-theme #status,
+html.blood-theme .account-heading span,
+html.blood-theme .account-note,
+html.blood-theme .account-field label,
+html.blood-theme .account-room,
+html.blood-theme .setting-toggle-text span,
+html.blood-theme .theme-button span,
+html.blood-theme footer {
+    color: #000;
+}
+
+html.blood-theme .header-button:hover,
+html.blood-theme .back-button:hover,
+html.blood-theme .theme-button:hover,
+html.blood-theme .disguise-setting-option:hover,
+html.blood-theme .account-action:hover {
+    background: #cc0000;
+    color: #000;
+    border-color: #000;
+}
+
+html.blood-theme .account-action.primary,
+html.blood-theme .embed-toggle {
+    background: #000;
+    color: #ff0000;
+    border-color: #000;
+}
+
+html.blood-theme .embed-toggle:hover {
+    background: #330000;
+    color: #ff0000;
+}
+
+html.blood-theme .game-card:hover {
+    border-color: #000;
+}
+
+html.blood-theme .game-icon {
+    background: #cc0000;
+}
+
+html.blood-theme .toggle-button::after {
+    background: #000;
+}
+
+html.blood-theme .toggle-button.active::after {
+    background: #000;
+}
+
+/* Running/scrolling text */
+html.blood-theme .logo,
+html.blood-theme .hero h1,
+html.blood-theme .settings-top h1,
+html.blood-theme .settings-card h2,
+html.blood-theme .game-title,
+html.blood-theme .account-heading strong,
+html.blood-theme .embed-header strong {
+    animation: bloodRun 2.8s linear infinite;
+}
+
+@keyframes bloodRun {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(6px); }
+    50%  { transform: translateX(0); }
+    75%  { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
 }
 
 /* Disguise settings */
@@ -690,6 +794,20 @@ body.hide-listen .embed-panel {
     </div>
 
     <div class="settings-card">
+        <h2>Blood Theme</h2>
+        <p>Turn the entire site bright red with black text and running text.</p>
+
+        <div class="setting-toggle">
+            <div class="setting-toggle-text">
+                <strong>Blood Theme</strong>
+                <span>Bright red background, black text, and animated running text.</span>
+            </div>
+            <button id="bloodThemeToggle" class="toggle-button" type="button"
+                    aria-label="Toggle Blood Theme" aria-pressed="false"></button>
+        </div>
+    </div>
+
+    <div class="settings-card">
         <h2>Listen</h2>
         <p>Choose whether the Listen button and panel are available.</p>
 
@@ -851,6 +969,7 @@ function getSiteSettings() {
         theme: localStorage.getItem("siteTheme") || "dark",
         hideListen: localStorage.getItem("hideListen") === "true",
         classicFont: localStorage.getItem("classicFont") === "true",
+        bloodTheme: localStorage.getItem("bloodTheme") === "true",
         disguise: localStorage.getItem("siteDisguise") || "none"
     };
 }
@@ -862,12 +981,19 @@ function applyGlobalSettings() {
 
     document.body.classList.toggle("hide-listen", settings.hideListen);
     document.documentElement.classList.toggle("classic-font", settings.classicFont);
+    document.documentElement.classList.toggle("blood-theme", settings.bloodTheme);
     applyDisguise(settings.disguise);
 
     const hideListenToggle = document.getElementById("hideListenToggle");
     if (hideListenToggle) {
         hideListenToggle.classList.toggle("active", settings.hideListen);
         hideListenToggle.setAttribute("aria-pressed", String(settings.hideListen));
+    }
+
+    const bloodThemeToggle = document.getElementById("bloodThemeToggle");
+    if (bloodThemeToggle) {
+        bloodThemeToggle.classList.toggle("active", settings.bloodTheme);
+        bloodThemeToggle.setAttribute("aria-pressed", String(settings.bloodTheme));
     }
 
     const classicFontToggle = document.getElementById("classicFontToggle");
@@ -1044,6 +1170,13 @@ if (hideListenToggle) {
     });
 }
 
+const bloodThemeToggle = document.getElementById("bloodThemeToggle");
+if (bloodThemeToggle) {
+    bloodThemeToggle.addEventListener("click", () => {
+        saveGlobalSetting("bloodTheme", !getSiteSettings().bloodTheme);
+    });
+}
+
 const classicFontToggle = document.getElementById("classicFontToggle");
 if (classicFontToggle) {
     classicFontToggle.addEventListener("click", () => {
@@ -1074,7 +1207,7 @@ applyGlobalSettings();
 loadGames();
 
 window.addEventListener("storage", event => {
-    if (["siteTheme", "hideListen", "classicFont", "siteDisguise"].includes(event.key)) {
+    if (["siteTheme", "hideListen", "classicFont", "bloodTheme", "siteDisguise"].includes(event.key)) {
         applyGlobalSettings();
     }
 });
