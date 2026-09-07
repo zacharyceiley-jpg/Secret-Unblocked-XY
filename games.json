@@ -1,11 +1,96 @@
+```json
 {
-  "generated": true,
   "games": [
     {
-      "filename": "Secret-Unblocked-XY-games-fixed.html",
-      "title": "Secret Unblocked XY Games Fixed",
-      "url": "Secret-Unblocked-XY-games-fixed.html",
-      "icon": ""
+      "filename": "0v0game.html",
+      "title": "0v0",
+      "url": "0v0game.html",
+      "icon": "0v0game.png"
+    },
+    {
+      "filename": "Amoung Usgame.html",
+      "title": "Amoung Us",
+      "url": "Amoung Usgame.html",
+      "icon": "Amoung Usgame.png"
+    },
+    {
+      "filename": "Baldi's Basic'sgame.html",
+      "title": "Baldi's Basic's",
+      "url": "Baldi's Basic'sgame.html",
+      "icon": "Baldi's Basic'sgame.png"
+    },
+    {
+      "filename": "FNAF 1game.html",
+      "title": "FNAF 1",
+      "url": "FNAF 1game.html",
+      "icon": "FNAF 1game.png"
+    },
+    {
+      "filename": "GAGgame.html",
+      "title": "GAG",
+      "url": "GAGgame.html",
+      "icon": "GAGgame.png"
+    },
+    {
+      "filename": "Minecraft Launchergame.html",
+      "title": "Minecraft Launcher",
+      "url": "Minecraft Launchergame.html",
+      "icon": "Minecraft Launchergame.png"
+    },
+    {
+      "filename": "Paper.IO 2game.html",
+      "title": "Paper.IO 2",
+      "url": "Paper.IO 2game.html",
+      "icon": "Paper.IO 2game.png"
+    },
+    {
+      "filename": "Peppa Piggame.html",
+      "title": "Peppa Pig",
+      "url": "Peppa Piggame.html",
+      "icon": "Peppa Piggame.png"
+    },
+    {
+      "filename": "Roblox Clickergame.html",
+      "title": "Roblox Clicker",
+      "url": "Roblox Clickergame.html",
+      "icon": "Roblox Clickergame.png"
+    },
+    {
+      "filename": "SABgame.html",
+      "title": "SAB",
+      "url": "SABgame.html",
+      "icon": "SABgame.png"
+    },
+    {
+      "filename": "Snowridergame.html",
+      "title": "Snowrider",
+      "url": "Snowridergame.html",
+      "icon": "Snowridergame.png"
+    },
+    {
+      "filename": "Solar Smashgame.html",
+      "title": "Solar Smash",
+      "url": "Solar Smashgame.html",
+      "icon": "Solar Smashgame.png"
+    },
+    {
+      "filename": "Sonic Robo Blast 2game.html",
+      "title": "Sonic Robo Blast 2",
+      "url": "Sonic Robo Blast 2game.html",
+      "icon": "Sonic Robo Blast 2game.png"
+    },
+    {
+      "filename": "TDS Moddedgame.html",
+      "title": "TDS Modded",
+      "url": "TDS Moddedgame.html",
+      "icon": "TDS Moddedgame.png"
+    },
+    {
+      "filename": "Time Shooter 3game.html",
+      "title": "Time Shooter 3",
+      "url": "Time Shooter 3game.html",
+      "icon": "Time Shooter 3game.png"
     }
   ]
 }
+```
