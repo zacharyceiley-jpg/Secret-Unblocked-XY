@@ -873,7 +873,7 @@ const disguises = {
     },
     powerpoint: {
         title: "Microsoft PowerPoint",
-        favicon: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Microsoft_Office_PowerPoint_%282025%E2%80%93present%29.svg/3840px-Microsoft_Office_PowerPoint_%282025%E2%80%93present%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"
+        favicon: "https://static.vecteezy.com/system/resources/thumbnails/027/179/348/small_2x/microsoft-power-point-icon-logo-symbol-free-png.png"
     },
     google: {
         title: "Google",
@@ -884,7 +884,10 @@ const disguises = {
 const owner = "zacharyceiley-jpg";
 const repo = "Secret-Unblocked-XY";
 const branch = "main";
-const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/?ref=${branch}`;
+
+// games.json is generated automatically by GitHub Actions.
+// The homepage no longer uses the GitHub API or a manually maintained list.
+const gamesURL = "./games.json";
 
 const gamesContainer = document.getElementById("games");
 const statusElement = document.getElementById("status");
@@ -1070,46 +1073,37 @@ function renderGames(list) {
 
 async function loadGames() {
     try {
-        const response = await fetch(apiURL, {
-            headers: { Accept: "application/vnd.github+json" }
+        const response = await fetch(gamesURL, {
+            cache: "no-store"
         });
 
-        if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`games.json returned ${response.status}`);
+        }
 
-        const files = await response.json();
+        const data = await response.json();
 
-        games = files
-            .filter(file =>
-                file.type === "file" &&
-                /\.html$/i.test(file.name) &&
-                /game/i.test(file.name) &&
-                file.name.toLowerCase() !== "index.html"
-            )
-            .map(file => {
-                const iconName = file.name.replace(/\.html$/i, ".png");
+        games = Array.isArray(data.games) ? data.games : [];
 
-                return {
-                    filename: file.name,
-                    title: getGameTitle(file.name),
-                    url: `https://${owner}.github.io/${repo}/${encodeURIComponent(file.name)}`,
-                    icon: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${encodeURIComponent(iconName)}`
-                };
-            })
-            .sort((a, b) => a.title.localeCompare(b.title));
+        statusElement.textContent =
+            `${games.length} game${games.length === 1 ? "" : "s"} found`;
 
-        statusElement.textContent = `${games.length} game${games.length === 1 ? "" : "s"} found`;
         renderGames(games);
     } catch (error) {
-        console.error(error);
-        statusElement.textContent = "Unable to load games from the repository.";
+        console.error("Could not load games.json:", error);
+
+        statusElement.textContent = "Unable to load games.";
+
         gamesContainer.innerHTML = `
             <div class="no-games">
                 <strong>Could not load the games.</strong><br><br>
-                Please check that the repository is public and try again.
+                The game index has not been generated yet.<br>
+                Push the GitHub Actions workflow and refresh this page.
             </div>
         `;
     }
 }
+
 document.addEventListener("click", event => {
 if (!event.target.closest(".account-wrapper")) {
         accountMenu.classList.remove("visible");
