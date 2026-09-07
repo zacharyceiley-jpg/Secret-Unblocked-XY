@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +74,7 @@ header {
     font-size: 15px;
 }
 
-    .header-button,
+.header-button,
 .back-button {
     padding: 13px 16px;
     border: 1px solid var(--border-strong);
@@ -334,7 +335,6 @@ body.hide-listen .embed-toggle,
 body.hide-listen .embed-panel {
     display: none !important;
 }
-
 
 /* Blood theme */
 html.blood-theme body {
@@ -695,7 +695,8 @@ html.blood-theme .embed-header strong {
         <div class="search-wrapper">
             <input id="search" type="search" placeholder="Search games..." autocomplete="off">
         </div>
-<button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
+
+        <button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
 
         <div class="account-wrapper">
             <button id="accountButton" class="header-button account-button" type="button" aria-expanded="false">
@@ -726,7 +727,10 @@ html.blood-theme .embed-header strong {
                     <button id="saveAccount" class="account-action primary" type="button">Save account</button>
                     <button id="googleSync" class="account-action" type="button">Sync to Google</button>
                 </div>
-                <p id="accountNote" class="account-note">Google sync needs a connected sign-in service. Your account currently saves locally.</p>
+
+                <p id="accountNote" class="account-note">
+                    Google sync needs a connected sign-in service. Your account currently saves locally.
+                </p>
 
                 <div class="account-rooms" aria-label="Future account rooms">
                     <div class="account-room">Room 1</div>
@@ -766,7 +770,7 @@ html.blood-theme .embed-header strong {
         <p>Choose a game to play.</p>
     </section>
 
-    <div id="status">Searching repository for games...</div>
+    <div id="status">Loading games...</div>
     <div id="games" class="games-grid"></div>
 </main>
 
@@ -781,12 +785,12 @@ html.blood-theme .embed-header strong {
         <p>Choose whether the entire site uses Light Mode or Dark Mode.</p>
 
         <div class="theme-buttons">
-            <button class="theme-button" data-theme="dark">
+            <button class="theme-button" data-theme="dark" type="button">
                 <strong>Dark Mode</strong>
                 <span>Dark background and interface.</span>
             </button>
 
-            <button class="theme-button" data-theme="light">
+            <button class="theme-button" data-theme="light" type="button">
                 <strong>Light Mode</strong>
                 <span>Light background and interface.</span>
             </button>
@@ -802,8 +806,12 @@ html.blood-theme .embed-header strong {
                 <strong>Blood Theme</strong>
                 <span>Bright red background, black text, and animated running text.</span>
             </div>
-            <button id="bloodThemeToggle" class="toggle-button" type="button"
-                    aria-label="Toggle Blood Theme" aria-pressed="false"></button>
+
+            <button id="bloodThemeToggle"
+                    class="toggle-button"
+                    type="button"
+                    aria-label="Toggle Blood Theme"
+                    aria-pressed="false"></button>
         </div>
     </div>
 
@@ -816,8 +824,12 @@ html.blood-theme .embed-header strong {
                 <strong>Hide Listen</strong>
                 <span>Hide the Listen button and its panel.</span>
             </div>
-            <button id="hideListenToggle" class="toggle-button" type="button"
-                    aria-label="Toggle Hide Listen" aria-pressed="false"></button>
+
+            <button id="hideListenToggle"
+                    class="toggle-button"
+                    type="button"
+                    aria-label="Toggle Hide Listen"
+                    aria-pressed="false"></button>
         </div>
     </div>
 
@@ -830,8 +842,12 @@ html.blood-theme .embed-header strong {
                 <strong>Classic Font</strong>
                 <span>Switch the site interface to Google Sans when available.</span>
             </div>
-            <button id="classicFontToggle" class="toggle-button" type="button"
-                    aria-label="Toggle Classic Font" aria-pressed="false"></button>
+
+            <button id="classicFontToggle"
+                    class="toggle-button"
+                    type="button"
+                    aria-label="Toggle Classic Font"
+                    aria-pressed="false"></button>
         </div>
     </div>
 
@@ -843,15 +859,19 @@ html.blood-theme .embed-header strong {
             <button class="disguise-setting-option" data-disguise="none" type="button">
                 Secret Unblocked XY
             </button>
+
             <button class="disguise-setting-option" data-disguise="word" type="button">
                 Microsoft Word
             </button>
+
             <button class="disguise-setting-option" data-disguise="classroom" type="button">
                 Google Classroom
             </button>
+
             <button class="disguise-setting-option" data-disguise="powerpoint" type="button">
                 Microsoft PowerPoint
             </button>
+
             <button class="disguise-setting-option" data-disguise="google" type="button">
                 Google
             </button>
@@ -867,26 +887,30 @@ const disguises = {
         title: "Microsoft Word",
         favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Microsoft_Office_Word_%282025%E2%80%93present%29.svg/960px-Microsoft_Office_Word_%282025%E2%80%93present%29.svg.png"
     },
+
     classroom: {
         title: "Google Classroom",
         favicon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-classroom-icon.png"
     },
+
     powerpoint: {
         title: "Microsoft PowerPoint",
         favicon: "https://static.vecteezy.com/system/resources/thumbnails/027/179/348/small_2x/microsoft-power-point-icon-logo-symbol-free-png.png"
     },
+
     google: {
         title: "Google",
         favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/3840px-Google_Favicon_2025.svg.png"
     }
 };
 
-const owner = "zacharyceiley-jpg";
-const repo = "Secret-Unblocked-XY";
-const branch = "main";
-
-// games.json is generated automatically by GitHub Actions.
-// The homepage no longer uses the GitHub API or a manually maintained list.
+/*
+ * games.json is generated automatically by GitHub Actions.
+ *
+ * IMPORTANT:
+ * index.html is the homepage.
+ * This file never redirects the homepage.
+ */
 const gamesURL = "./games.json";
 
 const gamesContainer = document.getElementById("games");
@@ -895,6 +919,7 @@ const searchInput = document.getElementById("search");
 const settingsPage = document.getElementById("settingsPage");
 const homePage = document.getElementById("homePage");
 const footer = document.getElementById("footer");
+
 const accountButton = document.getElementById("accountButton");
 const accountMenu = document.getElementById("accountMenu");
 const accountAvatar = document.getElementById("accountAvatar");
@@ -906,30 +931,54 @@ const accountButtonLabel = document.getElementById("accountButtonLabel");
 const accountNote = document.getElementById("accountNote");
 
 let games = [];
-let account = { name: "", avatar: "" };
-const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E";
+
+let account = {
+    name: "",
+    avatar: ""
+};
+
+const defaultAvatar =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E";
 
 function updateAccountDisplay() {
     const avatar = account.avatar || defaultAvatar;
+
     accountAvatar.src = avatar;
     profilePreview.src = avatar;
     accountName.value = account.name;
-    accountGreeting.textContent = account.name ? `Hello, ${account.name}` : "Your account";
-    accountButtonLabel.textContent = account.name || "Account";
+
+    accountGreeting.textContent =
+        account.name ? `Hello, ${account.name}` : "Your account";
+
+    accountButtonLabel.textContent =
+        account.name || "Account";
 }
 
 function saveAccountData() {
     account.name = accountName.value.trim();
-    localStorage.setItem("siteAccount", JSON.stringify(account));
+
+    localStorage.setItem(
+        "siteAccount",
+        JSON.stringify(account)
+    );
+
     updateAccountDisplay();
-    accountNote.textContent = "Account saved on this device.";
+
+    accountNote.textContent =
+        "Account saved on this device.";
 }
 
 try {
-    account = JSON.parse(localStorage.getItem("siteAccount")) || account;
+    account =
+        JSON.parse(localStorage.getItem("siteAccount")) ||
+        account;
 } catch (error) {
-    account = { name: "", avatar: "" };
+    account = {
+        name: "",
+        avatar: ""
+    };
 }
+
 updateAccountDisplay();
 
 function setFavicon(url) {
@@ -950,7 +999,10 @@ function applyDisguise(type) {
         setFavicon("");
     } else {
         const disguise = disguises[type];
-        if (!disguise) return;
+
+        if (!disguise) {
+            return;
+        }
 
         document.title = disguise.title;
         setFavicon(disguise.favicon);
@@ -958,15 +1010,16 @@ function applyDisguise(type) {
 
     localStorage.setItem("siteDisguise", type);
 
-    document.querySelectorAll(".disguise-setting-option").forEach(button => {
-        button.classList.toggle("active", button.dataset.disguise === type);
-    });
+    document
+        .querySelectorAll(".disguise-setting-option")
+        .forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.disguise === type
+            );
+        });
 }
 
-/*
- * Global settings are stored in localStorage so pages on this same
- * GitHub Pages site can share them.
- */
 function getSiteSettings() {
     return {
         theme: localStorage.getItem("siteTheme") || "dark",
@@ -982,27 +1035,66 @@ function applyGlobalSettings() {
 
     applyTheme(settings.theme);
 
-    document.body.classList.toggle("hide-listen", settings.hideListen);
-    document.documentElement.classList.toggle("classic-font", settings.classicFont);
-    document.documentElement.classList.toggle("blood-theme", settings.bloodTheme);
+    document.body.classList.toggle(
+        "hide-listen",
+        settings.hideListen
+    );
+
+    document.documentElement.classList.toggle(
+        "classic-font",
+        settings.classicFont
+    );
+
+    document.documentElement.classList.toggle(
+        "blood-theme",
+        settings.bloodTheme
+    );
+
     applyDisguise(settings.disguise);
 
-    const hideListenToggle = document.getElementById("hideListenToggle");
+    const hideListenToggle =
+        document.getElementById("hideListenToggle");
+
     if (hideListenToggle) {
-        hideListenToggle.classList.toggle("active", settings.hideListen);
-        hideListenToggle.setAttribute("aria-pressed", String(settings.hideListen));
+        hideListenToggle.classList.toggle(
+            "active",
+            settings.hideListen
+        );
+
+        hideListenToggle.setAttribute(
+            "aria-pressed",
+            String(settings.hideListen)
+        );
     }
 
-    const bloodThemeToggle = document.getElementById("bloodThemeToggle");
+    const bloodThemeToggle =
+        document.getElementById("bloodThemeToggle");
+
     if (bloodThemeToggle) {
-        bloodThemeToggle.classList.toggle("active", settings.bloodTheme);
-        bloodThemeToggle.setAttribute("aria-pressed", String(settings.bloodTheme));
+        bloodThemeToggle.classList.toggle(
+            "active",
+            settings.bloodTheme
+        );
+
+        bloodThemeToggle.setAttribute(
+            "aria-pressed",
+            String(settings.bloodTheme)
+        );
     }
 
-    const classicFontToggle = document.getElementById("classicFontToggle");
+    const classicFontToggle =
+        document.getElementById("classicFontToggle");
+
     if (classicFontToggle) {
-        classicFontToggle.classList.toggle("active", settings.classicFont);
-        classicFontToggle.setAttribute("aria-pressed", String(settings.classicFont));
+        classicFontToggle.classList.toggle(
+            "active",
+            settings.classicFont
+        );
+
+        classicFontToggle.setAttribute(
+            "aria-pressed",
+            String(settings.classicFont)
+        );
     }
 }
 
@@ -1013,20 +1105,58 @@ function saveGlobalSetting(name, value) {
 
 function applyTheme(theme) {
     const light = theme === "light";
+
     const values = light
-        ? ["#f5f5f7", "#fff", "#eeeef2", "#dedee5", "#c9c9d2", "#111116", "#5f606b", "#70717c"]
-        : ["#0b0b0f", "#15161c", "#1a1b22", "#252630", "#30313a", "#fff", "#a9aab4", "#8e909c"];
+        ? [
+            "#f5f5f7",
+            "#fff",
+            "#eeeef2",
+            "#dedee5",
+            "#c9c9d2",
+            "#111116",
+            "#5f606b",
+            "#70717c"
+        ]
+        : [
+            "#0b0b0f",
+            "#15161c",
+            "#1a1b22",
+            "#252630",
+            "#30313a",
+            "#fff",
+            "#a9aab4",
+            "#8e909c"
+        ];
 
-    ["--bg", "--surface", "--surface-hover", "--border", "--border-strong", "--text", "--muted", "--muted-2"]
-        .forEach((name, index) => {
-            document.documentElement.style.setProperty(name, values[index]);
-        });
-
-    localStorage.setItem("siteTheme", theme);
-
-    document.querySelectorAll(".theme-button").forEach(button => {
-        button.classList.toggle("active", button.dataset.theme === theme);
+    [
+        "--bg",
+        "--surface",
+        "--surface-hover",
+        "--border",
+        "--border-strong",
+        "--text",
+        "--muted",
+        "--muted-2"
+    ].forEach((name, index) => {
+        document.documentElement.style.setProperty(
+            name,
+            values[index]
+        );
     });
+
+    localStorage.setItem(
+        "siteTheme",
+        theme
+    );
+
+    document
+        .querySelectorAll(".theme-button")
+        .forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.theme === theme
+            );
+        });
 }
 
 function getGameTitle(filename) {
@@ -1049,21 +1179,54 @@ function renderGames(list) {
     gamesContainer.innerHTML = "";
 
     if (!list.length) {
-        gamesContainer.innerHTML = '<div class="no-games">No games found.</div>';
+        gamesContainer.innerHTML =
+            '<div class="no-games">No games found.</div>';
+
         return;
     }
 
     list.forEach(game => {
         const card = document.createElement("a");
+
         card.className = "game-card";
-        card.href = game.url + (game.url.includes("?") ? "&" : "?") + "siteSettings=1";
+
+        /*
+         * IMPORTANT:
+         * Always use the actual filename from games.json.
+         * This prevents an old/stale "url" value from opening
+         * the wrong HTML page.
+         */
+        card.href =
+            "./" +
+            encodeURI(game.filename) +
+            "?siteSettings=1";
+
         card.title = game.title;
 
+        const iconHTML = game.icon
+            ? `
+                <img
+                    class="game-icon"
+                    src="${encodeURI(game.icon)}"
+                    alt="${escapeHTML(game.title)}"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                >
+              `
+            : `
+                <div
+                    class="game-icon"
+                    aria-label="${escapeHTML(game.title)}"
+                ></div>
+              `;
+
         card.innerHTML = `
-            <img class="game-icon" src="${game.icon}" alt="${escapeHTML(game.title)}" loading="lazy"
-                onerror="this.style.display='none'">
+            ${iconHTML}
+
             <div class="game-info">
-                <div class="game-title">${escapeHTML(game.title)}</div>
+                <div class="game-title">
+                    ${escapeHTML(game.title)}
+                </div>
             </div>
         `;
 
@@ -1073,135 +1236,258 @@ function renderGames(list) {
 
 async function loadGames() {
     try {
-        const response = await fetch(gamesURL, {
-            cache: "no-store"
-        });
+        const response = await fetch(
+            gamesURL,
+            {
+                cache: "no-store"
+            }
+        );
 
         if (!response.ok) {
-            throw new Error(`games.json returned ${response.status}`);
+            throw new Error(
+                `games.json returned ${response.status}`
+            );
         }
 
         const data = await response.json();
 
-        games = Array.isArray(data.games) ? data.games : [];
+        /*
+         * Only accept real games.
+         *
+         * A filename MUST end with "game.html".
+         * This is what prevents things such as:
+         *
+         * Secret-Unblocked-XY-games-fixed.html
+         * settings.html
+         * index.html
+         * g@metemplate.html
+         *
+         * from appearing as games.
+         */
+        games = (
+            Array.isArray(data.games)
+                ? data.games
+                : []
+        ).filter(game =>
+            game &&
+            typeof game.filename === "string" &&
+            typeof game.title === "string" &&
+            /game\.html$/i.test(game.filename) &&
+            game.filename.toLowerCase() !== "index.html" &&
+            game.filename.toLowerCase() !== "g@metemplate.html"
+        );
 
         statusElement.textContent =
             `${games.length} game${games.length === 1 ? "" : "s"} found`;
 
         renderGames(games);
-    } catch (error) {
-        console.error("Could not load games.json:", error);
 
-        statusElement.textContent = "Unable to load games.";
+    } catch (error) {
+        console.error(
+            "Could not load games.json:",
+            error
+        );
+
+        statusElement.textContent =
+            "Unable to load games.";
 
         gamesContainer.innerHTML = `
             <div class="no-games">
-                <strong>Could not load the games.</strong><br><br>
-                The game index has not been generated yet.<br>
-                Push the GitHub Actions workflow and refresh this page.
+                <strong>Could not load the games.</strong>
+                <br><br>
+                Make sure the GitHub Actions game index has been generated.
             </div>
         `;
     }
 }
 
 document.addEventListener("click", event => {
-if (!event.target.closest(".account-wrapper")) {
+    if (!event.target.closest(".account-wrapper")) {
         accountMenu.classList.remove("visible");
-        accountButton.setAttribute("aria-expanded", "false");
+
+        accountButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
     }
 });
 
 accountButton.addEventListener("click", () => {
-    const isVisible = accountMenu.classList.toggle("visible");
-    accountButton.setAttribute("aria-expanded", String(isVisible));
+    const isVisible =
+        accountMenu.classList.toggle("visible");
+
+    accountButton.setAttribute(
+        "aria-expanded",
+        String(isVisible)
+    );
 });
 
-document.getElementById("saveAccount").addEventListener("click", saveAccountData);
+document
+    .getElementById("saveAccount")
+    .addEventListener(
+        "click",
+        saveAccountData
+    );
 
 profileUpload.addEventListener("change", () => {
     const file = profileUpload.files[0];
-    if (!file) return;
+
+    if (!file) {
+        return;
+    }
 
     const reader = new FileReader();
+
     reader.addEventListener("load", () => {
         account.avatar = reader.result;
+
         updateAccountDisplay();
-        accountNote.textContent = "Picture selected. Click Save account to keep it.";
+
+        accountNote.textContent =
+            "Picture selected. Click Save account to keep it.";
     });
+
     reader.readAsDataURL(file);
 });
 
-document.getElementById("googleSync").addEventListener("click", () => {
-    accountNote.textContent = "Google sync will be available after a Google sign-in service is connected.";
-});
+document
+    .getElementById("googleSync")
+    .addEventListener("click", () => {
+        accountNote.textContent =
+            "Google sync will be available after a Google sign-in service is connected.";
+    });
 
-document.querySelectorAll(".disguise-setting-option").forEach(option => {
-    option.addEventListener("click", () => applyDisguise(option.dataset.disguise));
-});
+document
+    .querySelectorAll(".disguise-setting-option")
+    .forEach(option => {
+        option.addEventListener("click", () => {
+            applyDisguise(
+                option.dataset.disguise
+            );
+        });
+    });
 
-document.getElementById("settingsButton").addEventListener("click", () => {
-    settingsPage.classList.add("visible");
-    homePage.style.display = "none";
-    footer.style.display = "none";
-    window.scrollTo(0, 0);
-});
+document
+    .getElementById("settingsButton")
+    .addEventListener("click", () => {
+        settingsPage.classList.add("visible");
+        homePage.style.display = "none";
+        footer.style.display = "none";
 
-document.getElementById("backButton").addEventListener("click", () => {
-    settingsPage.classList.remove("visible");
-    homePage.style.display = "";
-    footer.style.display = "";
-    window.scrollTo(0, 0);
-});
+        window.scrollTo(0, 0);
+    });
 
-document.querySelectorAll(".theme-button").forEach(button => {
-    button.addEventListener("click", () => applyTheme(button.dataset.theme));
-});
+document
+    .getElementById("backButton")
+    .addEventListener("click", () => {
+        settingsPage.classList.remove("visible");
+        homePage.style.display = "";
+        footer.style.display = "";
 
-const hideListenToggle = document.getElementById("hideListenToggle");
+        window.scrollTo(0, 0);
+    });
+
+document
+    .querySelectorAll(".theme-button")
+    .forEach(button => {
+        button.addEventListener("click", () => {
+            applyTheme(
+                button.dataset.theme
+            );
+        });
+    });
+
+const hideListenToggle =
+    document.getElementById("hideListenToggle");
+
 if (hideListenToggle) {
-    hideListenToggle.addEventListener("click", () => {
-        saveGlobalSetting("hideListen", !getSiteSettings().hideListen);
-    });
+    hideListenToggle.addEventListener(
+        "click",
+        () => {
+            saveGlobalSetting(
+                "hideListen",
+                !getSiteSettings().hideListen
+            );
+        }
+    );
 }
 
-const bloodThemeToggle = document.getElementById("bloodThemeToggle");
+const bloodThemeToggle =
+    document.getElementById("bloodThemeToggle");
+
 if (bloodThemeToggle) {
-    bloodThemeToggle.addEventListener("click", () => {
-        saveGlobalSetting("bloodTheme", !getSiteSettings().bloodTheme);
-    });
+    bloodThemeToggle.addEventListener(
+        "click",
+        () => {
+            saveGlobalSetting(
+                "bloodTheme",
+                !getSiteSettings().bloodTheme
+            );
+        }
+    );
 }
 
-const classicFontToggle = document.getElementById("classicFontToggle");
+const classicFontToggle =
+    document.getElementById("classicFontToggle");
+
 if (classicFontToggle) {
-    classicFontToggle.addEventListener("click", () => {
-        saveGlobalSetting("classicFont", !getSiteSettings().classicFont);
-    });
+    classicFontToggle.addEventListener(
+        "click",
+        () => {
+            saveGlobalSetting(
+                "classicFont",
+                !getSiteSettings().classicFont
+            );
+        }
+    );
 }
 
 searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim().toLowerCase();
+    const query =
+        searchInput.value
+            .trim()
+            .toLowerCase();
 
-    renderGames(games.filter(game =>
-        game.title.toLowerCase().includes(query) ||
-        game.filename.toLowerCase().includes(query)
-    ));
+    renderGames(
+        games.filter(game =>
+            game.title
+                .toLowerCase()
+                .includes(query) ||
+            game.filename
+                .toLowerCase()
+                .includes(query)
+        )
+    );
 });
 
-const embedPanel = document.getElementById("embedPanel");
+const embedPanel =
+    document.getElementById("embedPanel");
 
-document.getElementById("embedToggle").addEventListener("click", () => {
-    embedPanel.classList.add("visible");
-});
+document
+    .getElementById("embedToggle")
+    .addEventListener("click", () => {
+        embedPanel.classList.add("visible");
+    });
 
-document.getElementById("embedClose").addEventListener("click", () => {
-    embedPanel.classList.remove("visible");
-});
+document
+    .getElementById("embedClose")
+    .addEventListener("click", () => {
+        embedPanel.classList.remove("visible");
+    });
 
 applyGlobalSettings();
 loadGames();
 
 window.addEventListener("storage", event => {
-    if (["siteTheme", "hideListen", "classicFont", "bloodTheme", "siteDisguise"].includes(event.key)) {
+    if (
+        [
+            "siteTheme",
+            "hideListen",
+            "classicFont",
+            "bloodTheme",
+            "siteDisguise"
+        ].includes(event.key)
+    ) {
         applyGlobalSettings();
     }
 });
@@ -1209,3 +1495,4 @@ window.addEventListener("storage", event => {
 
 </body>
 </html>
+```
