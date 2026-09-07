@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +6,13 @@
 
 <title>Game</title>
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+<!-- Secret Unblocked XY shared settings -->
+<script src="site-settings.js"></script>
 
-    html,
-    body {
+<style>
+    * { box-sizing: border-box; }
+
+    html, body {
         margin: 0;
         width: 100%;
         min-height: 100%;
@@ -22,9 +21,7 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
-    body {
-        overflow-x: hidden;
-    }
+    body { overflow-x: hidden; }
 
     .page {
         max-width: 1400px;
@@ -49,9 +46,7 @@
         font-size: 15px;
     }
 
-    .back-button:hover {
-        background: #252630;
-    }
+    .back-button:hover { background: #252630; }
 
     .game-title {
         margin: 0;
@@ -113,9 +108,7 @@
         font-size: 14px;
     }
 
-    .control-button:hover {
-        background: #252630;
-    }
+    .control-button:hover { background: #252630; }
 
     .redirect-container {
         display: none;
@@ -126,13 +119,9 @@
         border: 1px solid #252630;
     }
 
-    .redirect-container h2 {
-        margin-top: 0;
-    }
+    .redirect-container h2 { margin-top: 0; }
 
-    .redirect-container p {
-        color: #a9aab4;
-    }
+    .redirect-container p { color: #a9aab4; }
 
     .play-button {
         display: inline-block;
@@ -145,19 +134,11 @@
         font-weight: bold;
     }
 
-    .play-button:hover {
-        opacity: 0.85;
-    }
+    .play-button:hover { opacity: 0.85; }
 
     @media (max-width: 600px) {
-        .page {
-            padding: 12px;
-        }
-
-        .game-title {
-            font-size: 22px;
-        }
-
+        .page { padding: 12px; }
+        .game-title { font-size: 22px; }
         .game-container {
             height: 65vh;
             min-height: 300px;
@@ -171,99 +152,64 @@
 <div class="page">
 
     <div class="topbar">
-        <button class="back-button" onclick="goBack()">
-            ← Back
-        </button>
-
-        <h1 class="game-title" id="gameTitle">
-            Game
-        </h1>
+        <button class="back-button" onclick="goBack()">← Back</button>
+        <h1 class="game-title" id="gameTitle">Game</h1>
     </div>
 
     <section class="description">
         <h2>About this game</h2>
-
-        <p id="gameDescription">
-            Game description goes here.
-        </p>
+        <p id="gameDescription">Game description goes here.</p>
     </section>
 
-    <!-- EMBEDDED GAME -->
     <div class="game-container" id="embedContainer">
-
         <iframe
             id="gameFrame"
             allowfullscreen
             loading="eager"
             referrerpolicy="no-referrer"
         ></iframe>
-
     </div>
 
-    <!-- REDIRECT GAME -->
     <div class="redirect-container" id="redirectContainer">
-
         <h2>Ready to play?</h2>
-
-        <p>
-            This game opens in another page.
-        </p>
-
+        <p>This game opens in another page.</p>
         <a
             id="playButton"
             class="play-button"
             target="_blank"
             rel="noopener noreferrer"
-        >
-            Play Game
-        </a>
-
+        >Play Game</a>
     </div>
 
     <div class="controls">
-
         <button
             class="control-button"
             id="fullscreenButton"
             onclick="toggleFullscreen()"
-        >
-            ⛶ Fullscreen
-        </button>
-
+        >⛶ Fullscreen</button>
     </div>
 
 </div>
 
 <script>
-
 /*
 ==================================================
 GAME SETUP
 ==================================================
-
 Change ONLY these settings for each game.
 ==================================================
 */
 
-
 // Game name
 const GAME_TITLE = "FNAF";
-
 
 // Game description
 const GAME_DESCRIPTION =
     "Enter your game description here.";
 
-
 // Game URL
-//
-// Example:
-// https://example.com/game
-//
-// Or a local/game URL if supported.
 const GAME_URL =
     "https://example.com/game";
-
 
 // TRUE  = embed the game inside this page
 // FALSE = show a button that opens the game
@@ -276,160 +222,60 @@ DO NOT EDIT BELOW THIS LINE
 ==================================================
 */
 
+const titleElement = document.getElementById("gameTitle");
+const descriptionElement = document.getElementById("gameDescription");
+const frame = document.getElementById("gameFrame");
+const embedContainer = document.getElementById("embedContainer");
+const redirectContainer = document.getElementById("redirectContainer");
+const playButton = document.getElementById("playButton");
+const fullscreenButton = document.getElementById("fullscreenButton");
 
-const titleElement =
-    document.getElementById("gameTitle");
-
-const descriptionElement =
-    document.getElementById("gameDescription");
-
-const frame =
-    document.getElementById("gameFrame");
-
-const embedContainer =
-    document.getElementById("embedContainer");
-
-const redirectContainer =
-    document.getElementById("redirectContainer");
-
-const playButton =
-    document.getElementById("playButton");
-
-const fullscreenButton =
-    document.getElementById("fullscreenButton");
-
-
-// Set title
-document.title =
-    GAME_TITLE + " - Secret Unblocked";
-
-titleElement.textContent =
-    GAME_TITLE;
-
-
-// Set description
-descriptionElement.textContent =
-    GAME_DESCRIPTION;
-
-
-// Decide whether this is an embedded
-// game or a redirect game.
+document.title = GAME_TITLE + " - Secret Unblocked";
+titleElement.textContent = GAME_TITLE;
+descriptionElement.textContent = GAME_DESCRIPTION;
 
 if (USE_EMBED) {
-
-    embedContainer.style.display =
-        "block";
-
-    redirectContainer.style.display =
-        "none";
-
-    frame.src =
-        GAME_URL;
-
+    embedContainer.style.display = "block";
+    redirectContainer.style.display = "none";
+    frame.src = GAME_URL;
 } else {
-
-    embedContainer.style.display =
-        "none";
-
-    redirectContainer.style.display =
-        "block";
-
-    playButton.href =
-        GAME_URL;
-
+    embedContainer.style.display = "none";
+    redirectContainer.style.display = "block";
+    playButton.href = GAME_URL;
 }
-
-
-/*
-==================================================
-FULLSCREEN
-==================================================
-*/
 
 async function toggleFullscreen() {
-
-    const element =
-        document.getElementById("embedContainer");
+    const element = document.getElementById("embedContainer");
 
     try {
-
         if (!document.fullscreenElement) {
-
             await element.requestFullscreen();
-
-            fullscreenButton.textContent =
-                "✕ Exit Fullscreen";
-
+            fullscreenButton.textContent = "✕ Exit Fullscreen";
         } else {
-
             await document.exitFullscreen();
-
-            fullscreenButton.textContent =
-                "⛶ Fullscreen";
-
+            fullscreenButton.textContent = "⛶ Fullscreen";
         }
-
     } catch (error) {
-
-        console.error(
-            "Fullscreen error:",
-            error
-        );
-
+        console.error("Fullscreen error:", error);
     }
-
 }
-
-
-/*
-==================================================
-BACK BUTTON
-==================================================
-*/
 
 function goBack() {
-
     if (window.history.length > 1) {
-
         window.history.back();
-
     } else {
-
-        window.location.href =
-            "index.html";
-
+        window.location.href = "index.html";
     }
-
 }
 
-
-/*
-==================================================
-KEEP FULLSCREEN BUTTON IN SYNC
-==================================================
-*/
-
-document.addEventListener(
-    "fullscreenchange",
-    () => {
-
-        if (document.fullscreenElement) {
-
-            fullscreenButton.textContent =
-                "✕ Exit Fullscreen";
-
-        } else {
-
-            fullscreenButton.textContent =
-                "⛶ Fullscreen";
-
-        }
-
+document.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement) {
+        fullscreenButton.textContent = "✕ Exit Fullscreen";
+    } else {
+        fullscreenButton.textContent = "⛶ Fullscreen";
     }
-);
-
+});
 </script>
 
 </body>
 </html>
-```
