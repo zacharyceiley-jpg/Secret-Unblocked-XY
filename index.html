@@ -230,6 +230,20 @@ button{
     cursor:pointer;
 }
 
+.overlay-search{
+    display:block;
+    width:calc(100% - 28px);
+    height:30px;
+    margin:14px 14px 0;
+    padding:4px 8px;
+    border:1px solid #777;
+    background:#111;
+    color:#eee;
+    font:13px Arial,Helvetica,sans-serif;
+}
+
+.overlay-search::placeholder{color:#aaa}
+
 .games-list{
     padding:14px;
     display:grid;
@@ -462,6 +476,7 @@ footer a{color:#00e}
         </div>
 
         <div id="gamesListView">
+            <input class="overlay-search" id="gamesSearch" type="search" placeholder="Search games..." aria-label="Search games">
             <div class="games-list" id="gamesList"></div>
         </div>
 
@@ -485,7 +500,9 @@ footer a{color:#00e}
     Each game needs:
     title       = game name
     date        = publication date
-    icon        = image shown in the Games list
+    iconFile    = the game's icon filename, normally icon.png
+    thumbnailFile = the game's thumbnail filename, such as rerunthumbnail.png
+    icon        = fallback icon URL
     image       = large image shown on the game page
     link        = page/game URL opened by Play
 */
@@ -493,6 +510,8 @@ const games = [
     {
         title: "FNAF LAUNCHER",
         date: "May 11, 2026",
+        iconFile: "icon.png",
+        thumbnailFile: "fnaflauncherthumbnail.png",
         icon: "https://media.craiyon.com/2025-08-30/wcZWqkTKT-SDDYpw4MEhSQ.webp",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ZoHRLgmiyhim-Ah7tvVY8ssSfbWhvGd-ZBqo4PPF7_JByzfmpza2KC8&s=10",
         link: "https://zacharyceiley-jpg.github.io/Secret-Unblocked-V/index.html",
@@ -501,6 +520,8 @@ const games = [
     {
         title: "Snowrider 3D",
         date: "September 8, 2024",
+        iconFile: "icon.png",
+        thumbnailFile: "snowrider3dthumbnail.png",
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_U_SVLGiGl7LhUsTPJ9g0ylnlcIHjyO8-KiwF3N-uSxzUCf0li3Lppt8&s=10",
         image: "https://assets.funnygames.org/2/115102/100968/1200x630/snow-rider-3d.webp",
         link: "https://snowrider-unblocked.github.io/game/",
@@ -509,6 +530,8 @@ const games = [
     {
         title: "They Are Coming",
         date: "September 20, 2026",
+        iconFile: "icon.png",
+        thumbnailFile: "theyarecomingthumbnail.png",
         icon: "https://kbhgames.com/wp-content/uploads/2025/06/They-Are-Coming.webp",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiykRKLP3JIyRpZU9xPCZ7tjMHQk9CE-I6cw6jQ5A1OCEJYt_UbTcOhr1X&s=10",
         link: "https://ragdollarchers.github.io/embed/they-are-coming.html",
@@ -517,6 +540,8 @@ const games = [
         {
         title: "Real Flight Simulator",
         date: "March 5, 2025",
+        iconFile: "icon.png",
+        thumbnailFile: "realflightsimulatorthumbnail.png",
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmbC4C4O7883Nwo2AWwPVVr5oYXcYqjF6PsVKwP0DI3xEe_b7QahTAPKo&s=10",
         image: "https://i.ytimg.com/vi/xrbq8bQ2k4Q/maxresdefault.jpg",
         link: "https://d11jzht7mj96rr.cloudfront.net/games/2023/unity2/real-flight-simulator/index-ts.html",
@@ -525,6 +550,8 @@ const games = [
             {
         title: "Ragdoll Archers",
         date: "August 5, 2026",
+        iconFile: "icon.png",
+        thumbnailFile: "ragdollarchersthumbnail.png",
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS96cqVzPQT7ll9wR0ehP2GV7_5SUCwo2q4P_Exe9nN9GOUEA02FIUWI2CR&s=10",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCgJ_Mkf_41q1Zzol-1G-AQzaEesKmSz0-uwWHVA14ivKjEsxVdjjQe9c&s=10",
         link: "https://ubghyper.github.io/GameList.github.io/Ragdoll-Archers/",
@@ -533,22 +560,28 @@ const games = [
              {
         title: "Gladihoppers",
         date: "September 20, 2026",
+        iconFile: "icon.png",
+        thumbnailFile: "gladihoppersthumbnail.png",
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlMzbNha0oRx6kVeQamUOPa3-Rze2iE_YqQFaJo8fZ9HVEP30Ot9fFdDU&s=10",
         image: "https://gamesfree.io/wp-content/uploads/2025/10/Gladihoppers-PC.webp",
         link: "https://gladihoppers-pro.github.io/file/",
         creator:"secretshetlesky"
     },
           {
-        title: "Super Mario 64",
+                 title: "Super Mario 64",
         date: "May 9, 2026",
+        iconFile: "icon.png",
+        thumbnailFile: "supermario64thumbnail.png",
         icon: "https://cdn.fbtb.net/wp-content/uploads/2020/10/12191847/super-mario-64-startup-screen.jpg",
         image: "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_7/SI_N64_SuperMario64_image1600w.jpg",
         link: "https://super-mario-64.bitbucket.io/file/",
         creator:"secretunblocked"
     },
          {
-        title: "Rerun",
+                 title: "Rerun",
         date: "September 11, 2026",
+        iconFile: "icon.png",
+        thumbnailFile: "rerunthumbnail.png",
         icon: "https://img.itch.zone/aW1nLzY4MzU4NDMucG5n/508x254%23mb/qtlb22.png",
         image: "https://taggame.io/data/image/how-to-play-re-run-tgio.jpg",
         link: "https://ubghyper.github.io/GameList.github.io/RERUN/",
@@ -562,6 +595,11 @@ const list = document.getElementById("gamesList");
 const listView = document.getElementById("gamesListView");
 const page = document.getElementById("gamePage");
 const gamesNavLink = document.getElementById("gamesNavLink");
+const gamesSearch = document.getElementById("gamesSearch");
+
+if (gamesSearch) {
+    gamesSearch.addEventListener("input", renderGames);
+}
 
 if (gamesNavLink) {
     gamesNavLink.addEventListener("click", function(event) {
@@ -572,14 +610,17 @@ if (gamesNavLink) {
 
 function renderGames(){
     list.innerHTML = "";
+    const query = document.getElementById("gamesSearch").value.trim().toLowerCase();
 
     games.forEach((game, index) => {
+        const searchableText = [game.title, game.date, game.creator].join(" ").toLowerCase();
+        if (query && !searchableText.includes(query)) return;
         const card = document.createElement("div");
         card.className = "game-card";
         card.onclick = () => openGame(index);
 
         card.innerHTML = `
-            <img src="${game.icon}" alt="">
+            <img src="${game.thumbnail || game.icon}" alt="">
             <div class="game-card-title">${game.title}</div>
             <div class="game-card-date">Published: ${game.date}</div>
             <div class="game-card-creator">Creator: ${game.creator || "Unknown"}</div>
@@ -641,6 +682,7 @@ renderGames();
 <button class="users-close" onclick="closeUsers()">×</button></div>
 <div class="users-content">
 <div id="usersListView">
+<input class="overlay-search" id="usersSearch" type="search" placeholder="Search users..." aria-label="Search users">
 <div class="users-section"><h3>Users</h3><div class="users-grid" id="allUsers"></div></div>
 </div>
 
@@ -656,11 +698,31 @@ renderGames();
 </div>
 
 <div class="users-section"><h3>Games</h3><div class="users-grid" id="userGames"></div></div>
-<div class="users-section"><h3>Assets</h3><div class="users-grid" id="userAssets"></div></div>
+<div class="users-section"><h3>Assets</h3><button class="view-assets-button" id="viewAssetsButton" type="button" onclick="toggleAllAssets()">View All Assets</button><div class="users-grid assets-collapsed" id="userAssets"></div></div>
 <div class="users-section"><h3>Images</h3><div class="users-grid" id="userImages"></div></div>
 <div class="users-section"><h3>Models</h3><div class="users-grid" id="userModels"></div></div>
 </div>
 </div></div></div>
+
+<div class="image-viewer" id="imageViewer" aria-hidden="true">
+    <div class="image-viewer-window" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <div class="image-viewer-titlebar">
+            <span id="viewerTitle">Image Preview</span>
+            <button class="image-viewer-close" type="button" onclick="closeImageViewer()">×</button>
+        </div>
+        <div class="image-viewer-toolbar">
+            <button type="button" onclick="changeImageZoom(-0.1)">−</button>
+            <span id="viewerZoom">100%</span>
+            <button type="button" onclick="changeImageZoom(0.1)">+</button>
+            <button type="button" onclick="resetImageZoom()">Reset</button>
+            <button type="button" onclick="toggleImageFullscreen()">Fullscreen</button>
+        </div>
+        <div class="image-viewer-stage" id="imageViewerStage">
+            <img id="viewerImage" src="" alt="">
+        </div>
+        <div class="image-viewer-dimensions" id="viewerDimensions"></div>
+    </div>
+</div>
 
 <style>
 .users-overlay{position:fixed;inset:0;z-index:100000;display:none;background:rgba(0,0,0,.72);overflow:auto;padding:35px 0}
@@ -677,6 +739,8 @@ renderGames();
 .users-section h3{color:#fff;font-size:17px;margin:0 0 9px;border-bottom:1px solid #444;padding-bottom:5px}
 .users-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .user-item{background:#292929;border:1px solid #596b80;padding:7px;min-height:120px}
+.user-media-card{cursor:pointer}
+.user-media-card:hover{background:#333;border-color:#88a8ce}
 .user-item img{width:100%;height:75px;object-fit:cover;display:block;background:#111;border:1px solid #555}
 .user-item-title{color:#fff;font-weight:bold;font-size:13px;margin-top:5px}
 .user-item-meta{color:#999;font-size:10px;margin-top:3px}
@@ -687,6 +751,21 @@ renderGames();
 .users-back{margin-bottom:12px;padding:7px 12px;background:#222;color:#fff;border:1px solid #666;cursor:pointer}
 .users-back:hover{background:#333}
 .user-card-avatar{margin:0 auto 8px;width:58px;height:58px}
+.view-assets-button{margin:0 0 10px;padding:5px 10px;background:#333;color:#eee;border:1px solid #777;cursor:pointer;font-size:12px}
+.view-assets-button:hover{background:#444}
+.assets-collapsed .user-item:nth-child(n+7){display:none}
+
+.image-viewer{position:fixed;inset:0;z-index:120000;display:none;background:rgba(0,0,0,.86);padding:24px;overflow:auto}
+.image-viewer.open{display:flex;align-items:center;justify-content:center}
+.image-viewer-window{width:min(900px,100%);background:#202020;border:2px solid #6d86a5;box-shadow:0 5px 25px #000}
+.image-viewer-titlebar{height:38px;background:#303f55;color:#fff;padding:9px 12px;font-size:16px;font-weight:bold;position:relative}
+.image-viewer-close{position:absolute;right:8px;top:7px;width:23px;height:23px;padding:0;background:#222;color:#fff;border:1px solid #888;cursor:pointer}
+.image-viewer-toolbar{display:flex;align-items:center;gap:7px;padding:10px;border-bottom:1px solid #444}
+.image-viewer-toolbar button{margin:0;cursor:pointer}
+.image-viewer-toolbar span{min-width:45px;text-align:center;color:#ddd}
+.image-viewer-stage{min-height:300px;max-height:70vh;display:flex;align-items:center;justify-content:center;overflow:auto;background:#111;padding:20px}
+.image-viewer-stage img{max-width:100%;max-height:65vh;object-fit:contain;transform-origin:center;transition:transform .15s ease}
+.image-viewer-dimensions{padding:10px;color:#bbb;text-align:center;font-size:12px}
 
 @media(max-width:820px){.users-window{width:94%}.users-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.users-grid{grid-template-columns:1fr}}
@@ -695,6 +774,11 @@ renderGames();
 <script>
 const usersNavLink = document.getElementById("usersNavLink");
 const usersOverlay = document.getElementById("usersOverlay");
+const usersSearch = document.getElementById("usersSearch");
+
+if (usersSearch) {
+    usersSearch.addEventListener("input", renderAllUsers);
+}
 
 if (usersNavLink) {
     usersNavLink.addEventListener("click", function(event) {
@@ -728,7 +812,10 @@ function getAllUsers() {
 }
 
 function renderAllUsers() {
-    const users = getAllUsers();
+    const query = document.getElementById("usersSearch").value.trim().toLowerCase();
+    const users = getAllUsers().filter(function(name) {
+        return name.toLowerCase().includes(query);
+    });
     const target = document.getElementById("allUsers");
 
     if (!users.length) {
@@ -752,6 +839,16 @@ function renderAllUsers() {
         const avatar = document.createElement("div");
         avatar.className = "users-avatar user-card-avatar";
         avatar.textContent = name.charAt(0).toUpperCase();
+        const profileKey = Object.keys(userImages).find(function(profileName) {
+            return profileName.toLowerCase() === name.toLowerCase();
+        });
+        const profileImage = profileKey && userImages[profileKey][0];
+        if (profileImage) {
+            avatar.textContent = "";
+            avatar.style.backgroundImage = "url(\"" + profileImage.image + "\")";
+            avatar.style.backgroundSize = "cover";
+            avatar.style.backgroundPosition = "center";
+        }
 
         const title = document.createElement("div");
         title.className = "user-item-title";
@@ -783,8 +880,21 @@ function openUserProfile(creatorName) {
     document.getElementById("usersListView").style.display = "none";
     document.getElementById("userProfileView").style.display = "block";
 
-    document.getElementById("userName").textContent = creatorName;
-    document.getElementById("userAvatar").textContent = creatorName.charAt(0).toUpperCase();
+            document.getElementById("userName").textContent = creatorName;
+
+    const profileImageKey = Object.keys(userImages).find(function(name) {
+        return name.toLowerCase() === creatorName.toLowerCase();
+    });
+    const profileImage = profileImageKey && userImages[profileImageKey][0];
+    const avatar = document.getElementById("userAvatar");
+    avatar.textContent = profileImage ? "" : creatorName.charAt(0).toUpperCase();
+    avatar.style.backgroundImage = profileImage ? "url(\"" + profileImage.image + "\")" : "";
+    avatar.style.backgroundSize = profileImage ? "cover" : "";
+    avatar.style.backgroundPosition = profileImage ? "center" : "";
+    avatar.onclick = profileImage ? function() {
+        openImageViewer(profileImage.image, profileImage.title || creatorName + " profile picture");
+    } : null;
+    avatar.classList.toggle("user-media-card", Boolean(profileImage));
 
     const userEmails = {
         "secretunblocked": "zachary.ceiley@education.nsw.gov.au",
@@ -814,7 +924,7 @@ function openUserProfile(creatorName) {
             card.setAttribute("aria-label", "Open " + game.title);
 
             const img = document.createElement("img");
-            img.src = game.icon;
+            img.src = game.thumbnail || game.icon;
             img.alt = game.title;
 
             const title = document.createElement("div");
@@ -848,12 +958,131 @@ function openUserProfile(creatorName) {
         });
     }
 
-    document.getElementById("userAssets").innerHTML =
-        '<div class="user-empty">No assets added yet.</div>';
-    document.getElementById("userImages").innerHTML =
-        '<div class="user-empty">No images added yet.</div>';
+    const assetsTarget = document.getElementById("userAssets");
+    const viewAssetsButton = document.getElementById("viewAssetsButton");
+    assetsTarget.innerHTML = "";
+    assetsTarget.classList.add("assets-collapsed");
+    if (viewAssetsButton) {
+        viewAssetsButton.hidden = false;
+        viewAssetsButton.textContent = "View All Assets";
+    }
+
+    const gameAssets = [];
+    creatorGames.forEach(function(game) {
+        // Keep each game's icon, thumbnail, and main image in its creator's Assets section.
+        if (game.icon) {
+            gameAssets.push({
+                title: game.title + " Icon (" + (game.iconFile || "icon.png") + ")",
+                image: game.icon,
+                type: "Game icon"
+            });
+        }
+        if (game.image) {
+            gameAssets.push({
+                title: game.title + " Thumbnail (" + (game.thumbnailFile || "thumbnail.png") + ")",
+                image: game.image,
+                type: "Game thumbnail"
+            });
+        }
+    });
+
+    if (!gameAssets.length) {
+        assetsTarget.innerHTML = '<div class="user-empty">No assets added yet.</div>';
+        if (viewAssetsButton) viewAssetsButton.hidden = true;
+    } else {
+        if (viewAssetsButton) viewAssetsButton.hidden = gameAssets.length <= 6;
+                    gameAssets.forEach(function(item) {
+            const card = document.createElement("div");
+            card.className = "user-item user-media-card";
+            card.tabIndex = 0;
+            card.setAttribute("role", "button");
+            card.setAttribute("aria-label", "View " + item.title);
+
+            const img = document.createElement("img");
+            img.src = item.image;
+            img.alt = item.title;
+            img.loading = "lazy";
+
+            const title = document.createElement("div");
+            title.className = "user-item-title";
+            title.textContent = item.title;
+
+            const meta = document.createElement("div");
+            meta.className = "user-item-meta";
+            meta.textContent = item.type;
+
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(meta);
+            card.addEventListener("click", function() {
+                openImageViewer(item.image, item.title);
+            });
+            card.addEventListener("keydown", function(event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openImageViewer(item.image, item.title);
+                }
+            });
+            assetsTarget.appendChild(card);
+        });
+    }
+
+    const profileImages = userImages[creatorName] || userImages[Object.keys(userImages).find(function(name) {
+        return name.toLowerCase() === creatorName.toLowerCase();
+    })] || [];
+    const imagesTarget = document.getElementById("userImages");
+    imagesTarget.innerHTML = "";
+
+    if (!profileImages.length) {
+        imagesTarget.innerHTML = '<div class="user-empty">No images added yet.</div>';
+    } else {
+        profileImages.forEach(function(item) {
+            const card = document.createElement("div");
+            card.className = "user-item user-media-card";
+            card.tabIndex = 0;
+            card.setAttribute("role", "button");
+            card.setAttribute("aria-label", "View " + (item.title || "profile image"));
+
+            const img = document.createElement("img");
+            img.src = item.image;
+            img.alt = item.title || "Profile image";
+            img.loading = "lazy";
+
+            const title = document.createElement("div");
+            title.className = "user-item-title";
+            title.textContent = item.title || "Untitled image";
+
+            const meta = document.createElement("div");
+            meta.className = "user-item-meta";
+            meta.textContent = "Image";
+
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(meta);
+            card.addEventListener("click", function() {
+                openImageViewer(item.image, item.title || "Profile image");
+            });
+            card.addEventListener("keydown", function(event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openImageViewer(item.image, item.title || "Profile image");
+                }
+            });
+            imagesTarget.appendChild(card);
+        });
+    }
+
     document.getElementById("userModels").innerHTML =
         '<div class="user-empty">No models added yet.</div>';
+}
+
+function toggleAllAssets() {
+    const assets = document.getElementById("userAssets");
+    const button = document.getElementById("viewAssetsButton");
+    if (!assets || !button) return;
+
+    const expanded = !assets.classList.toggle("assets-collapsed");
+    button.textContent = expanded ? "Show Fewer Assets" : "View All Assets";
 }
 
 function showUsersList() {
@@ -866,6 +1095,61 @@ usersOverlay.addEventListener("click", function(event) {
     if (event.target === usersOverlay) {
         closeUsers();
     }
+});
+
+const imageViewer = document.getElementById("imageViewer");
+const viewerImage = document.getElementById("viewerImage");
+const viewerTitle = document.getElementById("viewerTitle");
+const viewerDimensions = document.getElementById("viewerDimensions");
+const viewerZoom = document.getElementById("viewerZoom");
+let imageZoom = 1;
+
+function openImageViewer(image, title) {
+    imageZoom = 1;
+    viewerTitle.textContent = title || "Image Preview";
+    viewerImage.src = image;
+    viewerImage.alt = title || "Image preview";
+    viewerDimensions.textContent = "Loading dimensions...";
+    imageViewer.classList.add("open");
+    imageViewer.setAttribute("aria-hidden", "false");
+    viewerImage.onload = function() {
+        viewerDimensions.textContent = "Dimensions: " + viewerImage.naturalWidth + " × " + viewerImage.naturalHeight + " pixels";
+    };
+    updateImageZoom();
+}
+
+function closeImageViewer() {
+    imageViewer.classList.remove("open");
+    imageViewer.setAttribute("aria-hidden", "true");
+    viewerImage.src = "";
+}
+
+function updateImageZoom() {
+    viewerImage.style.transform = "scale(" + imageZoom + ")";
+    viewerZoom.textContent = Math.round(imageZoom * 100) + "%";
+}
+
+function changeImageZoom(amount) {
+    imageZoom = Math.min(3, Math.max(0.25, imageZoom + amount));
+    updateImageZoom();
+}
+
+function resetImageZoom() {
+    imageZoom = 1;
+    updateImageZoom();
+}
+
+function toggleImageFullscreen() {
+    const stage = document.getElementById("imageViewerStage");
+    if (!document.fullscreenElement) {
+        if (stage.requestFullscreen) stage.requestFullscreen();
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && imageViewer.classList.contains("open")) closeImageViewer();
 });
 </script>
 
