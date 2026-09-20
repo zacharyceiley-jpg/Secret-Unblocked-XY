@@ -272,6 +272,12 @@ button{
     margin-top:5px;
 }
 
+.game-card-creator{
+    color:#8fa8c5;
+    font-size:11px;
+    margin-top:4px;
+}
+
 .game-card a{
     display:none;
 }
@@ -488,7 +494,7 @@ const games = [
         date: "May 11, 2026",
         icon: "https://media.craiyon.com/2025-08-30/wcZWqkTKT-SDDYpw4MEhSQ.webp",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ZoHRLgmiyhim-Ah7tvVY8ssSfbWhvGd-ZBqo4PPF7_JByzfmpza2KC8&s=10",
-        link: "https://zacharyceiley-jpg.github.io/Secret-Unblocked-V/index.html"
+        link: "https://zacharyceiley-jpg.github.io/Secret-Unblocked-V/index.html",
         creator:"secretunblocked"
     },
     {
@@ -496,16 +502,16 @@ const games = [
         date: "September 8, 2024",
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_U_SVLGiGl7LhUsTPJ9g0ylnlcIHjyO8-KiwF3N-uSxzUCf0li3Lppt8&s=10",
         image: "https://assets.funnygames.org/2/115102/100968/1200x630/snow-rider-3d.webp",
-        link: "https://snowrider-unblocked.github.io/game/"
+        link: "https://snowrider-unblocked.github.io/game/",
         creator:"secretunblocked"
     },
     {
-        title: "New Game",
+        title: "They Are Coming",
         date: "September 20, 2026",
-        icon: "https://via.placeholder.com/300x180?text=Game+Icon",
-        image: "https://via.placeholder.com/760x330?text=New+Game",
-        link: "#"
-        creator:"secretunblocked"
+        icon: "https://kbhgames.com/wp-content/uploads/2025/06/They-Are-Coming.webp",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiykRKLP3JIyRpZU9xPCZ7tjMHQk9CE-I6cw6jQ5A1OCEJYt_UbTcOhr1X&s=10",
+        link: "https://ragdollarchers.github.io/embed/they-are-coming.html",
+        creator:"secretshetlesky"
     },
 ];
 
@@ -526,6 +532,7 @@ function renderGames(){
             <img src="${game.icon}" alt="">
             <div class="game-card-title">${game.title}</div>
             <div class="game-card-date">Published: ${game.date}</div>
+            <div class="game-card-creator">Creator: ${game.creator || "Unknown"}</div>
         `;
 
         list.appendChild(card);
