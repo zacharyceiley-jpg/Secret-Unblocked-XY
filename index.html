@@ -366,6 +366,37 @@ footer{
 }
 
 footer a{color:#00e}
+
+.play-tracking-bar{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    z-index:900;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    pointer-events:none;
+}
+
+.play-tracking-bar button,
+.play-tracking-bar span{
+    pointer-events:auto;
+    background:#222;
+    color:#eee;
+    border:1px solid #777;
+    box-shadow:0 2px 8px #000;
+    padding:7px 11px;
+    font-size:12px;
+}
+
+.play-tracking-bar button{
+    cursor:pointer;
+}
+
+.play-tracking-bar button:hover{
+    background:#334b68;
+}
 </style>
 </head>
 
@@ -463,6 +494,13 @@ footer a{color:#00e}
     <a href="#">Terms and Conditions</a>
 </footer>
 
+</div>
+
+<div class="play-tracking-bar" aria-label="Play tracking">
+    <button id="continuePlayingButton" type="button" onclick="continuePlaying()" hidden>
+        Continue Playing
+    </button>
+    <span id="playtimeDisplay">Playtime: 0m</span>
 </div>
 
 
@@ -596,6 +634,52 @@ const listView = document.getElementById("gamesListView");
 const page = document.getElementById("gamePage");
 const gamesNavLink = document.getElementById("gamesNavLink");
 const gamesSearch = document.getElementById("gamesSearch");
+const continuePlayingButton = document.getElementById("continuePlayingButton");
+const playtimeDisplay = document.getElementById("playtimeDisplay");
+let activeGameIndex = null;
+let playtimeSeconds = Number(localStorage.getItem("secretPlaytimeSeconds") || 0);
+
+function formatPlaytime(seconds){
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    if (hours) return "Playtime: " + hours + "h " + minutes + "m";
+    return "Playtime: " + minutes + "m";
+}
+
+function updatePlaytime(){
+    playtimeDisplay.textContent = formatPlaytime(playtimeSeconds);
+}
+
+function saveActiveGame(game){
+    localStorage.setItem("secretLastGame", JSON.stringify({
+        title: game.title,
+        index: games.indexOf(game)
+    }));
+    continuePlayingButton.textContent = "Continue " + game.title;
+    continuePlayingButton.hidden = false;
+}
+
+function continuePlaying(){
+    const savedGame = JSON.parse(localStorage.getItem("secretLastGame") || "null");
+    if (!savedGame || !games[savedGame.index]) return;
+    openGames();
+    openGame(savedGame.index);
+}
+
+updatePlaytime();
+setInterval(function(){
+    playtimeSeconds++;
+    localStorage.setItem("secretPlaytimeSeconds", playtimeSeconds);
+    updatePlaytime();
+}, 1000);
+
+(function loadLastGame(){
+    const savedGame = JSON.parse(localStorage.getItem("secretLastGame") || "null");
+    if (savedGame && games[savedGame.index]) {
+        continuePlayingButton.textContent = "Continue " + games[savedGame.index].title;
+        continuePlayingButton.hidden = false;
+    }
+})();
 
 if (gamesSearch) {
     gamesSearch.addEventListener("input", renderGames);
@@ -645,6 +729,8 @@ function closeGames(){
 
 function openGame(index){
     const game = games[index];
+    activeGameIndex = index;
+    saveActiveGame(game);
 
     document.getElementById("gameTitle").textContent = game.title;
     document.getElementById("gameDate").textContent = "Published: " + game.date;
@@ -1520,7 +1606,9 @@ body.smooth-corners .setting-button,
 body.smooth-corners button,
 body.smooth-corners input,
 body.smooth-corners .play-button,
-body.smooth-corners .back-games{
+body.smooth-corners .back-games,
+body.smooth-corners .play-tracking-bar button,
+body.smooth-corners .play-tracking-bar span{
     border-radius:10px;
 }
 
