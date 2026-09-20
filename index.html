@@ -1050,7 +1050,28 @@ document.addEventListener("keydown", function(event){
         closeSettings();
     }
 });
+const userImages = {
+  "secretunblocked": [
+    {
+      title: "Secret Unblocked Logo",
+      image: "https://i.ytimg.com/vi/D0hSCqWqhF0/hqdefault.jpg?v=64c70cbc"
+    }
+  ],
 
+  "secretshetlesky": [
+    {
+      title: "My Image",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp_wMLoJtamTYW8cKsot6t1Agkz6grYA705lwQpqog9KnOwK2HhyL3QcU&s=10"
+    }
+  ],
+
+  "Freezenova": [
+    {
+      title: "My Image",
+      image: "https://media.licdn.com/dms/image/v2/D4D0BAQFY8-rOF9qbXQ/company-logo_200_200/company-logo_200_200/0/1729458763741/freezenova_logo?e=2147483647&v=beta&t=WnOAdBPiYwZ4IcRvatBM-zghDdNuUyAxvyA78dR_sOg"
+    }
+  ],
+};
 (function loadSettings(){
     const light = localStorage.getItem("secretLightMode") === "true";
     const hide = localStorage.getItem("secretHideAccount") === "true";
