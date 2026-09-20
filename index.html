@@ -1243,6 +1243,16 @@ document.addEventListener("keydown", function(event) {
             </label>
 
             <label class="setting-row">
+                <span>Old Cursor</span>
+                <input type="checkbox" id="oldCursorToggle" onchange="toggleOldCursor()">
+            </label>
+
+            <label class="setting-row">
+                <span>Smooth Corners</span>
+                <input type="checkbox" id="smoothCornersToggle" onchange="toggleSmoothCorners()">
+            </label>
+
+            <label class="setting-row">
     <span>Disguiser</span>
     <button class="setting-button" onclick="openDisguiser()">Open</button>
 </label>
@@ -1491,6 +1501,36 @@ body.wallpaper-mode{
 body.wallpaper-mode .page{
     background:rgba(23,23,23,.94);
 }
+
+body.old-cursor-mode,
+body.old-cursor-mode *{
+    cursor:url("https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/0/9/d/09d4a2f9a3a671825d14dd6816761866ec680456.png"), auto !important;
+}
+
+body.smooth-corners .header,
+body.smooth-corners .login,
+body.smooth-corners .games-window,
+body.smooth-corners .users-window,
+body.smooth-corners .settings-window,
+body.smooth-corners .disguiser-window,
+body.smooth-corners .image-viewer-window,
+body.smooth-corners .game-card,
+body.smooth-corners .user-item,
+body.smooth-corners .setting-button,
+body.smooth-corners button,
+body.smooth-corners input,
+body.smooth-corners .play-button,
+body.smooth-corners .back-games{
+    border-radius:10px;
+}
+
+body.smooth-corners .games-titlebar,
+body.smooth-corners .users-titlebar,
+body.smooth-corners .settings-titlebar,
+body.smooth-corners .disguiser-titlebar,
+body.smooth-corners .image-viewer-titlebar{
+    border-radius:8px 8px 0 0;
+}
 </style>
 
 <script>
@@ -1580,6 +1620,18 @@ function toggleWallpaper(){
     localStorage.setItem("secretWallpaper", enabled);
 }
 
+function toggleOldCursor(){
+    const enabled = document.getElementById("oldCursorToggle").checked;
+    document.body.classList.toggle("old-cursor-mode", enabled);
+    localStorage.setItem("secretOldCursor", enabled);
+}
+
+function toggleSmoothCorners(){
+    const enabled = document.getElementById("smoothCornersToggle").checked;
+    document.body.classList.toggle("smooth-corners", enabled);
+    localStorage.setItem("secretSmoothCorners", enabled);
+}
+
 document.getElementById("settingsOverlay").addEventListener("click", function(event){
     if(event.target === this) closeSettings();
 });
@@ -1644,13 +1696,19 @@ const userImages = {
     const light = localStorage.getItem("secretLightMode") === "true";
     const hide = localStorage.getItem("secretHideAccount") === "true";
     const wallpaper = localStorage.getItem("secretWallpaper") === "true";
+    const oldCursor = localStorage.getItem("secretOldCursor") === "true";
+    const smoothCorners = localStorage.getItem("secretSmoothCorners") === "true";
 
     document.getElementById("lightModeToggle").checked = light;
     document.getElementById("hideAccountToggle").checked = hide;
     document.getElementById("wallpaperToggle").checked = wallpaper;
+    document.getElementById("oldCursorToggle").checked = oldCursor;
+    document.getElementById("smoothCornersToggle").checked = smoothCorners;
 
     document.body.classList.toggle("light-mode", light);
     document.body.classList.toggle("wallpaper-mode", wallpaper);
+    document.body.classList.toggle("old-cursor-mode", oldCursor);
+    document.body.classList.toggle("smooth-corners", smoothCorners);
 
     const login = document.querySelector(".login");
     if(login) login.style.display = hide ? "none" : "";
