@@ -188,7 +188,7 @@ button{
 .games-overlay{
     position:fixed;
     inset:0;
-    z-index:1000;
+    z-index:99999;
     display:none;
     background:rgba(0,0,0,.72);
     overflow:auto;
@@ -381,7 +381,7 @@ footer a{color:#00e}
 
     <nav class="nav">
         <a href="#">Home</a> |
-        <a href="#" onclick="openGames(event)">Games</a> | <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a> | <a href="#" onclick="openSettings(event)">Settings</a>
+        <a href="#" id="gamesNavLink">Games</a> | <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a> | <a href="#" onclick="openSettings(event)">Settings</a>
     </nav>
 
 </header>
@@ -469,6 +469,7 @@ footer a{color:#00e}
             <button class="back-games" onclick="showGamesList()">← Back to Games</button>
             <h2 id="gameTitle"></h2>
             <div class="game-publication" id="gameDate"></div>
+            <div class="game-card-creator" id="gameCreator"></div>
             <img class="game-image" id="gameImage" src="" alt="">
             <br>
             <a class="play-button" id="gamePlay" href="#" target="_blank" rel="noopener">Play</a>
@@ -519,6 +520,14 @@ const overlay = document.getElementById("gamesOverlay");
 const list = document.getElementById("gamesList");
 const listView = document.getElementById("gamesListView");
 const page = document.getElementById("gamePage");
+const gamesNavLink = document.getElementById("gamesNavLink");
+
+if (gamesNavLink) {
+    gamesNavLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        openGames();
+    });
+}
 
 function renderGames(){
     list.innerHTML = "";
@@ -557,6 +566,7 @@ function openGame(index){
 
     document.getElementById("gameTitle").textContent = game.title;
     document.getElementById("gameDate").textContent = "Published: " + game.date;
+    document.getElementById("gameCreator").textContent = "Creator: " + (game.creator || "Unknown");
     document.getElementById("gameImage").src = game.image;
     document.getElementById("gameImage").alt = game.title;
     document.getElementById("gamePlay").href = game.link;
