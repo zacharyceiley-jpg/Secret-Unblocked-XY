@@ -1153,6 +1153,64 @@ document.addEventListener("keydown", function(event) {
 });
 </script>
 
+    <!-- Disguiser overlay -->
+<div class="disguiser-overlay" id="disguiserOverlay">
+    <div class="disguiser-window">
+
+        <div class="disguiser-titlebar">
+            Secret Unblocked — Disguiser
+            <button class="disguiser-close" onclick="closeDisguiser()">×</button>
+        </div>
+
+        <div class="disguiser-content">
+            <h2>Choose a disguise</h2>
+
+            <div class="disguiser-grid">
+
+                <button class="disguise-card"
+                    onclick="applyDisguise('OneNote','https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_OneNote_Icon_%282025_-_present%29.svg/960px-Microsoft_OneNote_Icon_%282025_-_present%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20251004083752')">
+                    <span class="disguise-icon">N</span>
+                    <span class="disguise-name">OneNote</span>
+                </button>
+
+                <button class="disguise-card"
+                    onclick="applyDisguise('PowerPoint','https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Microsoft_Office_PowerPoint_%282025%E2%80%93present%29.svg/960px-Microsoft_Office_PowerPoint_%282025%E2%80%93present%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail')">
+                    <span class="disguise-icon">P</span>
+                    <span class="disguise-name">PowerPoint</span>
+                </button>
+
+                <button class="disguise-card"
+                    onclick="applyDisguise('Google','https://www.edigitalagency.com.au/wp-content/uploads/Google-G-icon-favicon-PNG-medium-size.png')">
+                    <span class="disguise-icon">G</span>
+                    <span class="disguise-name">Google</span>
+                </button>
+
+                <button class="disguise-card"
+                    onclick="applyDisguise('ChatGPT','https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/chatgpt-icon.png')">
+                    <span class="disguise-icon">C</span>
+                    <span class="disguise-name">ChatGPT</span>
+                </button>
+
+                <button class="disguise-card"
+                    onclick="applyDisguise('Roblox','https://www.rw-designer.com/icon-image/30085-256x256x32.png')">
+                    <span class="disguise-icon">R</span>
+                    <span class="disguise-name">Roblox</span>
+                </button>
+
+            </div>
+
+            <div class="disguiser-current">
+                <strong>Current title:</strong>
+                <span id="currentDisguiseTitle">Secret Unblocked - Home</span>
+            </div>
+
+            <button class="disguiser-reset" onclick="resetDisguise()">
+                Reset Disguise
+            </button>
+        </div>
+
+    </div>
+</div>
 <!-- Settings overlay -->
 <div class="settings-overlay" id="settingsOverlay">
     <div class="settings-window">
@@ -1183,9 +1241,134 @@ document.addEventListener("keydown", function(event) {
                 <span>Show Wallpaper</span>
                 <input type="checkbox" id="wallpaperToggle" onchange="toggleWallpaper()">
             </label>
+
+            <label class="setting-row">
+    <span>Disguiser</span>
+    <button class="setting-button" onclick="openDisguiser()">Open</button>
+</label>
         </div>
     </div>
 </div>
+
+<style>
+.disguiser-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1150;
+    display:none;
+    background:rgba(0,0,0,.72);
+    overflow:auto;
+    padding:60px 0;
+}
+
+.disguiser-overlay.open{display:block}
+
+.disguiser-window{
+    width:500px;
+    margin:0 auto;
+    background:#202020;
+    border:2px solid #6d86a5;
+    box-shadow:0 5px 25px #000;
+}
+
+.disguiser-titlebar{
+    height:38px;
+    background:#303f55;
+    border-bottom:1px solid #71839a;
+    color:#fff;
+    padding:9px 12px;
+    font-size:18px;
+    font-weight:bold;
+    position:relative;
+}
+
+.disguiser-close{
+    position:absolute;
+    right:8px;
+    top:7px;
+    width:23px;
+    height:23px;
+    padding:0;
+    margin:0;
+    background:#222;
+    color:#fff;
+    border:1px solid #888;
+    cursor:pointer;
+}
+
+.disguiser-content{padding:18px}
+
+.disguiser-content h2{
+    color:#fff;
+    font-size:22px;
+    margin:0 0 15px;
+}
+
+.disguiser-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.disguise-card{
+    min-height:95px;
+    background:#292929;
+    color:#fff;
+    border:1px solid #596b80;
+    cursor:pointer;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.disguise-card:hover{
+    background:#333;
+    border-color:#88a8ce;
+}
+
+.disguise-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#334b68;
+    border:1px solid #8298b2;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.disguise-name{font-size:13px;font-weight:bold}
+
+.disguiser-current{
+    margin-top:16px;
+    padding-top:12px;
+    border-top:1px solid #444;
+    color:#aaa;
+    font-size:12px;
+}
+
+.disguiser-current strong{color:#ddd}
+
+.disguiser-reset{
+    margin-top:12px;
+    padding:6px 12px;
+    background:#333;
+    color:#eee;
+    border:1px solid #777;
+    cursor:pointer;
+}
+
+.disguiser-reset:hover{background:#444}
+
+@media(max-width:540px){
+    .disguiser-window{width:94%}
+    .disguiser-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
 
 <style>
 .settings-overlay{
@@ -1311,6 +1494,53 @@ body.wallpaper-mode .page{
 </style>
 
 <script>
+function openDisguiser(){
+    document.getElementById("disguiserOverlay").classList.add("open");
+    document.getElementById("currentDisguiseTitle").textContent = document.title;
+}
+
+function closeDisguiser(){
+    document.getElementById("disguiserOverlay").classList.remove("open");
+}
+
+function applyDisguise(title, iconUrl){
+    document.title = title;
+
+    localStorage.setItem("secretDisguiseTitle", title);
+    localStorage.setItem("secretDisguiseIcon", iconUrl);
+
+    let favicon = document.querySelector('link[rel="icon"]');
+    if(!favicon){
+        favicon = document.createElement("link");
+        favicon.rel = "icon";
+        document.head.appendChild(favicon);
+    }
+
+    favicon.href = iconUrl;
+    document.getElementById("currentDisguiseTitle").textContent = title;
+
+    closeDisguiser();
+    closeSettings();
+}
+
+function resetDisguise(){
+    document.title = "Secret Unblocked - Home";
+
+    let favicon = document.querySelector('link[rel="icon"]');
+    if(!favicon){
+        favicon = document.createElement("link");
+        favicon.rel = "icon";
+        document.head.appendChild(favicon);
+    }
+
+    favicon.href = "https://cdn-icons-png.flaticon.com/512/6360/6360303.png";
+
+    localStorage.removeItem("secretDisguiseTitle");
+    localStorage.removeItem("secretDisguiseIcon");
+
+    document.getElementById("currentDisguiseTitle").textContent = "Secret Unblocked - Home";
+}
+
 function openSettings(event){
     if(event) event.preventDefault();
     document.getElementById("settingsOverlay").classList.add("open");
@@ -1354,9 +1584,19 @@ document.getElementById("settingsOverlay").addEventListener("click", function(ev
     if(event.target === this) closeSettings();
 });
 
+document.getElementById("disguiserOverlay").addEventListener(
+    "click",
+    function(event){
+        if(event.target === this){
+            closeDisguiser();
+        }
+    }
+);
+
 document.addEventListener("keydown", function(event){
     if(event.key === "Escape"){
         closeSettings();
+        closeDisguiser();
     }
 });
 const userImages = {
@@ -1381,6 +1621,25 @@ const userImages = {
     }
   ],
 };
+(function loadDisguise(){
+    const savedTitle = localStorage.getItem("secretDisguiseTitle");
+    const savedIcon = localStorage.getItem("secretDisguiseIcon");
+
+    if(savedTitle){
+        document.title = savedTitle;
+    }
+
+    if(savedIcon){
+        let favicon = document.querySelector('link[rel="icon"]');
+        if(!favicon){
+            favicon = document.createElement("link");
+            favicon.rel = "icon";
+            document.head.appendChild(favicon);
+        }
+        favicon.href = savedIcon;
+    }
+})();
+
 (function loadSettings(){
     const light = localStorage.getItem("secretLightMode") === "true";
     const hide = localStorage.getItem("secretHideAccount") === "true";
