@@ -3,1081 +3,798 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secret Unblocked XY</title>
-
+<title>Secret Unblocked - Home</title>
 <style>
-* { box-sizing: border-box; }
-
-:root {
-    --bg: #0b0b0f;
-    --surface: #15161c;
-    --surface-hover: #1a1b22;
-    --border: #252630;
-    --border-strong: #30313a;
-    --text: #fff;
-    --muted: #a9aab4;
-    --muted-2: #8e909c;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 20px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border-strong);
-    backdrop-filter: blur(12px);
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#171717;
+    color:#e8e8e8;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:13px;
 }
+
+a{color:#62a8ff;text-decoration:underline}
 
-.header-content {
-    max-width: 1200px;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
+.page{
+    width:800px;
+    margin:0 auto;
 }
 
-.logo {
-    font-size: 26px;
-    font-weight: 800;
-    white-space: nowrap;
+/* HEADER */
+.header{
+    height:110px;
+    border:1px solid #777;
+    position:relative;
+    background:#242424;
+    overflow:hidden;
 }
 
-.search-wrapper {
-    flex: 1;
-    min-width: 220px;
+.header-image{
+    position:absolute;
+    left:0;
+    top:0;
+    width:300px;
+    height:70px;
+    object-fit:cover;
 }
 
-#search {
-    width: 100%;
-    padding: 13px 16px;
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    outline: none;
-    background: var(--surface);
-    color: var(--text);
-    font-size: 15px;
+/* Your logo */
+.site-logo{
+    position:absolute;
+    left:15px;
+    top:9px;
+    width:115px;
+    height:50px;
+    object-fit:contain;
+    z-index:2;
 }
 
-    .header-button,
-.back-button {
-    padding: 13px 16px;
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    font-size: 14px;
+.think{
+    position:absolute;
+    right:150px;
+    top:8px;
+    color:#3147b5;
+    font-size:24px;
+    line-height:25px;
+    font-weight:bold;
 }
 
-.header-button:hover,
-.back-button:hover,
-.theme-button:hover {
-    background: var(--surface-hover);
-    border-color: #666875;
+.signup-bubble{
+    position:absolute;
+    right:-1px;
+    top:-1px;
+    width:157px;
+    height:71px;
+    border-radius:0 0 0 70px;
+    background:linear-gradient(145deg,#2929d8,#09096d);
+    color:white;
+    font-weight:bold;
+    text-align:right;
+    padding:28px 12px 0 0;
 }
 
-.account-wrapper {
-    position: relative;
+.nav{
+    position:absolute;
+    left:-1px;
+    right:-1px;
+    top:70px;
+    height:39px;
+    background:#303f55;
+    border:1px solid #555;
+    text-align:center;
+    padding-top:8px;
+    font-size:20px;
 }
 
-.account-button {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    max-width: 190px;
+.nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 7px;
 }
 
-.account-avatar,
-.profile-preview {
-    width: 30px;
-    height: 30px;
-    flex: 0 0 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: var(--surface-hover);
-}
-
-.account-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    width: min(340px, 90vw);
-    padding: 18px;
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.35);
-}
-
-.account-menu.visible {
-    display: block;
-}
-
-.account-heading {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.account-heading strong,
-.account-heading span {
-    display: block;
-}
-
-.account-heading span,
-.account-note {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.account-field {
-    display: grid;
-    gap: 6px;
-    margin-bottom: 12px;
-}
-
-.account-field label {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.account-field input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-strong);
-    border-radius: 9px;
-    background: var(--bg);
-    color: var(--text);
-}
-
-.account-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 14px;
-}
-
-.account-action {
-    padding: 10px 12px;
-    border: 1px solid var(--border-strong);
-    border-radius: 9px;
-    background: var(--bg);
-    color: var(--text);
-    cursor: pointer;
-}
-
-.account-action.primary {
-    background: #4f46e5;
-    border-color: #4f46e5;
-}
-
-.account-rooms {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
-    margin-top: 16px;
-}
-
-.account-room {
-    min-height: 48px;
-    border: 1px dashed var(--border-strong);
-    border-radius: 8px;
-    color: var(--muted-2);
-    font-size: 11px;
-    display: grid;
-    place-items: center;
-}
-
-.disguise-wrapper {
-    position: relative;
-}
-
-.disguise-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    min-width: 220px;
-    padding: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.35);
-}
-
-.disguise-menu.visible {
-    display: grid;
-    gap: 5px;
-}
-
-.disguise-option {
-    padding: 10px 12px;
-    border: 0;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text);
-    text-align: left;
-    cursor: pointer;
-}
-
-.disguise-option:hover {
-    background: var(--surface-hover);
-}
-
-main,
-#settingsPage {
-    max-width: 1200px;
-    margin: auto;
-    padding: 35px 20px 60px;
-}
-
-.hero {
-    margin-bottom: 30px;
-}
-
-.hero h1,
-.settings-top h1 {
-    margin: 0 0 8px;
-    font-size: clamp(30px, 5vw, 48px);
-}
-
-.hero p,
-.settings-card p {
-    color: var(--muted);
-}
-
-#status {
-    margin: 25px 0;
-    color: var(--muted-2);
-}
-
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 20px;
-}
-
-.game-card {
-    display: block;
-    overflow: hidden;
-    text-decoration: none;
-    color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    transition: transform .18s ease, border-color .18s ease;
-}
-
-.game-card:hover {
-    transform: translateY(-4px);
-    border-color: #454752;
-}
+.nav a:hover{text-decoration:underline}
 
-.game-icon {
-    width: 100%;
-    aspect-ratio: 1;
-    display: block;
-    object-fit: cover;
-    background: var(--surface-hover);
+/* MAIN */
+.main{
+    padding:39px 10px 0;
 }
 
-.game-info {
-    padding: 13px 14px 15px;
+.intro{
+    width:470px;
+    float:left;
 }
 
-.game-title {
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+h1,h2{
+    font-weight:normal;
+    margin:0;
 }
 
-.no-games {
-    padding: 35px;
-    text-align: center;
-    border: 1px dashed var(--border-strong);
-    border-radius: 16px;
-    color: var(--muted-2);
+.intro h1{
+    font-size:20px;
+    margin-bottom:17px;
 }
 
-footer {
-    padding: 25px;
-    text-align: center;
-    color: var(--muted-2);
-    font-size: 13px;
+.intro p{
+    margin:0 0 10px;
+    line-height:15px;
 }
 
-/* Global settings helpers */
-html.classic-font,
-html.classic-font body {
-    font-family: "Google Sans", "Google Sans Text", "Product Sans", Arial, Helvetica, sans-serif;
+/* LOGIN */
+.login{
+    float:right;
+    width:308px;
+    min-height:160px;
+    border:1px solid #5578a5;
+    background:#222;
+    padding:10px 8px;
 }
 
-body.hide-listen .embed-toggle,
-body.hide-listen .embed-panel {
-    display: none !important;
+.login-row{
+    display:flex;
+    align-items:center;
+    margin-bottom:9px;
 }
 
-/* Disguise settings */
-.disguise-settings-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 16px;
+.login-row label{
+    width:123px;
+    font-size:13px;
 }
 
-.disguise-setting-option {
-    padding: 14px;
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    background: var(--bg);
-    color: var(--text);
-    cursor: pointer;
-    text-align: left;
-    font: inherit;
+.login-row input{
+    width:162px;
+    height:22px;
+    border:1px solid #777;
+    background:#111;
+    color:#eee;
+    padding:2px;
 }
 
-.disguise-setting-option:hover {
-    background: var(--surface-hover);
+.login-buttons{
+    text-align:right;
+    margin-top:26px;
+    padding-right:21px;
 }
 
-.disguise-setting-option.active {
-    border-color: var(--text);
-    box-shadow: 0 0 0 2px var(--text);
+button{
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:12px;
+    background:#333;
+    color:#eee;
+    border:1px solid #777;
+    height:21px;
+    margin-left:5px;
+    padding:1px 8px;
 }
 
-/* Settings toggles */
-.setting-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    padding: 16px 0;
-    border-top: 1px solid var(--border);
+.reset{
+    display:block;
+    text-align:center;
+    margin-top:24px;
 }
 
-.setting-toggle:first-child {
-    border-top: 0;
-}
+.clear{clear:both}
 
-.setting-toggle-text strong,
-.setting-toggle-text span {
-    display: block;
+/* EMPTY CONTENT AREA */
+.content-row{
+    clear:both;
+    margin-top:23px;
+    min-height:430px;
 }
 
-.setting-toggle-text span {
-    margin-top: 5px;
-    color: var(--muted);
-    font-size: 13px;
-}
 
-.toggle-button {
-    min-width: 62px;
-    height: 34px;
-    padding: 3px;
-    border: 1px solid var(--border-strong);
-    border-radius: 999px;
-    background: var(--bg);
-    cursor: pointer;
+/* GAMES OVERLAY */
+.games-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:none;
+    background:rgba(0,0,0,.72);
+    overflow:auto;
+    padding:35px 0;
 }
+.games-overlay.open{display:block}
 
-.toggle-button::after {
-    content: "";
-    display: block;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: var(--muted);
-    transition: transform .18s ease, background .18s ease;
+.games-window{
+    width:760px;
+    min-height:420px;
+    margin:0 auto;
+    background:#202020;
+    border:2px solid #6d86a5;
+    box-shadow:0 5px 25px #000;
 }
 
-.toggle-button.active::after {
-    transform: translateX(28px);
-    background: var(--text);
+.games-titlebar{
+    height:38px;
+    background:#303f55;
+    border-bottom:1px solid #71839a;
+    color:#fff;
+    padding:9px 12px;
+    font-size:18px;
+    font-weight:bold;
+    position:relative;
 }
 
-/* Settings */
-#settingsPage {
-    display: none;
-    max-width: 900px;
+.games-close{
+    position:absolute;
+    right:8px;
+    top:7px;
+    width:23px;
+    height:23px;
+    padding:0;
+    margin:0;
+    background:#222;
+    color:#fff;
+    border:1px solid #888;
+    cursor:pointer;
 }
 
-#settingsPage.visible {
-    display: block;
+.games-list{
+    padding:14px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
 }
 
-.settings-top {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
+.game-card{
+    min-height:165px;
+    background:#292929;
+    border:1px solid #596b80;
+    padding:8px;
+    cursor:pointer;
 }
 
-.settings-top h1 {
-    margin: 0;
+.game-card:hover{
+    background:#333;
+    border-color:#88a8ce;
 }
 
-.settings-card {
-    padding: 22px;
-    margin-bottom: 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 18px;
+.game-card img{
+    width:100%;
+    height:92px;
+    display:block;
+    object-fit:cover;
+    background:#111;
+    border:1px solid #555;
 }
 
-.settings-card h2 {
-    margin: 0 0 8px;
+.game-card-title{
+    color:#fff;
+    font-size:15px;
+    margin-top:7px;
+    font-weight:bold;
 }
 
-.theme-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+.game-card-date{
+    color:#aaa;
+    font-size:11px;
+    margin-top:5px;
 }
 
-.theme-button {
-    padding: 18px;
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    background: var(--bg);
-    color: var(--text);
-    cursor: pointer;
-    text-align: left;
+.game-card a{
+    display:none;
 }
 
-.theme-button strong,
-.theme-button span {
-    display: block;
+.game-page{
+    display:none;
+    padding:18px;
 }
 
-.theme-button span {
-    margin-top: 6px;
-    color: var(--muted);
-    font-size: 13px;
-}
+.game-page.active{display:block}
 
-.theme-button.active {
-    border-color: var(--text);
-    box-shadow: 0 0 0 2px var(--text);
+.game-page h2{
+    color:#fff;
+    font-size:25px;
+    margin-bottom:5px;
 }
 
-/* Embedded side panel */
-.embed-toggle {
-    position: fixed;
-    right: 0;
-    top: 50%;
-    z-index: 300;
-    padding: 14px 10px;
-    border: 0;
-    border-radius: 12px 0 0 12px;
-    background: #4f46e5;
-    color: #fff;
-    cursor: pointer;
-    font-weight: 700;
-    writing-mode: vertical-rl;
-    transform: translateY(-50%);
-    box-shadow: 0 4px 18px rgba(0,0,0,.35);
+.game-publication{
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:14px;
 }
 
-.embed-toggle:hover {
-    background: #6366f1;
+.game-image{
+    width:100%;
+    max-height:330px;
+    object-fit:cover;
+    border:1px solid #666;
+    background:#111;
 }
 
-.embed-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 250;
-    width: min(420px, 90vw);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: var(--surface);
-    border-left: 1px solid var(--border-strong);
-    box-shadow: -8px 0 25px rgba(0,0,0,.4);
-    transform: translateX(100%);
-    transition: transform .25s ease;
+.play-button{
+    display:inline-block;
+    margin-top:15px;
+    padding:7px 18px;
+    background:#334b68;
+    border:1px solid #8298b2;
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
 }
 
-.embed-panel.visible {
-    transform: translateX(0);
-}
+.play-button:hover{background:#466382}
 
-.embed-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-    border-bottom: 1px solid var(--border-strong);
+.back-games{
+    margin-top:12px;
+    background:#333;
+    color:#ddd;
+    border:1px solid #777;
+    padding:5px 12px;
+    cursor:pointer;
 }
 
-.embed-header strong {
-    font-size: 16px;
+@media(max-width:820px){
+    .games-window{width:94%}
+    .games-list{grid-template-columns:repeat(2,1fr)}
 }
-
-.embed-close {
-    padding: 6px 10px;
-    border: 1px solid var(--border-strong);
-    border-radius: 8px;
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    font-size: 18px;
+@media(max-width:520px){
+    .games-list{grid-template-columns:1fr}
 }
 
-.embed-frame {
-    width: 100%;
-    flex: 1;
-    border: 0;
-    background: #fff;
+/* FOOTER */
+footer{
+    margin-top:0;
+    border-top:1px solid #666;
+    color:#aaa;
+    text-align:center;
+    font-size:9px;
+    line-height:13px;
+    padding-top:6px;
+    padding-bottom:8px;
 }
-
-@media (max-width: 600px) {
-    header {
-        padding: 15px;
-    }
-
-    main,
-    #settingsPage {
-        padding: 25px 15px 50px;
-    }
 
-    .games-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 13px;
-    }
-
-    .disguise-wrapper,
-    .header-button {
-        width: 100%;
-    }
-
-    .disguise-menu {
-        left: 0;
-        right: 0;
-    }
-
-    .theme-buttons {
-        grid-template-columns: 1fr;
-    }
-
-    .disguise-settings-grid {
-        grid-template-columns: 1fr;
-    }
-}
+footer a{color:#00e}
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="header-content">
-        <div class="logo">Secret Unblocked XY</div>
+<div class="page">
 
-        <div class="search-wrapper">
-            <input id="search" type="search" placeholder="Search games..." autocomplete="off">
-        </div>
-<button id="settingsButton" class="header-button" type="button">⚙ Settings</button>
+<header class="header">
 
-        <div class="account-wrapper">
-            <button id="accountButton" class="header-button account-button" type="button" aria-expanded="false">
-                <img id="accountAvatar" class="account-avatar" alt="Profile picture">
-                <span id="accountButtonLabel">Account</span>
-            </button>
+    <img
+        class="header-image"
+        src="https://pbs.twimg.com/profile_banners/16745055/1788884114"
+        alt=""
+    >
 
-            <div id="accountMenu" class="account-menu" aria-label="Account menu">
-                <div class="account-heading">
-                    <img id="profilePreview" class="profile-preview" alt="Your profile picture">
-                    <div>
-                        <strong id="accountGreeting">Your account</strong>
-                        <span>Saved on this device</span>
-                    </div>
-                </div>
+    <img
+        class="site-logo"
+        src="https://cdn-icons-png.flaticon.com/512/6360/6360303.png"
+        alt="Secret Unblocked"
+    >
 
-                <div class="account-field">
-                    <label for="accountName">Display name</label>
-                    <input id="accountName" type="text" maxlength="40" placeholder="Your name" autocomplete="name">
-                </div>
+    <div class="think">Think.<br>Create.</div>
 
-                <div class="account-field">
-                    <label for="profileUpload">Profile picture</label>
-                    <input id="profileUpload" type="file" accept="image/*">
-                </div>
-
-                <div class="account-actions">
-                    <button id="saveAccount" class="account-action primary" type="button">Save account</button>
-                    <button id="googleSync" class="account-action" type="button">Sync to Google</button>
-                </div>
-                <p id="accountNote" class="account-note">Google sync needs a connected sign-in service. Your account currently saves locally.</p>
-
-                <div class="account-rooms" aria-label="Future account rooms">
-                    <div class="account-room">Room 1</div>
-                    <div class="account-room">Room 2</div>
-                    <div class="account-room">Room 3</div>
-                    <div class="account-room">Room 4</div>
-                    <div class="account-room">Room 5</div>
-                    <div class="account-room">Room 6</div>
-                </div>
-            </div>
-        </div>
+    <div class="signup-bubble">
+        Sign Up
     </div>
+
+    <nav class="nav">
+        <a href="#">Home</a> |
+        <a href="#" onclick="openGames(event)">Games</a> | <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a> | <a href="#" onclick="openSettings(event)">Settings</a>
+    </nav>
+
 </header>
 
-<button id="embedToggle" class="embed-toggle" type="button">
-    Open Listen
-</button>
+<main class="main">
 
-<aside id="embedPanel" class="embed-panel" aria-label="Embedded Listen site">
-    <div class="embed-header">
-        <strong>Secret Unblocked Listen</strong>
-        <button id="embedClose" class="embed-close" type="button" aria-label="Close embed">×</button>
-    </div>
+    <section class="intro">
+        <h1>Welcome to Secret Unblocked!</h1>
 
-    <iframe
-        class="embed-frame"
-        src="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/"
-        title="Secret Unblocked Listen"
-        loading="lazy"
-        allow="autoplay; fullscreen"
-    ></iframe>
-</aside>
+        <p>
+            To get started, simply choose a character and visit somebody's place.
+            When you visit your own place, changes that you make are permanent.
+            Changes to someone else's place are not permanent.
+        </p>
 
-<main id="homePage">
-    <section class="hero">
-        <h1>Games</h1>
-        <p>Choose a game to play.</p>
+        <p>
+            Consult the <a href="mailto:zachary.ceiley@education.nsw.gov.au?subject=Secret%20Unblocked%20Developer%20Question&body=Hello%2C%0A%0A">developer section</a> in the coming days to learn
+            how to create complex Places, how to create and publish Things,
+            and how to work offline.
+        </p>
+
+        <p>
+            Please enter feedback and bugs in the <a href="#">forums</a>.
+            Thank you from the Secret Unblocked team.
+        </p>
     </section>
 
-    <div id="status">Searching repository for games...</div>
-    <div id="games" class="games-grid"></div>
+    <section class="login">
+
+        <div class="login-row">
+            <label>Username or E-mail:</label>
+            <input type="text">
+        </div>
+
+        <div class="login-row">
+            <label>Password:</label>
+            <input type="password">
+        </div>
+
+        <div class="login-buttons">
+            <button>Log In</button>
+            <button>Sign Up!</button>
+        </div>
+
+        <a class="reset" href="#">Reset password</a>
+
+    </section>
+
+    <div class="clear"></div>
+
+    <div class="content-row"></div>
+
 </main>
 
-<section id="settingsPage">
-    <div class="settings-top">
-        <button id="backButton" class="back-button" type="button">← Back</button>
-        <h1>Settings</h1>
-    </div>
+<footer>
+    Secret Unblocked, "The future of html and classic roblox",
+    characters, logos, names and all related indicia are trademarks of
+    Secret Unblocked/Zac's Unblocked Corporation, © 2006. Patents pending.<br>
 
-    <div class="settings-card">
-        <h2>Site Appearance</h2>
-        <p>Choose whether the entire site uses Light Mode or Dark Mode.</p>
+    <a href="#">Privacy Policy</a> |
+    <a href="mailto:zachary.ceiley@education.nsw.gov.au?subject=Secret%20Unblocked%20Contact&body=Hello%20Secret%20Unblocked%20team%2C%0A%0A">Contact Us</a> |
+    <a href="#">About Us</a><br>
 
-        <div class="theme-buttons">
-            <button class="theme-button" data-theme="dark">
-                <strong>Dark Mode</strong>
-                <span>Dark background and interface.</span>
-            </button>
+    Use of this site signifies your acceptance of the
+    <a href="#">Terms and Conditions</a>
+</footer>
 
-            <button class="theme-button" data-theme="light">
-                <strong>Light Mode</strong>
-                <span>Light background and interface.</span>
-            </button>
+</div>
+
+
+<!-- Games opens over the main page -->
+<div class="games-overlay" id="gamesOverlay">
+    <div class="games-window">
+
+        <div class="games-titlebar">
+            Secret Unblocked — Games
+            <button class="games-close" onclick="closeGames()">×</button>
         </div>
-    </div>
 
-    <div class="settings-card">
-        <h2>Listen</h2>
-        <p>Choose whether the Listen button and panel are available.</p>
-
-        <div class="setting-toggle">
-            <div class="setting-toggle-text">
-                <strong>Hide Listen</strong>
-                <span>Hide the Listen button and its panel.</span>
-            </div>
-            <button id="hideListenToggle" class="toggle-button" type="button"
-                    aria-label="Toggle Hide Listen" aria-pressed="false"></button>
+        <div id="gamesListView">
+            <div class="games-list" id="gamesList"></div>
         </div>
-    </div>
 
-    <div class="settings-card">
-        <h2>Font</h2>
-        <p>Use a Google Sans-style font across supported pages.</p>
-
-        <div class="setting-toggle">
-            <div class="setting-toggle-text">
-                <strong>Classic Font</strong>
-                <span>Switch the site interface to Google Sans when available.</span>
-            </div>
-            <button id="classicFontToggle" class="toggle-button" type="button"
-                    aria-label="Toggle Classic Font" aria-pressed="false"></button>
+        <div class="game-page" id="gamePage">
+            <button class="back-games" onclick="showGamesList()">← Back to Games</button>
+            <h2 id="gameTitle"></h2>
+            <div class="game-publication" id="gameDate"></div>
+            <img class="game-image" id="gameImage" src="" alt="">
+            <br>
+            <a class="play-button" id="gamePlay" href="#" target="_blank" rel="noopener">Play</a>
         </div>
+
     </div>
-
-    <div class="settings-card">
-        <h2>Disguise Tab</h2>
-        <p>Choose what this site looks like in your browser tab.</p>
-
-        <div class="disguise-settings-grid">
-            <button class="disguise-setting-option" data-disguise="none" type="button">
-                Secret Unblocked XY
-            </button>
-            <button class="disguise-setting-option" data-disguise="word" type="button">
-                Microsoft Word
-            </button>
-            <button class="disguise-setting-option" data-disguise="classroom" type="button">
-                Google Classroom
-            </button>
-            <button class="disguise-setting-option" data-disguise="powerpoint" type="button">
-                Microsoft PowerPoint
-            </button>
-            <button class="disguise-setting-option" data-disguise="google" type="button">
-                Google
-            </button>
-        </div>
-    </div>
-</section>
-
-<footer id="footer">Secret Unblocked</footer>
+</div>
 
 <script>
-const disguises = {
-    word: {
-        title: "Microsoft Word",
-        favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Microsoft_Office_Word_%282025%E2%80%93present%29.svg/960px-Microsoft_Office_Word_%282025%E2%80%93present%29.svg.png"
-    },
-    classroom: {
-        title: "Google Classroom",
-        favicon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-classroom-icon.png"
-    },
-    powerpoint: {
-        title: "Microsoft PowerPoint",
-        favicon: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Microsoft_Office_PowerPoint_%282025%E2%80%93present%29.svg/3840px-Microsoft_Office_PowerPoint_%282025%E2%80%93present%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"
-    },
-    google: {
-        title: "Google",
-        favicon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/3840px-Google_Favicon_2025.svg.png"
-    }
-};
-
-const owner = "zacharyceiley-jpg";
-const repo = "Secret-Unblocked-XY";
-const branch = "main";
-const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/?ref=${branch}`;
-
-const gamesContainer = document.getElementById("games");
-const statusElement = document.getElementById("status");
-const searchInput = document.getElementById("search");
-const settingsPage = document.getElementById("settingsPage");
-const homePage = document.getElementById("homePage");
-const footer = document.getElementById("footer");
-const accountButton = document.getElementById("accountButton");
-const accountMenu = document.getElementById("accountMenu");
-const accountAvatar = document.getElementById("accountAvatar");
-const profilePreview = document.getElementById("profilePreview");
-const accountName = document.getElementById("accountName");
-const profileUpload = document.getElementById("profileUpload");
-const accountGreeting = document.getElementById("accountGreeting");
-const accountButtonLabel = document.getElementById("accountButtonLabel");
-const accountNote = document.getElementById("accountNote");
-
-let games = [];
-let account = { name: "", avatar: "" };
-const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='50' fill='%234f46e5'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 86c4-20 18-30 30-30s26 10 30 30' fill='white'/%3E%3C/svg%3E";
-
-function updateAccountDisplay() {
-    const avatar = account.avatar || defaultAvatar;
-    accountAvatar.src = avatar;
-    profilePreview.src = avatar;
-    accountName.value = account.name;
-    accountGreeting.textContent = account.name ? `Hello, ${account.name}` : "Your account";
-    accountButtonLabel.textContent = account.name || "Account";
-}
-
-function saveAccountData() {
-    account.name = accountName.value.trim();
-    localStorage.setItem("siteAccount", JSON.stringify(account));
-    updateAccountDisplay();
-    accountNote.textContent = "Account saved on this device.";
-}
-
-try {
-    account = JSON.parse(localStorage.getItem("siteAccount")) || account;
-} catch (error) {
-    account = { name: "", avatar: "" };
-}
-updateAccountDisplay();
-
-function setFavicon(url) {
-    let icon = document.querySelector("link[rel='icon']");
-
-    if (!icon) {
-        icon = document.createElement("link");
-        icon.rel = "icon";
-        document.head.appendChild(icon);
-    }
-
-    icon.href = url || "";
-}
-
-function applyDisguise(type) {
-    if (type === "none") {
-        document.title = "Secret Unblocked XY";
-        setFavicon("");
-    } else {
-        const disguise = disguises[type];
-        if (!disguise) return;
-
-        document.title = disguise.title;
-        setFavicon(disguise.favicon);
-    }
-
-    localStorage.setItem("siteDisguise", type);
-
-    document.querySelectorAll(".disguise-setting-option").forEach(button => {
-        button.classList.toggle("active", button.dataset.disguise === type);
-    });
-}
-
 /*
- * Global settings are stored in localStorage so pages on this same
- * GitHub Pages site can share them.
- */
-function getSiteSettings() {
-    return {
-        theme: localStorage.getItem("siteTheme") || "dark",
-        hideListen: localStorage.getItem("hideListen") === "true",
-        classicFont: localStorage.getItem("classicFont") === "true",
-        disguise: localStorage.getItem("siteDisguise") || "none"
-    };
-}
+    Add games here.
 
-function applyGlobalSettings() {
-    const settings = getSiteSettings();
+    Each game needs:
+    title       = game name
+    date        = publication date
+    icon        = image shown in the Games list
+    image       = large image shown on the game page
+    link        = page/game URL opened by Play
+*/
+const games = [
+    {
+        title: "Example Game",
+        date: "September 20, 2026",
+        icon: "https://via.placeholder.com/300x180?text=Game+Icon",
+        image: "https://via.placeholder.com/760x330?text=Example+Game",
+        link: "#"
+    },
+    {
+        title: "Another Game",
+        date: "September 20, 2026",
+        icon: "https://via.placeholder.com/300x180?text=Game+Icon",
+        image: "https://via.placeholder.com/760x330?text=Another+Game",
+        link: "#"
+    },
+    {
+        title: "New Game",
+        date: "September 20, 2026",
+        icon: "https://via.placeholder.com/300x180?text=Game+Icon",
+        image: "https://via.placeholder.com/760x330?text=New+Game",
+        link: "#"
+    },
+];
 
-    applyTheme(settings.theme);
+const overlay = document.getElementById("gamesOverlay");
+const list = document.getElementById("gamesList");
+const listView = document.getElementById("gamesListView");
+const page = document.getElementById("gamePage");
 
-    document.body.classList.toggle("hide-listen", settings.hideListen);
-    document.documentElement.classList.toggle("classic-font", settings.classicFont);
-    applyDisguise(settings.disguise);
+function renderGames(){
+    list.innerHTML = "";
 
-    const hideListenToggle = document.getElementById("hideListenToggle");
-    if (hideListenToggle) {
-        hideListenToggle.classList.toggle("active", settings.hideListen);
-        hideListenToggle.setAttribute("aria-pressed", String(settings.hideListen));
-    }
-
-    const classicFontToggle = document.getElementById("classicFontToggle");
-    if (classicFontToggle) {
-        classicFontToggle.classList.toggle("active", settings.classicFont);
-        classicFontToggle.setAttribute("aria-pressed", String(settings.classicFont));
-    }
-}
-
-function saveGlobalSetting(name, value) {
-    localStorage.setItem(name, String(value));
-    applyGlobalSettings();
-}
-
-function applyTheme(theme) {
-    const light = theme === "light";
-    const values = light
-        ? ["#f5f5f7", "#fff", "#eeeef2", "#dedee5", "#c9c9d2", "#111116", "#5f606b", "#70717c"]
-        : ["#0b0b0f", "#15161c", "#1a1b22", "#252630", "#30313a", "#fff", "#a9aab4", "#8e909c"];
-
-    ["--bg", "--surface", "--surface-hover", "--border", "--border-strong", "--text", "--muted", "--muted-2"]
-        .forEach((name, index) => {
-            document.documentElement.style.setProperty(name, values[index]);
-        });
-
-    localStorage.setItem("siteTheme", theme);
-
-    document.querySelectorAll(".theme-button").forEach(button => {
-        button.classList.toggle("active", button.dataset.theme === theme);
-    });
-}
-
-function getGameTitle(filename) {
-    return filename
-        .replace(/\.html$/i, "")
-        .replace(/game$/i, "")
-        .replace(/[-_]+/g, " ")
-        .replace(/\s+/g, " ")
-        .trim()
-        .replace(/\b\w/g, letter => letter.toUpperCase());
-}
-
-function escapeHTML(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-function renderGames(list) {
-    gamesContainer.innerHTML = "";
-
-    if (!list.length) {
-        gamesContainer.innerHTML = '<div class="no-games">No games found.</div>';
-        return;
-    }
-
-    list.forEach(game => {
-        const card = document.createElement("a");
+    games.forEach((game, index) => {
+        const card = document.createElement("div");
         card.className = "game-card";
-        card.href = game.url + (game.url.includes("?") ? "&" : "?") + "siteSettings=1";
-        card.title = game.title;
+        card.onclick = () => openGame(index);
 
         card.innerHTML = `
-            <img class="game-icon" src="${game.icon}" alt="${escapeHTML(game.title)}" loading="lazy"
-                onerror="this.style.display='none'">
-            <div class="game-info">
-                <div class="game-title">${escapeHTML(game.title)}</div>
-            </div>
+            <img src="${game.icon}" alt="">
+            <div class="game-card-title">${game.title}</div>
+            <div class="game-card-date">Published: ${game.date}</div>
         `;
 
-        gamesContainer.appendChild(card);
+        list.appendChild(card);
     });
 }
 
-async function loadGames() {
-    try {
-        const response = await fetch(apiURL, {
-            headers: { Accept: "application/vnd.github+json" }
-        });
+function openGames(event){
+    if(event) event.preventDefault();
 
-        if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+    renderGames();
+    listView.style.display = "block";
+    page.classList.remove("active");
+    overlay.classList.add("open");
+}
 
-        const files = await response.json();
+function closeGames(){
+    overlay.classList.remove("open");
+}
 
-        games = files
-            .filter(file =>
-                file.type === "file" &&
-                /\.html$/i.test(file.name) &&
-                /game/i.test(file.name) &&
-                file.name.toLowerCase() !== "index.html"
-            )
-            .map(file => {
-                const iconName = file.name.replace(/\.html$/i, ".png");
+function openGame(index){
+    const game = games[index];
 
-                return {
-                    filename: file.name,
-                    title: getGameTitle(file.name),
-                    url: `https://${owner}.github.io/${repo}/${encodeURIComponent(file.name)}`,
-                    icon: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${encodeURIComponent(iconName)}`
-                };
-            })
-            .sort((a, b) => a.title.localeCompare(b.title));
+    document.getElementById("gameTitle").textContent = game.title;
+    document.getElementById("gameDate").textContent = "Published: " + game.date;
+    document.getElementById("gameImage").src = game.image;
+    document.getElementById("gameImage").alt = game.title;
+    document.getElementById("gamePlay").href = game.link;
 
-        statusElement.textContent = `${games.length} game${games.length === 1 ? "" : "s"} found`;
-        renderGames(games);
-    } catch (error) {
-        console.error(error);
-        statusElement.textContent = "Unable to load games from the repository.";
-        gamesContainer.innerHTML = `
-            <div class="no-games">
-                <strong>Could not load the games.</strong><br><br>
-                Please check that the repository is public and try again.
-            </div>
-        `;
+    listView.style.display = "none";
+    page.classList.add("active");
+}
+
+function showGamesList(){
+    page.classList.remove("active");
+    listView.style.display = "block";
+    renderGames();
+}
+
+overlay.addEventListener("click", function(event){
+    if(event.target === overlay) closeGames();
+});
+
+document.addEventListener("keydown", function(event){
+    if(event.key === "Escape") closeGames();
+});
+
+renderGames();
+</script>
+
+
+<!-- Settings overlay -->
+<div class="settings-overlay" id="settingsOverlay">
+    <div class="settings-window">
+        <div class="settings-titlebar">
+            Secret Unblocked — Settings
+            <button class="settings-close" onclick="closeSettings()">×</button>
+        </div>
+
+        <div class="settings-content">
+            <h2>Settings</h2>
+
+            <label class="setting-row">
+                <span>Light Mode</span>
+                <input type="checkbox" id="lightModeToggle" onchange="toggleLightMode()">
+            </label>
+
+            <label class="setting-row">
+                <span>Hide Account</span>
+                <input type="checkbox" id="hideAccountToggle" onchange="toggleAccount()">
+            </label>
+
+            <label class="setting-row">
+                <span>Sign In</span>
+                <button class="setting-button" onclick="showSignIn()">Sign In</button>
+            </label>
+
+            <label class="setting-row">
+                <span>Show Wallpaper</span>
+                <input type="checkbox" id="wallpaperToggle" onchange="toggleWallpaper()">
+            </label>
+        </div>
+    </div>
+</div>
+
+<style>
+.settings-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1100;
+    display:none;
+    background:rgba(0,0,0,.72);
+    overflow:auto;
+    padding:60px 0;
+}
+.settings-overlay.open{display:block}
+
+.settings-window{
+    width:430px;
+    margin:0 auto;
+    background:#202020;
+    border:2px solid #6d86a5;
+    box-shadow:0 5px 25px #000;
+}
+
+.settings-titlebar{
+    height:38px;
+    background:#303f55;
+    border-bottom:1px solid #71839a;
+    color:#fff;
+    padding:9px 12px;
+    font-size:18px;
+    font-weight:bold;
+    position:relative;
+}
+
+.settings-close{
+    position:absolute;
+    right:8px;
+    top:7px;
+    width:23px;
+    height:23px;
+    padding:0;
+    margin:0;
+    background:#222;
+    color:#fff;
+    border:1px solid #888;
+    cursor:pointer;
+}
+
+.settings-content{
+    padding:18px;
+}
+
+.settings-content h2{
+    color:#fff;
+    font-size:22px;
+    margin:0 0 15px;
+}
+
+.setting-row{
+    min-height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid #444;
+    padding:8px 2px;
+    color:#eee;
+}
+
+.setting-row input[type="checkbox"]{
+    width:18px;
+    height:18px;
+}
+
+.setting-button{
+    background:#333;
+    color:#eee;
+    border:1px solid #777;
+    padding:5px 12px;
+    cursor:pointer;
+}
+
+body.light-mode{
+    background:#fff;
+    color:#000;
+}
+
+body.light-mode .login{
+    background:#fff;
+}
+
+body.light-mode .settings-window,
+body.light-mode .games-window{
+    background:#f4f4f4;
+}
+
+body.light-mode .settings-content h2{
+    color:#111;
+}
+
+body.light-mode .setting-row{
+    color:#111;
+    border-color:#ccc;
+}
+
+body.light-mode .settings-titlebar,
+body.light-mode .games-titlebar{
+    background:#afc4df;
+}
+
+body.light-mode .settings-button,
+body.light-mode .settings-close{
+    background:#eee;
+    color:#111;
+}
+
+body.wallpaper-mode{
+    background-image:url("https://tr.rbxcdn.com/180DAY-335f97392a8d783a953ad78ae6fe934c/500/280/Image/Jpeg/noFilter");
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+body.wallpaper-mode .page{
+    background:rgba(23,23,23,.94);
+}
+</style>
+
+<script>
+function openSettings(event){
+    if(event) event.preventDefault();
+    document.getElementById("settingsOverlay").classList.add("open");
+}
+
+function closeSettings(){
+    document.getElementById("settingsOverlay").classList.remove("open");
+}
+
+function toggleLightMode(){
+    const enabled = document.getElementById("lightModeToggle").checked;
+    document.body.classList.toggle("light-mode", enabled);
+    localStorage.setItem("secretLightMode", enabled);
+}
+
+function toggleAccount(){
+    const enabled = document.getElementById("hideAccountToggle").checked;
+    const login = document.querySelector(".login");
+    if(login) login.style.display = enabled ? "none" : "";
+    localStorage.setItem("secretHideAccount", enabled);
+}
+
+function showSignIn(){
+    const login = document.querySelector(".login");
+    if(login){
+        login.style.display = "";
+        login.scrollIntoView({behavior:"smooth", block:"center"});
     }
+    document.getElementById("hideAccountToggle").checked = false;
+    localStorage.setItem("secretHideAccount", false);
+    closeSettings();
 }
-document.addEventListener("click", event => {
-if (!event.target.closest(".account-wrapper")) {
-        accountMenu.classList.remove("visible");
-        accountButton.setAttribute("aria-expanded", "false");
+
+function toggleWallpaper(){
+    const enabled = document.getElementById("wallpaperToggle").checked;
+    document.body.classList.toggle("wallpaper-mode", enabled);
+    localStorage.setItem("secretWallpaper", enabled);
+}
+
+document.getElementById("settingsOverlay").addEventListener("click", function(event){
+    if(event.target === this) closeSettings();
+});
+
+document.addEventListener("keydown", function(event){
+    if(event.key === "Escape"){
+        closeSettings();
     }
 });
 
-accountButton.addEventListener("click", () => {
-    const isVisible = accountMenu.classList.toggle("visible");
-    accountButton.setAttribute("aria-expanded", String(isVisible));
-});
+(function loadSettings(){
+    const light = localStorage.getItem("secretLightMode") === "true";
+    const hide = localStorage.getItem("secretHideAccount") === "true";
+    const wallpaper = localStorage.getItem("secretWallpaper") === "true";
 
-document.getElementById("saveAccount").addEventListener("click", saveAccountData);
+    document.getElementById("lightModeToggle").checked = light;
+    document.getElementById("hideAccountToggle").checked = hide;
+    document.getElementById("wallpaperToggle").checked = wallpaper;
 
-profileUpload.addEventListener("change", () => {
-    const file = profileUpload.files[0];
-    if (!file) return;
+    document.body.classList.toggle("light-mode", light);
+    document.body.classList.toggle("wallpaper-mode", wallpaper);
 
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-        account.avatar = reader.result;
-        updateAccountDisplay();
-        accountNote.textContent = "Picture selected. Click Save account to keep it.";
-    });
-    reader.readAsDataURL(file);
-});
-
-document.getElementById("googleSync").addEventListener("click", () => {
-    accountNote.textContent = "Google sync will be available after a Google sign-in service is connected.";
-});
-
-document.querySelectorAll(".disguise-setting-option").forEach(option => {
-    option.addEventListener("click", () => applyDisguise(option.dataset.disguise));
-});
-
-document.getElementById("settingsButton").addEventListener("click", () => {
-    settingsPage.classList.add("visible");
-    homePage.style.display = "none";
-    footer.style.display = "none";
-    window.scrollTo(0, 0);
-});
-
-document.getElementById("backButton").addEventListener("click", () => {
-    settingsPage.classList.remove("visible");
-    homePage.style.display = "";
-    footer.style.display = "";
-    window.scrollTo(0, 0);
-});
-
-document.querySelectorAll(".theme-button").forEach(button => {
-    button.addEventListener("click", () => applyTheme(button.dataset.theme));
-});
-
-const hideListenToggle = document.getElementById("hideListenToggle");
-if (hideListenToggle) {
-    hideListenToggle.addEventListener("click", () => {
-        saveGlobalSetting("hideListen", !getSiteSettings().hideListen);
-    });
-}
-
-const classicFontToggle = document.getElementById("classicFontToggle");
-if (classicFontToggle) {
-    classicFontToggle.addEventListener("click", () => {
-        saveGlobalSetting("classicFont", !getSiteSettings().classicFont);
-    });
-}
-
-searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim().toLowerCase();
-
-    renderGames(games.filter(game =>
-        game.title.toLowerCase().includes(query) ||
-        game.filename.toLowerCase().includes(query)
-    ));
-});
-
-const embedPanel = document.getElementById("embedPanel");
-
-document.getElementById("embedToggle").addEventListener("click", () => {
-    embedPanel.classList.add("visible");
-});
-
-document.getElementById("embedClose").addEventListener("click", () => {
-    embedPanel.classList.remove("visible");
-});
-
-applyGlobalSettings();
-loadGames();
-
-window.addEventListener("storage", event => {
-    if (["siteTheme", "hideListen", "classicFont", "siteDisguise"].includes(event.key)) {
-        applyGlobalSettings();
-    }
-});
+    const login = document.querySelector(".login");
+    if(login) login.style.display = hide ? "none" : "";
+})();
 </script>
 
 </body>
