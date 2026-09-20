@@ -381,7 +381,7 @@ footer a{color:#00e}
 
     <nav class="nav">
         <a href="#">Home</a> |
-        <a href="#" id="gamesNavLink">Games</a> | <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a> | <a href="#" onclick="openSettings(event)">Settings</a>
+        <a href="#" id="gamesNavLink">Games</a> | <a href="#" id="usersNavLink">Users</a> | <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a> | <a href="#" onclick="openSettings(event)">Settings</a>
     </nav>
 
 </header>
@@ -608,6 +608,241 @@ document.addEventListener("keydown", function(event){
 renderGames();
 </script>
 
+
+<!-- Users page overlay -->
+<div class="users-overlay" id="usersOverlay">
+<div class="users-window">
+<div class="users-titlebar">Secret Unblocked — Users
+<button class="users-close" onclick="closeUsers()">×</button></div>
+<div class="users-content">
+<div id="usersListView">
+<div class="users-section"><h3>Users</h3><div class="users-grid" id="allUsers"></div></div>
+</div>
+
+<div id="userProfileView" style="display:none">
+<button class="users-back" onclick="showUsersList()">← Back to Users</button>
+<div class="users-profile">
+<div class="users-avatar" id="userAvatar">S</div>
+<div>
+<h2 id="userName">secretunblocked</h2>
+<div class="users-subtitle">Creator</div>
+<div class="user-email" id="userEmail"><strong>Email:</strong> No email provided</div>
+</div>
+</div>
+
+<div class="users-section"><h3>Games</h3><div class="users-grid" id="userGames"></div></div>
+<div class="users-section"><h3>Assets</h3><div class="users-grid" id="userAssets"></div></div>
+<div class="users-section"><h3>Images</h3><div class="users-grid" id="userImages"></div></div>
+<div class="users-section"><h3>Models</h3><div class="users-grid" id="userModels"></div></div>
+</div>
+</div></div></div>
+
+<style>
+.users-overlay{position:fixed;inset:0;z-index:100000;display:none;background:rgba(0,0,0,.72);overflow:auto;padding:35px 0}
+.users-overlay.open{display:block}
+.users-window{width:760px;min-height:500px;margin:0 auto;background:#202020;border:2px solid #6d86a5;box-shadow:0 5px 25px #000}
+.users-titlebar{height:38px;background:#303f55;border-bottom:1px solid #71839a;color:#fff;padding:9px 12px;font-size:18px;font-weight:bold;position:relative}
+.users-close{position:absolute;right:8px;top:7px;width:23px;height:23px;padding:0;margin:0;background:#222;color:#fff;border:1px solid #888;cursor:pointer}
+.users-content{padding:18px}
+.users-profile{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid #555}
+.users-avatar{width:58px;height:58px;background:#334b68;border:1px solid #8298b2;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold;color:#fff}
+.users-profile h2{color:#fff;font-size:24px;margin:0}
+.users-subtitle{color:#9aa8b8;margin-top:3px}
+.users-section{margin-top:20px}
+.users-section h3{color:#fff;font-size:17px;margin:0 0 9px;border-bottom:1px solid #444;padding-bottom:5px}
+.users-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.user-item{background:#292929;border:1px solid #596b80;padding:7px;min-height:120px}
+.user-item img{width:100%;height:75px;object-fit:cover;display:block;background:#111;border:1px solid #555}
+.user-item-title{color:#fff;font-weight:bold;font-size:13px;margin-top:5px}
+.user-item-meta{color:#999;font-size:10px;margin-top:3px}
+.user-empty{color:#888;font-size:12px;padding:8px 0}
+.users-clickable{cursor:pointer}
+.users-clickable:hover{background:#333}
+.user-email{margin-top:5px;font-size:12px;color:#aaa}.user-email strong{color:#ddd}
+.users-back{margin-bottom:12px;padding:7px 12px;background:#222;color:#fff;border:1px solid #666;cursor:pointer}
+.users-back:hover{background:#333}
+.user-card-avatar{margin:0 auto 8px;width:58px;height:58px}
+
+@media(max-width:820px){.users-window{width:94%}.users-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.users-grid{grid-template-columns:1fr}}
+</style>
+
+<script>
+const usersNavLink = document.getElementById("usersNavLink");
+const usersOverlay = document.getElementById("usersOverlay");
+
+if (usersNavLink) {
+    usersNavLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        openUsers();
+    });
+}
+
+function openUsers() {
+    renderAllUsers();
+    document.getElementById("usersListView").style.display = "block";
+    document.getElementById("userProfileView").style.display = "none";
+    usersOverlay.classList.add("open");
+}
+
+function closeUsers() {
+    usersOverlay.classList.remove("open");
+}
+
+function getAllUsers() {
+    const names = [];
+    games.forEach(function(game) {
+        const name = (game.creator || "Unknown").trim();
+        if (name && !names.some(function(existing) {
+            return existing.toLowerCase() === name.toLowerCase();
+        })) {
+            names.push(name);
+        }
+    });
+    return names;
+}
+
+function renderAllUsers() {
+    const users = getAllUsers();
+    const target = document.getElementById("allUsers");
+
+    if (!users.length) {
+        target.innerHTML = '<div class="user-empty">No users found.</div>';
+        return;
+    }
+
+    target.innerHTML = "";
+
+    users.forEach(function(name) {
+        const count = games.filter(function(game) {
+            return (game.creator || "").toLowerCase() === name.toLowerCase();
+        }).length;
+
+        const card = document.createElement("div");
+        card.className = "user-item users-clickable";
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", "Open " + name + " profile");
+
+        const avatar = document.createElement("div");
+        avatar.className = "users-avatar user-card-avatar";
+        avatar.textContent = name.charAt(0).toUpperCase();
+
+        const title = document.createElement("div");
+        title.className = "user-item-title";
+        title.textContent = name;
+
+        const meta = document.createElement("div");
+        meta.className = "user-item-meta";
+        meta.textContent = count + " game" + (count === 1 ? "" : "s");
+
+        card.appendChild(avatar);
+        card.appendChild(title);
+        card.appendChild(meta);
+
+        card.addEventListener("click", function() {
+            openUserProfile(name);
+        });
+        card.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openUserProfile(name);
+            }
+        });
+
+        target.appendChild(card);
+    });
+}
+
+function openUserProfile(creatorName) {
+    document.getElementById("usersListView").style.display = "none";
+    document.getElementById("userProfileView").style.display = "block";
+
+    document.getElementById("userName").textContent = creatorName;
+    document.getElementById("userAvatar").textContent = creatorName.charAt(0).toUpperCase();
+
+    const userEmails = {
+        "secretunblocked": "zachary.ceiley@education.nsw.gov.au",
+        "secretshetlesky": "jasper.marshall@education.nsw.gov.au",
+        "Freezenova": ""
+    };
+
+    const email = userEmails[creatorName] || "";
+    document.getElementById("userEmail").innerHTML =
+        "<strong>Email:</strong> " + (email || "No email provided");
+
+    const creatorGames = games.filter(function(game) {
+        return (game.creator || "").toLowerCase() === creatorName.toLowerCase();
+    });
+
+    const gamesTarget = document.getElementById("userGames");
+    gamesTarget.innerHTML = "";
+
+    if (!creatorGames.length) {
+        gamesTarget.innerHTML = '<div class="user-empty">No games published.</div>';
+    } else {
+        creatorGames.forEach(function(game) {
+            const card = document.createElement("div");
+            card.className = "user-item users-clickable";
+            card.tabIndex = 0;
+            card.setAttribute("role", "button");
+            card.setAttribute("aria-label", "Open " + game.title);
+
+            const img = document.createElement("img");
+            img.src = game.icon;
+            img.alt = game.title;
+
+            const title = document.createElement("div");
+            title.className = "user-item-title";
+            title.textContent = game.title;
+
+            const meta = document.createElement("div");
+            meta.className = "user-item-meta";
+            meta.textContent = "Game • " + (game.date || "");
+
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(meta);
+
+            const openThisGame = function() {
+                const index = games.indexOf(game);
+                closeUsers();
+                openGames();
+                openGame(index);
+            };
+
+            card.addEventListener("click", openThisGame);
+            card.addEventListener("keydown", function(event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openThisGame();
+                }
+            });
+
+            gamesTarget.appendChild(card);
+        });
+    }
+
+    document.getElementById("userAssets").innerHTML =
+        '<div class="user-empty">No assets added yet.</div>';
+    document.getElementById("userImages").innerHTML =
+        '<div class="user-empty">No images added yet.</div>';
+    document.getElementById("userModels").innerHTML =
+        '<div class="user-empty">No models added yet.</div>';
+}
+
+function showUsersList() {
+    document.getElementById("userProfileView").style.display = "none";
+    document.getElementById("usersListView").style.display = "block";
+    renderAllUsers();
+}
+
+usersOverlay.addEventListener("click", function(event) {
+    if (event.target === usersOverlay) {
+        closeUsers();
+    }
+});
+</script>
 
 <!-- Settings overlay -->
 <div class="settings-overlay" id="settingsOverlay">
