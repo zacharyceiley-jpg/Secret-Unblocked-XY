@@ -174,6 +174,14 @@ button{
     margin-top:24px;
 }
 
+#loginMessage{
+    min-height:15px;
+    margin-top:8px;
+    color:#9fc1e8;
+    text-align:center;
+    font-size:11px;
+}
+
 .clear{clear:both}
 
 /* EMPTY CONTENT AREA */
@@ -434,7 +442,7 @@ footer a{color:#00e}
 <main class="main">
 
     <section class="intro">
-        <h1>Welcome to Secret Unblocked!</h1>
+        <h1 id="welcomeMessage">Welcome to Secret Unblocked!</h1>
 
         <p>
             To get started, simply choose a character and visit somebody's place.
@@ -458,18 +466,19 @@ footer a{color:#00e}
 
         <div class="login-row">
             <label>Username or E-mail:</label>
-            <input type="text">
+            <input type="text" id="loginEmail" autocomplete="username">
         </div>
 
         <div class="login-row">
             <label>Password:</label>
-            <input type="password">
+            <input type="password" id="loginPassword" autocomplete="current-password">
         </div>
 
         <div class="login-buttons">
-            <button>Log In</button>
-            <button>Sign Up!</button>
+            <button type="button" id="loginButton">Log In</button>
+            <button type="button">Sign Up!</button>
         </div>
+        <div id="loginMessage" aria-live="polite"></div>
 
         <a class="reset" href="#">Reset password</a>
 
@@ -636,7 +645,60 @@ const gamesNavLink = document.getElementById("gamesNavLink");
 const gamesSearch = document.getElementById("gamesSearch");
 const continuePlayingButton = document.getElementById("continuePlayingButton");
 const playtimeDisplay = document.getElementById("playtimeDisplay");
+const loginEmail = document.getElementById("loginEmail");
+const loginPassword = document.getElementById("loginPassword");
+const loginButton = document.getElementById("loginButton");
+const welcomeMessage = document.getElementById("welcomeMessage");
+const loginMessage = document.getElementById("loginMessage");
 let activeGameIndex = null;
+
+const accountNames = {
+    "zachary.ceiley@education.nsw.gov.au": "secretunblocked",
+    "jasper.marshall@education.nsw.gov.au": "secretshetlesky"
+};
+
+function updateWelcomeMessage(username){
+    welcomeMessage.textContent = username
+        ? "Welcome " + username + "!"
+        : "Welcome to Secret Unblocked!";
+}
+
+function signIn(){
+    const email = loginEmail.value.trim().toLowerCase();
+    const username = accountNames[email];
+
+    if (!username) {
+        loginMessage.textContent = "That email is not registered yet.";
+        updateWelcomeMessage("");
+        return;
+    }
+
+    localStorage.setItem("secretSignedInUser", username);
+    localStorage.setItem("secretSignedInEmail", email);
+    updateWelcomeMessage(username);
+    loginMessage.textContent = "Signed in as " + username + ".";
+}
+
+if (loginButton) {
+    loginButton.addEventListener("click", signIn);
+}
+
+if (loginEmail) {
+    loginEmail.addEventListener("keydown", function(event){
+        if (event.key === "Enter") signIn();
+    });
+}
+
+if (loginPassword) {
+    loginPassword.addEventListener("keydown", function(event){
+        if (event.key === "Enter") signIn();
+    });
+}
+
+(function loadSignedInUser(){
+    const username = localStorage.getItem("secretSignedInUser");
+    if (username) updateWelcomeMessage(username);
+})();
 let playtimeSeconds = Number(localStorage.getItem("secretPlaytimeSeconds") || 0);
 
 function formatPlaytime(seconds){
