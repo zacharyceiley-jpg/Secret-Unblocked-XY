@@ -405,6 +405,78 @@ footer a{color:#00e}
 .play-tracking-bar button:hover{
     background:#334b68;
 }
+
+/* LEFT DASHBOARD */
+.left-dashboard{
+    position:fixed;
+    left:12px;
+    top:125px;
+    width:180px;
+    z-index:800;
+}
+
+.dashboard-panel{
+    margin-bottom:10px;
+    padding:10px;
+    background:#222;
+    border:1px solid #5578a5;
+    box-shadow:0 2px 8px #000;
+}
+
+.dashboard-panel h2{
+    color:#fff;
+    font-size:15px;
+    margin:0 0 8px;
+}
+
+.dashboard-panel strong,
+.dashboard-panel span{
+    display:block;
+}
+
+.dashboard-panel strong{
+    color:#fff;
+    font-size:13px;
+}
+
+.dashboard-panel span,
+#dashboardPlaytime{
+    color:#bbb;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.dashboard-panel img{
+    width:100%;
+    height:82px;
+    display:block;
+    object-fit:cover;
+    background:#111;
+    border:1px solid #555;
+    margin-bottom:7px;
+}
+
+.dashboard-panel button{
+    margin:8px 0 0;
+    cursor:pointer;
+}
+
+@media(max-width:1100px){
+    .left-dashboard{
+        position:static;
+        width:800px;
+        max-width:calc(100% - 20px);
+        margin:10px auto;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:10px;
+    }
+    .dashboard-panel{margin:0}
+}
+
+@media(max-width:620px){
+    .left-dashboard{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 
@@ -489,6 +561,33 @@ footer a{color:#00e}
     <div class="content-row"></div>
 
 </main>
+
+<aside class="left-dashboard" aria-label="Game dashboard">
+    <section class="dashboard-panel">
+        <h2>Playtime</h2>
+        <div id="dashboardPlaytime">Playtime: 0m</div>
+    </section>
+
+    <section class="dashboard-panel" id="lastGamePanel">
+        <h2>Last Played</h2>
+        <img id="lastGameImage" src="" alt="">
+        <strong id="lastGameTitle">No game played yet</strong>
+        <button type="button" id="lastGameButton" hidden>Open Game</button>
+    </section>
+
+    <section class="dashboard-panel">
+        <h2>Newest Game</h2>
+        <img id="newestGameImage" src="" alt="">
+        <strong id="newestGameTitle">No games available</strong>
+        <span id="newestGameDate"></span>
+    </section>
+
+    <section class="dashboard-panel">
+        <h2>Top User</h2>
+        <strong id="topUserName">No users available</strong>
+        <span id="topUserGames"></span>
+    </section>
+</aside>
 
 <footer>
     Secret Unblocked, "The future of html and classic roblox",
@@ -645,6 +744,15 @@ const gamesNavLink = document.getElementById("gamesNavLink");
 const gamesSearch = document.getElementById("gamesSearch");
 const continuePlayingButton = document.getElementById("continuePlayingButton");
 const playtimeDisplay = document.getElementById("playtimeDisplay");
+const dashboardPlaytime = document.getElementById("dashboardPlaytime");
+const lastGameImage = document.getElementById("lastGameImage");
+const lastGameTitle = document.getElementById("lastGameTitle");
+const lastGameButton = document.getElementById("lastGameButton");
+const newestGameImage = document.getElementById("newestGameImage");
+const newestGameTitle = document.getElementById("newestGameTitle");
+const newestGameDate = document.getElementById("newestGameDate");
+const topUserName = document.getElementById("topUserName");
+const topUserGames = document.getElementById("topUserGames");
 const loginEmail = document.getElementById("loginEmail");
 const loginPassword = document.getElementById("loginPassword");
 const loginButton = document.getElementById("loginButton");
@@ -709,16 +817,65 @@ function formatPlaytime(seconds){
 }
 
 function updatePlaytime(){
-    playtimeDisplay.textContent = formatPlaytime(playtimeSeconds);
+    const formatted = formatPlaytime(playtimeSeconds);
+    playtimeDisplay.textContent = formatted;
+    dashboardPlaytime.textContent = formatted;
+}
+
+function gameImage(game){
+    return game.thumbnail || game.image || game.icon;
+}
+
+function updateGameDashboard(){
+    const savedGame = JSON.parse(localStorage.getItem("secretLastGame") || "null");
+    const lastGame = savedGame && games[savedGame.index];
+
+    if (lastGame) {
+        lastGameImage.src = gameImage(lastGame);
+        lastGameImage.alt = lastGame.title;
+        lastGameTitle.textContent = lastGame.title;
+        lastGameButton.hidden = false;
+        lastGameButton.onclick = function(){
+            openGames();
+            openGame(savedGame.index);
+        };
+    }
+
+    const newestGame = games.reduce(function(newest, game){
+        return new Date(game.date) > new Date(newest.date) ? game : newest;
+    }, games[0]);
+
+    if (newestGame) {
+        newestGameImage.src = gameImage(newestGame);
+        newestGameImage.alt = newestGame.title;
+        newestGameTitle.textContent = newestGame.title;
+        newestGameDate.textContent = "Released: " + newestGame.date;
+    }
+
+    const userCounts = {};
+    games.forEach(function(game){
+        const creator = game.creator || "Unknown";
+        userCounts[creator] = (userCounts[creator] || 0) + 1;
+    });
+    const topUser = Object.keys(userCounts).sort(function(a, b){
+        return userCounts[b] - userCounts[a] || a.localeCompare(b);
+    })[0];
+
+    if (topUser) {
+        topUserName.textContent = topUser;
+        topUserGames.textContent = userCounts[topUser] + " game" + (userCounts[topUser] === 1 ? "" : "s");
+    }
 }
 
 function saveActiveGame(game){
+    const index = games.indexOf(game);
     localStorage.setItem("secretLastGame", JSON.stringify({
         title: game.title,
-        index: games.indexOf(game)
+        index: index
     }));
     continuePlayingButton.textContent = "Continue " + game.title;
     continuePlayingButton.hidden = false;
+    updateGameDashboard();
 }
 
 function continuePlaying(){
@@ -729,6 +886,7 @@ function continuePlaying(){
 }
 
 updatePlaytime();
+updateGameDashboard();
 setInterval(function(){
     playtimeSeconds++;
     localStorage.setItem("secretPlaytimeSeconds", playtimeSeconds);
