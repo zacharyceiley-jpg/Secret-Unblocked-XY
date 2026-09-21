@@ -566,6 +566,7 @@ footer a{color:#00e}
     <section class="dashboard-panel">
         <h2>Playtime</h2>
         <div id="dashboardPlaytime">Playtime: 0m</div>
+        <button type="button" id="resetPlaytimeButton">Reset Playtime</button>
     </section>
 
     <section class="dashboard-panel" id="lastGamePanel">
@@ -745,6 +746,7 @@ const gamesSearch = document.getElementById("gamesSearch");
 const continuePlayingButton = document.getElementById("continuePlayingButton");
 const playtimeDisplay = document.getElementById("playtimeDisplay");
 const dashboardPlaytime = document.getElementById("dashboardPlaytime");
+const resetPlaytimeButton = document.getElementById("resetPlaytimeButton");
 const lastGameImage = document.getElementById("lastGameImage");
 const lastGameTitle = document.getElementById("lastGameTitle");
 const lastGameButton = document.getElementById("lastGameButton");
@@ -820,6 +822,16 @@ function updatePlaytime(){
     const formatted = formatPlaytime(playtimeSeconds);
     playtimeDisplay.textContent = formatted;
     dashboardPlaytime.textContent = formatted;
+}
+
+function resetPlaytime(){
+    playtimeSeconds = 0;
+    localStorage.setItem("secretPlaytimeSeconds", "0");
+    updatePlaytime();
+}
+
+if (resetPlaytimeButton) {
+    resetPlaytimeButton.addEventListener("click", resetPlaytime);
 }
 
 function gameImage(game){
