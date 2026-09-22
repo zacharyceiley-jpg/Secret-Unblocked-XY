@@ -31,70 +31,56 @@ a{color:#62a8ff;text-decoration:underline}
     overflow:hidden;
 }
 
-.header-image{
-    position:absolute;
-    left:0;
-    top:0;
-    width:300px;
-    height:70px;
-    object-fit:cover;
-}
-
-/* Your logo */
 .site-logo{
     position:absolute;
-    left:15px;
-    top:9px;
-    width:115px;
-    height:50px;
+    left:18px;
+    top:8px;
+    width:54px;
+    height:54px;
     object-fit:contain;
     z-index:2;
 }
 
-.think{
+.brand-name{
     position:absolute;
-    right:150px;
-    top:8px;
-    color:#3147b5;
-    font-size:24px;
-    line-height:25px;
+    left:84px;
+    top:22px;
+    color:#fff;
+    font-size:21px;
     font-weight:bold;
-}
-
-.signup-bubble{
-    position:absolute;
-    right:-1px;
-    top:-1px;
-    width:157px;
-    height:71px;
-    border-radius:0 0 0 70px;
-    background:linear-gradient(145deg,#2929d8,#09096d);
-    color:white;
-    font-weight:bold;
-    text-align:right;
-    padding:28px 12px 0 0;
+    letter-spacing:.2px;
 }
 
 .nav{
     position:absolute;
-    left:-1px;
-    right:-1px;
-    top:70px;
-    height:39px;
+    left:0;
+    right:0;
+    bottom:0;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:5px;
+    padding:0 12px;
     background:#303f55;
-    border:1px solid #555;
-    text-align:center;
-    padding-top:8px;
-    font-size:20px;
+    border-top:1px solid #555;
+    font-size:13px;
 }
 
 .nav a{
-    color:white;
+    color:#eaf1fb;
     text-decoration:none;
-    margin:0 7px;
+    padding:7px 11px;
+    border:1px solid transparent;
+    border-radius:5px;
 }
 
-.nav a:hover{text-decoration:underline}
+.nav a:hover,
+.nav a:focus{
+    background:#466382;
+    border-color:#8298b2;
+    text-decoration:none;
+}
 
 /* MAIN */
 .main{
@@ -127,9 +113,73 @@ h1,h2{
     width:308px;
     min-height:160px;
     border:1px solid #5578a5;
-    background:#222;
+    border-top:3px solid #6f9ed3;
+    background:linear-gradient(145deg,#292929,#1c1c1c);
+    box-shadow:0 3px 12px rgba(0,0,0,.45);
     padding:10px 8px;
 }
+
+.signin-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.72);
+    padding:20px;
+}
+
+.signin-overlay.open{display:flex}
+
+.signin-window{
+    width:360px;
+    max-width:100%;
+    background:#202020;
+    border:2px solid #6d86a5;
+    box-shadow:0 5px 25px #000;
+}
+
+.signin-titlebar{
+    height:38px;
+    background:#303f55;
+    border-bottom:1px solid #71839a;
+    color:#fff;
+    padding:9px 12px;
+    font-size:18px;
+    font-weight:bold;
+    position:relative;
+}
+
+.signin-close{
+    position:absolute;
+    right:8px;
+    top:7px;
+    width:23px;
+    height:23px;
+    padding:0;
+    margin:0;
+    background:#222;
+    color:#fff;
+    border:1px solid #888;
+    cursor:pointer;
+}
+
+.signin-content{padding:18px}
+
+.signin-content .login{
+    float:none;
+    width:auto;
+    min-height:0;
+    border:0;
+    box-shadow:none;
+    padding:0;
+}
+
+.signin-content .login-buttons{margin-top:22px}
+
+body.light-mode .signin-window{background:#f4f4f4}
+body.light-mode .signin-titlebar{background:#afc4df}
 
 .login-row{
     display:flex;
@@ -413,20 +463,31 @@ footer a{color:#00e}
     top:125px;
     width:180px;
     z-index:800;
+    padding:10px;
+    border:1px solid #6f9ed3;
+    background:
+        linear-gradient(rgba(12,22,36,.76),rgba(12,22,36,.88)),
+        url("https://i.ytimg.com/vi/D0hSCqWqhF0/hqdefault.jpg?v=64c70cbc") center/cover no-repeat;
+    box-shadow:0 4px 18px rgba(0,0,0,.8);
 }
 
 .dashboard-panel{
-    margin-bottom:10px;
-    padding:10px;
-    background:#222;
-    border:1px solid #5578a5;
-    box-shadow:0 2px 8px #000;
+    position:relative;
+    z-index:1;
+    margin-bottom:12px;
+    padding:13px;
+    background:linear-gradient(145deg,rgba(41,41,41,.92),rgba(20,27,36,.94));
+    border:1px solid rgba(111,158,211,.75);
+    border-left:3px solid #8bb9ed;
+    box-shadow:0 3px 12px rgba(0,0,0,.7);
+    backdrop-filter:blur(2px);
 }
 
 .dashboard-panel h2{
     color:#fff;
     font-size:15px;
-    margin:0 0 8px;
+    margin:0 0 9px;
+    letter-spacing:.2px;
 }
 
 .dashboard-panel strong,
@@ -441,9 +502,15 @@ footer a{color:#00e}
 
 .dashboard-panel span,
 #dashboardPlaytime{
-    color:#bbb;
+    color:#b9c8d9;
     font-size:11px;
     margin-top:5px;
+}
+
+.dashboard-hint{
+    color:#8795a5 !important;
+    font-size:10px !important;
+    line-height:14px;
 }
 
 .dashboard-panel img{
@@ -459,6 +526,8 @@ footer a{color:#00e}
 .dashboard-panel button{
     margin:8px 0 0;
     cursor:pointer;
+    width:100%;
+    border-color:#718eaf;
 }
 
 @media(max-width:1100px){
@@ -467,6 +536,7 @@ footer a{color:#00e}
         width:800px;
         max-width:calc(100% - 20px);
         margin:10px auto;
+        padding:10px;
         display:grid;
         grid-template-columns:repeat(4,1fr);
         gap:10px;
@@ -475,7 +545,153 @@ footer a{color:#00e}
 }
 
 @media(max-width:620px){
+    .header{height:125px}
+    .brand-name{font-size:18px}
+    .nav{height:58px;flex-wrap:wrap;justify-content:center;padding:4px}
+    .nav a{padding:5px 7px}
+}
+
+@media(max-width:620px){
     .left-dashboard{grid-template-columns:repeat(2,1fr)}
+}
+/* LIQUID GLASS POLISH */
+.header,
+.login,
+.games-window,
+.users-window,
+.settings-window,
+.disguiser-window,
+.signin-window,
+.image-viewer-window,
+.left-dashboard,
+.dashboard-panel,
+.game-card,
+.user-item,
+.play-tracking-bar button,
+.play-tracking-bar span{
+    border-radius:16px;
+}
+
+.header,
+.login,
+.games-window,
+.users-window,
+.settings-window,
+.disguiser-window,
+.signin-window,
+.image-viewer-window{
+    background:linear-gradient(135deg,rgba(48,61,79,.78),rgba(20,24,31,.88));
+    border-color:rgba(157,194,232,.62);
+    box-shadow:0 12px 35px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.18);
+    backdrop-filter:blur(16px) saturate(135%);
+    -webkit-backdrop-filter:blur(16px) saturate(135%);
+}
+
+.header::after,
+.left-dashboard::after,
+.dashboard-panel::after,
+.game-card::after,
+.user-item::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    border-radius:inherit;
+    background:linear-gradient(120deg,rgba(255,255,255,.16),transparent 30%,transparent 70%,rgba(135,190,255,.06));
+}
+
+.header::after{z-index:1}
+.header > *{z-index:2}
+
+.nav{
+    background:linear-gradient(90deg,rgba(39,57,79,.72),rgba(61,86,116,.62));
+    border-top-color:rgba(180,211,242,.28);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+}
+
+.nav a,
+button,
+.play-button,
+.back-games,
+.setting-button{
+    border-radius:10px;
+    border-color:rgba(173,207,239,.55);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 3px 10px rgba(0,0,0,.18);
+}
+
+.nav a:hover,
+.nav a:focus,
+button:hover,
+.setting-button:hover{
+    box-shadow:0 0 16px rgba(108,171,235,.28),inset 0 1px 0 rgba(255,255,255,.2);
+}
+
+.left-dashboard{
+    overflow:hidden;
+    background:
+        linear-gradient(145deg,rgba(30,57,84,.62),rgba(8,14,24,.78)),
+        url("https://i.ytimg.com/vi/D0hSCqWqhF0/hqdefault.jpg?v=64c70cbc") center/cover no-repeat;
+    border-color:rgba(157,194,232,.72);
+    backdrop-filter:blur(14px) saturate(125%);
+    -webkit-backdrop-filter:blur(14px) saturate(125%);
+}
+
+.dashboard-panel{
+    overflow:hidden;
+    background:linear-gradient(145deg,rgba(61,76,96,.58),rgba(18,25,36,.68));
+    border-color:rgba(157,194,232,.58);
+    box-shadow:0 8px 22px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.16);
+    backdrop-filter:blur(10px) saturate(130%);
+    -webkit-backdrop-filter:blur(10px) saturate(130%);
+}
+
+.game-card,
+.user-item{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(145deg,rgba(61,72,88,.72),rgba(28,31,38,.82));
+    border-color:rgba(141,178,215,.58);
+    box-shadow:0 7px 18px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.13);
+    backdrop-filter:blur(9px) saturate(125%);
+    -webkit-backdrop-filter:blur(9px) saturate(125%);
+}
+
+.game-card:hover,
+.user-item:hover{
+    transform:translateY(-2px);
+    background:linear-gradient(145deg,rgba(77,101,128,.78),rgba(31,37,47,.86));
+    box-shadow:0 10px 24px rgba(0,0,0,.4),0 0 18px rgba(108,171,235,.18);
+}
+
+.game-card img,
+.user-item img,
+.dashboard-panel img{
+    border-radius:10px;
+    border-color:rgba(180,211,242,.42);
+}
+
+.signin-titlebar,
+.games-titlebar,
+.users-titlebar,
+.settings-titlebar,
+.disguiser-titlebar,
+.image-viewer-titlebar{
+    border-radius:14px 14px 0 0;
+    background:linear-gradient(100deg,rgba(63,88,119,.9),rgba(42,57,77,.86));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.login-row input,
+.overlay-search{
+    border-radius:9px;
+    border-color:rgba(173,207,239,.5);
+    background:rgba(7,11,17,.65);
+    box-shadow:inset 0 2px 8px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.08);
+}
+
+@media(max-width:620px){
+    .header,.left-dashboard{border-radius:14px}
 }
 </style>
 </head>
@@ -487,26 +703,20 @@ footer a{color:#00e}
 <header class="header">
 
     <img
-        class="header-image"
-        src="https://pbs.twimg.com/profile_banners/16745055/1788884114"
-        alt=""
-    >
-
-    <img
         class="site-logo"
         src="https://cdn-icons-png.flaticon.com/512/6360/6360303.png"
         alt="Secret Unblocked"
     >
 
-    <div class="think">Bored.<br>Game.</div>
+    <div class="brand-name">Secret Unblocked</div>
 
-    <div class="signup-bubble">
-        Secret Unblocked XY
-    </div>
-
-    <nav class="nav">
-        <a href="#">Home</a> |
-        <a href="#" id="gamesNavLink">Games</a> | <a href="#" id="usersNavLink">Users</a> | <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a> | <a href="#" onclick="openSettings(event)">Settings</a>
+    <nav class="nav" aria-label="Main navigation">
+        <a href="#">Home</a>
+        <a href="#" id="gamesNavLink">Games</a>
+        <a href="#" id="usersNavLink">Users</a>
+        <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a>
+        <a href="#" id="signinNavLink">Sign In</a>
+        <a href="#" onclick="openSettings(event)">Settings</a>
     </nav>
 
 </header>
@@ -534,28 +744,6 @@ footer a{color:#00e}
         </p>
     </section>
 
-    <section class="login">
-
-        <div class="login-row">
-            <label>Username or E-mail:</label>
-            <input type="text" id="loginEmail" autocomplete="username">
-        </div>
-
-        <div class="login-row">
-            <label>Password:</label>
-            <input type="password" id="loginPassword" autocomplete="current-password">
-        </div>
-
-        <div class="login-buttons">
-            <button type="button" id="loginButton">Log In</button>
-            <button type="button">Sign Up!</button>
-        </div>
-        <div id="loginMessage" aria-live="polite"></div>
-
-        <a class="reset" href="#">Reset password</a>
-
-    </section>
-
     <div class="clear"></div>
 
     <div class="content-row"></div>
@@ -566,7 +754,7 @@ footer a{color:#00e}
     <section class="dashboard-panel">
         <h2>Playtime</h2>
         <div id="dashboardPlaytime">Playtime: 0m</div>
-        <button type="button" id="resetPlaytimeButton">Reset Playtime</button>
+        <span class="dashboard-hint">Your total time played</span>
     </section>
 
     <section class="dashboard-panel" id="lastGamePanel">
@@ -612,6 +800,34 @@ footer a{color:#00e}
     <span id="playtimeDisplay">Playtime: 0m</span>
 </div>
 
+
+<!-- Sign-in modal -->
+<div class="signin-overlay" id="signinOverlay" aria-hidden="true">
+    <div class="signin-window" role="dialog" aria-modal="true" aria-labelledby="signinTitle">
+        <div class="signin-titlebar">
+            <span id="signinTitle">Secret Unblocked — Sign In</span>
+            <button class="signin-close" type="button" onclick="closeSignIn()">×</button>
+        </div>
+        <div class="signin-content">
+            <section class="login">
+                <div class="login-row">
+                    <label for="loginEmail">Username or E-mail:</label>
+                    <input type="text" id="loginEmail" autocomplete="username">
+                </div>
+                <div class="login-row">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" autocomplete="current-password">
+                </div>
+                <div class="login-buttons">
+                    <button type="button" id="loginButton">Log In</button>
+                    <button type="button">Sign Up!</button>
+                </div>
+                <div id="loginMessage" aria-live="polite"></div>
+                <a class="reset" href="#">Reset password</a>
+            </section>
+        </div>
+    </div>
+</div>
 
 <!-- Games opens over the main page -->
 <div class="games-overlay" id="gamesOverlay">
@@ -753,6 +969,8 @@ const list = document.getElementById("gamesList");
 const listView = document.getElementById("gamesListView");
 const page = document.getElementById("gamePage");
 const gamesNavLink = document.getElementById("gamesNavLink");
+const signinNavLink = document.getElementById("signinNavLink");
+const signinOverlay = document.getElementById("signinOverlay");
 const gamesSearch = document.getElementById("gamesSearch");
 const continuePlayingButton = document.getElementById("continuePlayingButton");
 const playtimeDisplay = document.getElementById("playtimeDisplay");
@@ -934,6 +1152,28 @@ if (gamesNavLink) {
         openGames();
     });
 }
+
+if (signinNavLink) {
+    signinNavLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        openSignIn();
+    });
+}
+
+function openSignIn(){
+    signinOverlay.classList.add("open");
+    signinOverlay.setAttribute("aria-hidden", "false");
+    window.setTimeout(function(){ loginEmail.focus(); }, 0);
+}
+
+function closeSignIn(){
+    signinOverlay.classList.remove("open");
+    signinOverlay.setAttribute("aria-hidden", "true");
+}
+
+signinOverlay.addEventListener("click", function(event){
+    if(event.target === signinOverlay) closeSignIn();
+});
 
 function renderGames(){
     list.innerHTML = "";
@@ -1520,12 +1760,6 @@ document.addEventListener("keydown", function(event) {
                     <span class="disguise-name">ChatGPT</span>
                 </button>
 
-                <button class="disguise-card"
-                    onclick="applyDisguise('Roblox','https://www.rw-designer.com/icon-image/30085-256x256x32.png')">
-                    <span class="disguise-icon">R</span>
-                    <span class="disguise-name">Roblox</span>
-                </button>
-
             </div>
 
             <div class="disguiser-current">
@@ -1569,6 +1803,11 @@ document.addEventListener("keydown", function(event) {
             <label class="setting-row">
                 <span>Show Wallpaper</span>
                 <input type="checkbox" id="wallpaperToggle" onchange="toggleWallpaper()">
+            </label>
+
+            <label class="setting-row">
+                <span>Reset Playtime</span>
+                <button class="setting-button" type="button" id="resetPlaytimeButton">Reset</button>
             </label>
 
             <label class="setting-row">
@@ -1852,7 +2091,7 @@ body.smooth-corners .play-button,
 body.smooth-corners .back-games,
 body.smooth-corners .play-tracking-bar button,
 body.smooth-corners .play-tracking-bar span{
-    border-radius:10px;
+    border-radius:16px;
 }
 
 body.smooth-corners .games-titlebar,
@@ -1935,14 +2174,10 @@ function toggleAccount(){
 }
 
 function showSignIn(){
-    const login = document.querySelector(".login");
-    if(login){
-        login.style.display = "";
-        login.scrollIntoView({behavior:"smooth", block:"center"});
-    }
     document.getElementById("hideAccountToggle").checked = false;
     localStorage.setItem("secretHideAccount", false);
     closeSettings();
+    openSignIn();
 }
 
 function toggleWallpaper(){
@@ -1980,6 +2215,7 @@ document.addEventListener("keydown", function(event){
     if(event.key === "Escape"){
         closeSettings();
         closeDisguiser();
+        closeSignIn();
     }
 });
 const userImages = {
@@ -2043,6 +2279,11 @@ const userImages = {
 
     const login = document.querySelector(".login");
     if(login) login.style.display = hide ? "none" : "";
+
+    const settingsResetPlaytimeButton = document.getElementById("resetPlaytimeButton");
+    if (settingsResetPlaytimeButton) {
+        settingsResetPlaytimeButton.addEventListener("click", resetPlaytime);
+    }
 })();
 </script>
 
