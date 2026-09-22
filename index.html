@@ -122,7 +122,7 @@ h1,h2{
 .signin-overlay{
     position:fixed;
     inset:0;
-    z-index:1100;
+    z-index:130000;
     display:none;
     align-items:center;
     justify-content:center;
@@ -715,7 +715,7 @@ button:hover,
         <a href="#" id="gamesNavLink">Games</a>
         <a href="#" id="usersNavLink">Users</a>
         <a href="https://zacharyceiley-jpg.github.io/secret-Unblocked-Listen/">Listen</a>
-        <a href="#" id="signinNavLink">Sign In</a>
+        <a href="#" id="signinNavLink" onclick="openSignIn(event)">Sign In</a>
         <a href="#" onclick="openSettings(event)">Settings</a>
     </nav>
 
@@ -1156,19 +1156,29 @@ if (gamesNavLink) {
 if (signinNavLink) {
     signinNavLink.addEventListener("click", function(event) {
         event.preventDefault();
+        event.stopPropagation();
         openSignIn();
     });
 }
 
-function openSignIn(){
+function openSignIn(event){
+    if (event) event.preventDefault();
+    if (!signinOverlay) return;
+
     signinOverlay.classList.add("open");
     signinOverlay.setAttribute("aria-hidden", "false");
-    window.setTimeout(function(){ loginEmail.focus(); }, 0);
+    document.body.style.overflow = "hidden";
+
+    window.setTimeout(function(){
+        if (loginEmail) loginEmail.focus();
+    }, 0);
 }
 
 function closeSignIn(){
+    if (!signinOverlay) return;
     signinOverlay.classList.remove("open");
     signinOverlay.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
 }
 
 signinOverlay.addEventListener("click", function(event){
@@ -2168,8 +2178,10 @@ function toggleLightMode(){
 
 function toggleAccount(){
     const enabled = document.getElementById("hideAccountToggle").checked;
-    const login = document.querySelector(".login");
-    if(login) login.style.display = enabled ? "none" : "";
+    const signInLink = document.getElementById("signinNavLink");
+
+    // Hide only the navigation tab; never hide the login form inside the popup.
+    if (signInLink) signInLink.style.display = enabled ? "none" : "";
     localStorage.setItem("secretHideAccount", enabled);
 }
 
@@ -2277,8 +2289,8 @@ const userImages = {
     document.body.classList.toggle("old-cursor-mode", oldCursor);
     document.body.classList.toggle("smooth-corners", smoothCorners);
 
-    const login = document.querySelector(".login");
-    if(login) login.style.display = hide ? "none" : "";
+    const signInLink = document.getElementById("signinNavLink");
+    if (signInLink) signInLink.style.display = hide ? "none" : "";
 
     const settingsResetPlaytimeButton = document.getElementById("resetPlaytimeButton");
     if (settingsResetPlaytimeButton) {
